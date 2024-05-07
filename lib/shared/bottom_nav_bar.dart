@@ -1,55 +1,55 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:swimmast_movil/screens/home_screen.dart';
-import 'package:swimmast_movil/screens/notification_screen.dart';
-
-class MyBottomNavBar extends StatelessWidget {
-  const MyBottomNavBar({super.key});
+class TrainerBtBar extends StatefulWidget {
+  final Function currentIndex;
+  const TrainerBtBar({super.key, required this.currentIndex});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(NavigationController());
-    return Scaffold(
-      bottomNavigationBar: Obx(
-        ()=> NavigationBar(
-          height: 70,
-          elevation: 0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (value) => controller.selectedIndex.value = value,
-
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home),
-              label: '',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.book),
-              label: '',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.event),
-              label: '',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.notifications),
-              label: '',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.group),
-              label: '',
-            ),
-          ],
-        ),
-      ),
-      body: Obx(() => controller.screens[controller.selectedIndex.value],)
-    );
-  }
+  State<TrainerBtBar> createState() => _TrainerBtBarState();
 }
 
+class _TrainerBtBarState extends State<TrainerBtBar> {
+  int selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: selectedIndex,
+      onTap: (index) {
+        setState(() {
+          selectedIndex = index;
+          widget.currentIndex(index);
+        });
+      },
 
-class NavigationController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
-
-  final screens = [ const HomeScreen(), Container(color: Colors.green), Container(color: Colors.blue), const NotificationScreen(), Container(color: Colors.purple)];
+      // stles 
+      type: BottomNavigationBarType.fixed,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedItemColor:const  Color.fromRGBO(11, 34, 181, 1),
+      unselectedItemColor: Colors.black,
+      // end styles
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.book),
+          label: 'book',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.event),
+          label: 'event',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: 'notifications',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.group),
+          label: 'group',
+        )
+      ],
+    );
+  }
 }

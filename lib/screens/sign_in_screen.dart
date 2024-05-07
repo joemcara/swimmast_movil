@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
+import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainerScreens/home_screen.dart';
 import 'package:swimmast_movil/shared/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
@@ -106,7 +108,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const MyBottomNavBar()));
+                                        const MainScreenTrainee()));
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
