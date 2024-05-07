@@ -17,7 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: EdgeInsets.symmetric(horizontal: 30),
         child: Center(
           child: SingleChildScrollView(
             child: Wrap(
@@ -35,24 +35,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   "Creación de cuenta",
                   style: TextStyle(fontSize: 20),
                 ),
-                SignUpInput(
+                TextInput(
                   hintText: "Nombres y Apellidos",
                   label: "Nombres y Apellidos",
                 ),
-                SignUpInput(
+                TextInput(
                   hintText: "Teléfono",
                   label: "Número de teléfono",
                 ),
-                SignUpInput(
+                TextInput(
                   hintText: "Correo electrónico",
                   label: "Correo electrónico",
                 ),
-                SignUpInput(
+                PasswordInput(
                   hintText: "Contraseña",
                   label: "Contraseña",
-                  password: true,
                 ),
-                SignUpInput(
+                TextInput(
                   hintText: "Dirección",
                   label: "Dirección ",
                 ),

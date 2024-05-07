@@ -65,15 +65,19 @@ class _SignInScreenState extends State<SignInScreen> {
                     const Form(
                         child: Column(
                       children: [
-                        SignInInput(
+                        SizedBox(
+                          height: 25,
+                        ),
+                        TextInput(
                           hintText: "Ingrese su correo",
+                          signIn: true,
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 25,
                         ),
-                        SignInInput(
+                        PasswordInput(
                           hintText: "Contraseña",
-                          password: true,
+                          signIn: true,
                         ),
                       ],
                     )),
