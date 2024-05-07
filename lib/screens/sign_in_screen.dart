@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
-import 'package:swimmast_movil/shared/bottom_nav_bar.dart';
+import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainerScreens/home_screen.dart';
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -15,6 +18,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  var member = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -106,11 +110,18 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 50,
                       child: FilledButton(
                           onPressed: () {
+                            if (member) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MainScreenMember()));
+                            }
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const MyBottomNavBar()));
+                                        const MainScreenTrainee()));
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
