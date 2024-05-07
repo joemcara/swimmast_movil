@@ -14,18 +14,18 @@ class LoginInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final inputDecoration = InputDecoration(
       hintText: placeholder,
-      hintStyle: TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
+      hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
       border: InputBorder.none,
     );
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
           border: Border.all(color: Colors.black),
           color: Colors.white),
       child: TextField(
-        style: TextStyle(fontSize: 20, letterSpacing: 2),
+        style: const TextStyle(fontSize: 20, letterSpacing: 2),
         textAlign: TextAlign.center,
         decoration: inputDecoration,
         onChanged: (value) {
