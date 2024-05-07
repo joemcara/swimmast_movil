@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 
 //class _LoginInputState extends State<LoginInput>{
 class SignInInput extends StatelessWidget {
-  const SignInInput({super.key, required this.hintText, this.label});
+  const SignInInput(
+      {super.key, required this.hintText, this.label, this.password});
   final String hintText;
   final String? label;
+  final bool? password;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,6 +47,10 @@ class SignInInput extends StatelessWidget {
                   style: const TextStyle(fontSize: 20, letterSpacing: 2),
                   textAlign: TextAlign.center,
                   decoration: inputDecoration,
+                  obscureText: password ?? false,
+                  enableSuggestions:
+                      password != null && password! ? false : true,
+                  autocorrect: password != null && password! ? false : true,
                 ),
               ],
             ))
@@ -53,9 +60,11 @@ class SignInInput extends StatelessWidget {
 }
 
 class SignUpInput extends StatelessWidget {
-  const SignUpInput({super.key, required this.hintText, this.label});
+  const SignUpInput(
+      {super.key, required this.hintText, this.label, this.password});
   final String hintText;
   final String? label;
+  final bool? password;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -89,7 +98,12 @@ class SignUpInput extends StatelessWidget {
                   style: const TextStyle(fontSize: 15, letterSpacing: 2),
                   // textAlign: TextAlign.center,
                   decoration: inputDecoration,
+                  obscureText: password ?? false,
+                  enableSuggestions:
+                      password != null && password! ? false : true,
+                  autocorrect: password != null && password! ? false : true,
                 ),
+                IconButton(onPressed: () {}, icon: Icon(Icons.password))
               ],
             ))
       ],

@@ -17,7 +17,8 @@ class _SignInScreenState extends State<SignInScreen> {
     Size size = MediaQuery.of(context).size;
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
-      body: Container(
+        body: SingleChildScrollView(
+      child: Container(
           height: size.height,
           color: const Color.fromRGBO(11, 34, 181, 1),
           child: Column(
@@ -69,6 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         SignInInput(
                           hintText: "Contraseña",
+                          password: true,
                         ),
                       ],
                     )),
@@ -114,6 +116,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ],
           )),
-    );
+    ));
   }
 }

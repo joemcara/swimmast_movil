@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: "Nombres y Apellidos",
                 ),
                 SignUpInput(
-                  hintText: "Contraseña",
+                  hintText: "Teléfono",
                   label: "Número de teléfono",
                 ),
                 SignUpInput(
@@ -50,6 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SignUpInput(
                   hintText: "Contraseña",
                   label: "Contraseña",
+                  password: true,
                 ),
                 SignUpInput(
                   hintText: "Dirección",
