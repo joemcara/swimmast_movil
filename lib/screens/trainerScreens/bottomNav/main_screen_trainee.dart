@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/bottom_nav_bar.dart';
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
 
 
@@ -13,6 +13,7 @@ class MainScreenTrainee extends StatefulWidget {
 class _MainScreenTraineeState extends State<MainScreenTrainee> {
   int index = 0;
   TrainerBtBar ?trainerBtBar;
+  
 
   @override
   void initState() {
