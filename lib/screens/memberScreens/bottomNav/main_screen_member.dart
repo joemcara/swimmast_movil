@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/shared/profile_header.dart';
 import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
-
-
 
 class MainScreenMember extends StatefulWidget {
   const MainScreenMember({super.key});
@@ -13,8 +13,7 @@ class MainScreenMember extends StatefulWidget {
 
 class _MainScreenMemberState extends State<MainScreenMember> {
   int index = 0;
-  MemberBtBar ?trainerBtBar;
-  
+  MemberBtBar? trainerBtBar;
 
   @override
   void initState() {
@@ -33,6 +32,6 @@ class _MainScreenMemberState extends State<MainScreenMember> {
     return Scaffold(
       bottomNavigationBar: trainerBtBar,
       body: BottomRouteMember(index: index),
-      );
+    );
   }
 }

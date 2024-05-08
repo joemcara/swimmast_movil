@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:swimmast_movil/shared/profile_header.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -7,8 +7,8 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body:  Center(
-        child: Text('history Screen member'),
+      body: Column(
+        children: [ProfileHeader(username: "Evelyn Smith")],
       ),
     );
   }

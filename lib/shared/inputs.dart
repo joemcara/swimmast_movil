@@ -64,7 +64,7 @@ class _PasswordInputState extends State<PasswordInput> {
                 Icon(_obscureText ? Icons.visibility_off : Icons.visibility)));
 
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.only(left: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
                 widget.signIn != null && widget.signIn! ? 50 : 10),

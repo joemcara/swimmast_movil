@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:swimmast_movil/shared/profile_header.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -7,8 +7,8 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body:  Center(
-        child: Text('notification Screen'),
+      body: Column(
+        children: [ProfileHeader(username: "Evelyn Smith")],
       ),
     );
   }
