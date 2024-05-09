@@ -66,7 +66,7 @@ Widget _scheduleBox(
   String? imageUrl,
 ) {
   return Container(
-    height: 150,
+    height: 120,
     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
     margin: const EdgeInsets.symmetric(vertical: 10),
     decoration: BoxDecoration(
