@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:swimmast_movil/screens/memberScreens/history_screen.dart';
 import 'package:swimmast_movil/screens/memberScreens/home_screen.dart';
 import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
@@ -44,4 +43,3 @@ class BottomRouteMember extends StatelessWidget {
     return screens[index];
   }
 }
-

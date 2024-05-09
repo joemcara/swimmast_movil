@@ -21,19 +21,12 @@ class HomeScreenMember extends StatelessWidget {
         "trainer": "Pedro",
         "image_url": "lib/assets/swimmast_logo.png"
       },
-      {
-        "day": "Martes",
-        "hour": "10:30",
-        "trainer": "Pedro",
-        "image_url": "lib/assets/swimmast_logo.png"
-      },
     ];
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: statusBarHeight),
         child: Column(
           children: [
-            const ProfileHeader(username: "Evelyn Smith"),
             const Text(
               "Horarios",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -42,14 +35,16 @@ class HomeScreenMember extends StatelessWidget {
               height: 20,
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: scheduleList.length,
-                padding: const EdgeInsets.all(12),
-                itemBuilder: (_, index) => _scheduleBox(
-                  scheduleList[index]['day'],
-                  scheduleList[index]['hour']!,
-                  scheduleList[index]['trainer']!,
-                  scheduleList[index]["image_url"],
+              child: Container(
+                child: ListView.builder(
+                  itemCount: scheduleList.length,
+                  padding: const EdgeInsets.all(12),
+                  itemBuilder: (_, index) => _scheduleBox(
+                    scheduleList[index]['day'],
+                    scheduleList[index]['hour']!,
+                    scheduleList[index]['trainer']!,
+                    scheduleList[index]["image_url"],
+                  ),
                 ),
               ),
             ),

@@ -21,10 +21,9 @@ class ProfileScreen extends StatelessWidget {
       "Paquete Z - Lunes 8:30 - 11:00am",
     ];
 
-        
     return Scaffold(
       body: Container(
-          padding: EdgeInsets.only(top: statusBarHeight *1.5),
+          padding: EdgeInsets.only(top: statusBarHeight * 1.5),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -98,7 +97,11 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                CustomButton(text: "Cerrar sesión", onPressed: () {})
+                CustomButton(
+                    text: "Cerrar sesión",
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
               ],
             ),
           )),

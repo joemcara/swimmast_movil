@@ -10,8 +10,8 @@ class ShopScreen extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(top: statusBarHeight),
-      child: Column(
-        children: [ProfileHeader(username: "Evelyn Smith")],
+      child: const Column(
+        children: [],
       ),
     );
   }

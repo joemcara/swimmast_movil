@@ -36,9 +36,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       padding: EdgeInsets.only(top: statusBarHeight),
       child: Column(
         children: [
-          const ProfileHeader(
-            username: 'joseph',
-          ),
           Center(
             child: Text(
               notificaciones,

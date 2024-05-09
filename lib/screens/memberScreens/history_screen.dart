@@ -8,11 +8,27 @@ class HistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    return Container(
-      padding: EdgeInsets.only(top: statusBarHeight),
-      child: Column(
-        children: [ProfileHeader(username: "Evelyn Smith")],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.only(top: statusBarHeight),
+          child: Column(
+            children: [],
+          ),
+        ),
       ),
     );
   }
+}
+
+Widget _tabs() {
+  return const TabBar(tabs: [
+    Tab(
+      text: "Horarios",
+    ),
+    Tab(
+      text: "Sesiones",
+    ),
+  ]);
 }

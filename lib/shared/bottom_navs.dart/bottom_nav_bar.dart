@@ -57,21 +57,22 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
 
 class MemberBtBar extends StatefulWidget {
   final Function currentIndex;
-  const MemberBtBar({super.key, required this.currentIndex});
+  int selected = 0;
+  MemberBtBar({super.key, required this.currentIndex, required this.selected});
 
   @override
   State<MemberBtBar> createState() => _MemberBtBarState();
 }
 
 class _MemberBtBarState extends State<MemberBtBar> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: selectedIndex,
+      currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
-          selectedIndex = index;
+          // selectedIndex = index;
+          widget.selected = index;
           widget.currentIndex(index);
         });
       },
