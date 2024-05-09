@@ -7,6 +7,8 @@ class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
     const List<String> data = [
       "Número de teléfono: 1234567890",
       "Dirección: Av.9 de octubre y Chimborazo "
@@ -18,20 +20,18 @@ class ProfileScreen extends StatelessWidget {
       "Paquete Z - Lunes 8:30 - 11:00am",
     ];
 
-    return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
+    return Container(
+        padding: EdgeInsets.only(top: statusBarHeight * 2.5),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Center(
                 child: SizedBox(
                   height: 150,
                   width: 150,
-                  child: Expanded(
-                    child: CustomAvatar(
-                      username: "Evelyn Smith",
-                      onTap: () {},
-                    ),
+                  child: CustomAvatar(
+                    username: "Evelyn Smith",
+                    onTap: () {},
                   ),
                 ),
               ),

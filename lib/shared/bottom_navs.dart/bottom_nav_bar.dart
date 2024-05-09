@@ -21,11 +21,11 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
         });
       },
 
-      // stles 
+      // stles
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedItemColor:const  Color.fromRGBO(11, 34, 181, 1),
+      selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
       unselectedItemColor: Colors.black,
       iconSize: 33,
       // end styles
@@ -76,11 +76,11 @@ class _MemberBtBarState extends State<MemberBtBar> {
         });
       },
 
-      // stles 
+      // stles
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedItemColor:const  Color.fromRGBO(11, 34, 181, 1),
+      selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
       unselectedItemColor: Colors.black,
       iconSize: 33,
       // end styles
@@ -91,12 +91,12 @@ class _MemberBtBarState extends State<MemberBtBar> {
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'book',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.event),
           label: 'event',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart),
+          label: 'book',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
@@ -110,4 +110,3 @@ class _MemberBtBarState extends State<MemberBtBar> {
     );
   }
 }
-

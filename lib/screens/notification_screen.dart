@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:swimmast_movil/shared/profile_header.dart';
 import 'package:swimmast_movil/widgets/widget_notification.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -17,34 +17,39 @@ class _NotificationScreenState extends State<NotificationScreen> {
     {'id': '4', 'title': 'titulo 4', 'description': 'descripcion 4'},
   ];
 
+  String notificaciones = 'Notificaciones';
+
   void deleteNotification(String id) {
     setState(() {
       items.removeWhere((element) => element['id'] == id);
+      if (items.isEmpty) {
+        notificaciones = 'No hay notificaciones';
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Notificaciones'),
-      ),
-      body: Card.outlined(
-        margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-        elevation: 0,
-        child: Column(
-          children: [
-            if (items.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(30),
-                child: Text(
-                  'No hay notificaciones',
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
-                ),
+    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
+    return Container(
+      padding: EdgeInsets.only(top: statusBarHeight),
+      child: Column(
+        children: [
+          const ProfileHeader(
+            username: 'joseph',
+          ),
+          Center(
+            child: Text(
+              notificaciones,
+              style: const TextStyle(
+                fontSize: 20,
               ),
-            const SizedBox(height: 20),
-            Expanded(
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Card.outlined(
               child: ListView.builder(
                 itemCount: items.length,
                 padding: const EdgeInsets.all(6),
@@ -55,9 +60,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   deleteNotification: deleteNotification,
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
