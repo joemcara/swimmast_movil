@@ -6,8 +6,11 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
+    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
+    return Container(
+      padding: EdgeInsets.only(top: statusBarHeight),
+      child: Column(
         children: [ProfileHeader(username: "Evelyn Smith")],
       ),
     );

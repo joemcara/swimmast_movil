@@ -5,6 +5,8 @@ class HomeScreenMember extends StatelessWidget {
   const HomeScreenMember({super.key});
   @override
   Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
     const List<Map<String, String>> scheduleList = [
       {
         "day": "Lunes",
@@ -27,6 +29,7 @@ class HomeScreenMember extends StatelessWidget {
     ];
     return Scaffold(
         body: Container(
+      padding: EdgeInsets.only(top: statusBarHeight),
       child: Column(
         children: [
           const ProfileHeader(username: "Evelyn Smith"),
@@ -63,7 +66,7 @@ Widget _scheduleBox(
   String? imageUrl,
 ) {
   return Container(
-    height: 150,
+    height: 120,
     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
     margin: const EdgeInsets.symmetric(vertical: 10),
     decoration: BoxDecoration(
