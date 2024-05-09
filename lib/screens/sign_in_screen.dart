@@ -1,13 +1,8 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
-import 'package:swimmast_movil/screens/trainerScreens/home_screen.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 

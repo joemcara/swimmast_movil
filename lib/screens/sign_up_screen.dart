@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
@@ -17,7 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Center(
           child: SingleChildScrollView(
             child: Wrap(
@@ -31,27 +29,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 100,
                   ),
                 ),
-                Text(
+                const Text(
                   "Creación de cuenta",
                   style: TextStyle(fontSize: 20),
                 ),
-                TextInput(
+                const TextInput(
                   hintText: "Nombres y Apellidos",
                   label: "Nombres y Apellidos",
                 ),
-                TextInput(
+                const TextInput(
                   hintText: "Teléfono",
                   label: "Número de teléfono",
                 ),
-                TextInput(
+                const TextInput(
                   hintText: "Correo electrónico",
                   label: "Correo electrónico",
                 ),
-                PasswordInput(
+                const PasswordInput(
                   hintText: "Contraseña",
                   label: "Contraseña",
                 ),
-                TextInput(
+                const TextInput(
                   hintText: "Dirección",
                   label: "Dirección ",
                 ),
@@ -71,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _checkboxValue = value!;
                             });
                           }),
-                      Text("Aceptar condiciones"),
+                      const Text("Aceptar condiciones"),
                     ],
                   ),
                 ),

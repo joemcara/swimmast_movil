@@ -20,80 +20,83 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(),
-        body: Column(
-          children: [
-            Center(
-              child: Container(
-                height: 150,
-                width: 150,
-                child: Expanded(
-                  child: CustomAvatar(
-                    username: "Evelyn Smith",
-                    onTap: () {},
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: Expanded(
+                    child: CustomAvatar(
+                      username: "Evelyn Smith",
+                      onTap: () {},
+                    ),
                   ),
                 ),
               ),
-            ),
-            Text(
-              "Evelyn Smith",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            CustomTextButton(
-              text: "Editar perfil",
-              onPressed: () {},
-              text_color: system_blue,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  _infoBox("Información general", data),
-                  SizedBox(
-                    height: 32,
-                  ),
-                  _infoBox("Paquetes inscritos", packages),
-                ],
+              const Text(
+                "Evelyn Smith",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              height: 48,
-              decoration: BoxDecoration(
-                  border: Border.all(), borderRadius: BorderRadius.circular(5)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: system_blue,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(100))),
-                        padding: EdgeInsets.all(6),
-                        child: Icon(
-                          Icons.lock,
-                          color: Colors.white,
+              CustomTextButton(
+                text: "Editar perfil",
+                onPressed: () {},
+                text_color: system_blue,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    _infoBox("Información general", data),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    _infoBox("Paquetes inscritos", packages),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                height: 48,
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                              color: system_blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(100))),
+                          padding: const EdgeInsets.all(6),
+                          child: const Icon(
+                            Icons.lock,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Cambiar contraseña",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ],
-                  ),
-                  Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                  )
-                ],
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        const Text(
+                          "Cambiar contraseña",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    const Icon(
+                      Icons.keyboard_arrow_right_outlined,
+                    )
+                  ],
+                ),
               ),
-            ),
-            CustomButton(text: "Cerrar sesión", onPressed: () {})
-          ],
+              CustomButton(text: "Cerrar sesión", onPressed: () {})
+            ],
+          ),
         ));
   }
 }
@@ -104,22 +107,22 @@ Widget _infoBox(String title, List<String> data) {
     children: [
       Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
-      SizedBox(
+      const SizedBox(
         height: 8,
       ),
       Container(
         decoration: BoxDecoration(
             border: Border.all(), borderRadius: BorderRadius.circular(5)),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: data
               .map((e) => Text(
                     e,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ))
               .toList(),
         ),

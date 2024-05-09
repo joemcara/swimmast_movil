@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());

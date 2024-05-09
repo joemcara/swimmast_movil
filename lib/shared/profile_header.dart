@@ -11,10 +11,10 @@ class ProfileHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          padding: EdgeInsets.only(bottom: 25),
+          padding: const EdgeInsets.only(bottom: 25),
           child: Text(
             username,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
         Container(
@@ -24,7 +24,7 @@ class ProfileHeader extends StatelessWidget {
                     BorderRadius.only(bottomLeft: Radius.circular(150))),
             height: 120,
             width: 120,
-            padding: EdgeInsets.fromLTRB(35, 5, 5, 35),
+            padding: const EdgeInsets.fromLTRB(35, 5, 5, 35),
             child: CustomAvatar(
                 username: username,
                 onTap: () {
@@ -39,7 +39,7 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class CustomAvatar extends StatelessWidget {
-  CustomAvatar({super.key, required this.username, required this.onTap});
+  const CustomAvatar({super.key, required this.username, required this.onTap});
   final String username;
   final Function onTap;
 
