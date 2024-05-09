@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
