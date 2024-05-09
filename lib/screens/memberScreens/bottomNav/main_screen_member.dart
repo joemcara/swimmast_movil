@@ -48,7 +48,6 @@ class _MainScreenMemberState extends State<MainScreenMember> {
                         },
                         selected: index,
                       );
-                      ;
                     });
                   },
                 )
