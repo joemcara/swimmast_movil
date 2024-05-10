@@ -27,6 +27,7 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
       showUnselectedLabels: false,
       selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
       unselectedItemColor: Colors.black,
+      enableFeedback: false,
       iconSize: 33,
       // end styles
       items: const [
@@ -79,6 +80,7 @@ class _MemberBtBarState extends State<MemberBtBar> {
 
       // stles
       type: BottomNavigationBarType.fixed,
+      enableFeedback: false,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
