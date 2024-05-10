@@ -27,6 +27,7 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
       showUnselectedLabels: false,
       selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
       unselectedItemColor: Colors.black,
+      enableFeedback: false,
       iconSize: 33,
       // end styles
       items: const [
@@ -57,27 +58,29 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
 
 class MemberBtBar extends StatefulWidget {
   final Function currentIndex;
-  const MemberBtBar({super.key, required this.currentIndex});
+  int selected = 0;
+  MemberBtBar({super.key, required this.currentIndex, required this.selected});
 
   @override
   State<MemberBtBar> createState() => _MemberBtBarState();
 }
 
 class _MemberBtBarState extends State<MemberBtBar> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: selectedIndex,
+      currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
-          selectedIndex = index;
+          // selectedIndex = index;
+          widget.selected = index;
           widget.currentIndex(index);
         });
       },
 
       // stles
       type: BottomNavigationBarType.fixed,
+      enableFeedback: false,
       showSelectedLabels: false,
       showUnselectedLabels: false,
       selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),

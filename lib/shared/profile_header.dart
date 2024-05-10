@@ -3,8 +3,9 @@ import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key, required this.username});
+  const ProfileHeader({super.key, required this.username, this.onAvatarTap});
   final String username;
+  final Function? onAvatarTap;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,7 +20,7 @@ class ProfileHeader extends StatelessWidget {
         ),
         Container(
             decoration: const BoxDecoration(
-                color: system_blue,
+                color: swimmastBlue,
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(150))),
             height: 120,
@@ -28,10 +29,7 @@ class ProfileHeader extends StatelessWidget {
             child: CustomAvatar(
                 username: username,
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileScreen()));
+                  if (onAvatarTap != null) onAvatarTap!();
                 }))
       ],
     );

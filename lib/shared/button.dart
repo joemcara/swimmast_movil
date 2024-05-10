@@ -9,7 +9,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-        style: FilledButton.styleFrom(backgroundColor: system_yellow),
+        style: FilledButton.styleFrom(backgroundColor: swimmastYellow),
         onPressed: () {
           onPressed();
         },
@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
           text,
           style: const TextStyle(
               letterSpacing: 3,
-              color: system_blue,
+              color: swimmastBlue,
               fontSize: 20,
               fontWeight: FontWeight.w500),
         ));

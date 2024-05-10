@@ -21,10 +21,9 @@ class ProfileScreen extends StatelessWidget {
       "Paquete Z - Lunes 8:30 - 11:00am",
     ];
 
-        
     return Scaffold(
       body: Container(
-          padding: EdgeInsets.only(top: statusBarHeight *1.5),
+          padding: EdgeInsets.only(top: statusBarHeight * 1.5),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -45,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                 CustomTextButton(
                   text: "Editar perfil",
                   onPressed: () {},
-                  text_color: system_blue,
+                  text_color: swimmastBlue,
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -74,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Container(
                             decoration: const BoxDecoration(
-                                color: system_blue,
+                                color: swimmastBlue,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(100))),
                             padding: const EdgeInsets.all(6),
@@ -98,7 +97,11 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                CustomButton(text: "Cerrar sesión", onPressed: () {})
+                CustomButton(
+                    text: "Cerrar sesión",
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
               ],
             ),
           )),

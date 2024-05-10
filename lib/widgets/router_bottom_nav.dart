@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:swimmast_movil/screens/memberScreens/history_screen.dart';
 import 'package:swimmast_movil/screens/memberScreens/home_screen.dart';
 import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
-import 'package:swimmast_movil/screens/memberScreens/shop_screen.dart';
+import 'package:swimmast_movil/screens/memberScreens/shop_Screens/shop_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/group_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/home_screen.dart';
@@ -44,4 +43,3 @@ class BottomRouteMember extends StatelessWidget {
     return screens[index];
   }
 }
-
