@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/custom_date_dropdown.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
@@ -41,7 +40,7 @@ class _HistoryScrenState extends State<HistoryScreen> {
                     });
                   },
                 ),
-                _schedule(sessions: [
+                const _schedule(sessions: [
                   {"name": "500 Freestyle", "time": "5:09"}
                 ])
               ],
@@ -65,24 +64,63 @@ class _schedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(20)),
+            borderRadius: BorderRadius.circular(10)),
         child: ListView.builder(
-            itemCount: sessions.length,
+            itemCount: 5, //sessions.length,
             padding: const EdgeInsets.all(6),
             itemBuilder: (_, index) => Container(
-                  padding: const EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ListTile(
-                    title: Text(sessions[index]["name"] ?? ""),
-                    subtitle: Text(sessions[index]["time"] ?? ""),
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Container(
+                      padding: const EdgeInsets.all(0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 16,
+                            height: 80,
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10)),
+                                color: system_blue),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                // sessions[index]["name"] ?? "",
+                                "500 Freestyle",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.watch_later_outlined,
+                                    size: 16,
+                                  ),
+                                  // Text(sessions[index]["time"] ?? "")
+                                  Text("5:09")
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      )),
                 )),
       ),
     );

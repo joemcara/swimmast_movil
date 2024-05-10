@@ -25,10 +25,8 @@ class ShopScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (_,index) =>
-                  const PaquetesInscripcion()
-                  ),
+                    itemCount: 5,
+                    itemBuilder: (_, index) => const PaquetesInscripcion()),
               ),
             ],
           )),
@@ -50,28 +48,26 @@ class _PaquetesInscripcionState extends State<PaquetesInscripcion> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15),
-          //padding
-          
+      //padding
+
       child: Center(
-        child: Card.outlined(
+          child: Card.outlined(
         child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 90, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 10),
           //padding
           child: Column(
             // mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               const Text(
                 'Paquete X',
-                style: TextStyle(
-                    fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                  context,
-                   MaterialPageRoute(
-                    builder: (context) => const BuyScreen()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BuyScreen()));
                   // Handle the button press
                 },
                 child: const Text('Inscribirse'),
@@ -79,8 +75,7 @@ class _PaquetesInscripcionState extends State<PaquetesInscripcion> {
               // SizedBox(height: 8.0),
               const Text(
                 '\$10',
-                style: TextStyle(
-                    fontSize: 24.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
               ),
             ],
           ),
