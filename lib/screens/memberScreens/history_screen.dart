@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/screens/memberScreens/packages_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/custom_date_dropdown.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
+import 'package:swimmast_movil/widgets/swimmast_card.dart';
+import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -42,13 +45,22 @@ class _HistoryScrenState extends State<HistoryScreen> {
                   },
                 ),
                 const Schedule(sessions: [
-                  {"name": "500 Freestyle", "time": "5:09"}
+                  {"name": "500 Freestyle", "time": "5:09"},
+                  {"name": "500 Freestyle", "time": "5:09"},
+                  {"name": "500 Freestyle", "time": "5:09"},
                 ])
               ],
             ),
             Column(
               children: [
-                CustomTextButton(text: "Paquetes inscritos", onPressed: () {}),
+                CustomTextButton(
+                    text: "Paquetes inscritos",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PackageScreen()));
+                    }),
                 const Session(),
               ],
             )
@@ -68,60 +80,43 @@ class Session extends StatelessWidget {
         child: Card.outlined(
       margin: const EdgeInsets.symmetric(horizontal: 12),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
         child: ListView.builder(
           itemCount: 2,
           itemBuilder: (_, index) {
-            return Card.outlined(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+            return const SwimmastCard(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(children: []),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          const Text(
-                            "Entrenador/a: Pedro",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(200),
-                                color: Colors.red),
-                            child: Image.asset(
-                              "lib/assets/swim.png",
-                              height: 100,
-                              width: 80,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        "Nombre de rutina 1",
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.calendar_month_outlined),
-                              Text("Lunes")
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.watch_later_outlined),
-                              Text("9:30 - 11:00")
-                            ],
-                          )
-                        ],
-                      )
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SwimmastIconText(
+                        text: "Lunes",
+                        icon: Icon(Icons.calendar_month_outlined),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SwimmastIconText(
+                        text: "9:30 - 11:00",
+                        icon: Icon(Icons.watch_later_outlined),
+                      ),
                     ],
-                  ),
-                ));
+                  )
+                ],
+              ),
+            );
           },
         ),
       ),
@@ -147,57 +142,29 @@ class Schedule extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)),
         child: ListView.builder(
             itemCount: sessions.length,
-            padding: const EdgeInsets.all(6),
-            itemBuilder: (_, index) => Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Container(
-                      padding: const EdgeInsets.all(0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
+            itemBuilder: (_, index) => SwimmastCard(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      sessions[index]["name"] ?? "",
+                      // "500 Freestyle",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SwimmastIconText(
+                      text: sessions[index]["time"] ?? "",
+                      icon: const Icon(
+                        Icons.watch_later_outlined,
+                        size: 16,
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 16,
-                            height: 80,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10)),
-                                color: system_blue),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                sessions[index]["name"] ?? "",
-                                // "500 Freestyle",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.watch_later_outlined,
-                                    size: 16,
-                                  ),
-                                  Text(sessions[index]["time"] ?? "")
-                                  // Text("5:09")
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      )),
-                )),
+                    ),
+                  ],
+                ))),
       ),
     );
   }
