@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/memberScreens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -7,7 +8,6 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> tabs = ["Paquetes", "Pago"];
 
     return DefaultTabController(
       length: 2,
@@ -16,17 +16,42 @@ class ShopScreen extends StatelessWidget {
             automaticallyImplyLeading: false,
             bottom: const PreferredSize(
               preferredSize: Size(double.infinity, 10),
-              child: SwimmastTabs(
-                tabNames: tabs,
-              ),
+              child: Text("Paquetes",
+                  style: TextStyle(
+                    fontSize: 23,
+                    
+                  )),
             ),
           ),
           body: Column(
             children: [
               Expanded(
-                child: ListView.builder(
+                child: Container(
+                  height: 150,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(10),
                     itemCount: 5,
-                    itemBuilder: (_, index) => const PaquetesInscripcion()),
+                    itemBuilder: (_, index) => PaquetesInscripcion(
+                      nomPaquete: 'Paquete',
+                      descPaquete: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                      button: ElevatedButton(
+                        onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BuyScreen()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.yellow,
+                        
+                      ),
+                      child: const Text('Inscribirse'),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           )),
@@ -34,53 +59,87 @@ class ShopScreen extends StatelessWidget {
   }
 }
 
-class PaquetesInscripcion extends StatefulWidget {
-  const PaquetesInscripcion({
+class DetallePaquete extends StatelessWidget {
+  final String nomPaquete;
+  final String descPaquete;
+  final ElevatedButton button;
+
+  const DetallePaquete({
     super.key,
+    required this.nomPaquete,
+    required this.descPaquete,
+    required this.button,
   });
 
   @override
-  State<PaquetesInscripcion> createState() => _PaquetesInscripcionState();
+  Widget build(BuildContext context) {
+    return Card.outlined(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              nomPaquete,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+            Expanded(
+              child: Text(
+                descPaquete,
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+            
+            Center(child: button,)
+          ],
+        ),
+      ),
+    );
+  }
 }
 
-class _PaquetesInscripcionState extends State<PaquetesInscripcion> {
+class PaquetesInscripcion extends StatelessWidget {
+  final String nomPaquete;
+  final String descPaquete;
+  final ElevatedButton button;
+
+  const PaquetesInscripcion(
+      {super.key,
+      required this.nomPaquete,
+      required this.descPaquete,
+      required this.button});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      //padding
-
-      child: Center(
-          child: Card.outlined(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 90, vertical: 10),
-          //padding
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Text(
-                'Paquete X',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+      margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+      child: SizedBox(
+        height: 225,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              child: DetallePaquete(
+                nomPaquete: nomPaquete,
+                descPaquete: descPaquete,
+                button: button,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BuyScreen()));
-                  // Handle the button press
-                },
-                child: const Text('Inscribirse'),
-              ),
-              // SizedBox(height: 8.0),
-              const Text(
-                '\$10',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      )),
+      ),
     );
   }
 }
