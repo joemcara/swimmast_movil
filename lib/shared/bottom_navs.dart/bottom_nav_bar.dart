@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class TrainerBtBar extends StatefulWidget {
   final Function currentIndex;
-  const TrainerBtBar({super.key, required this.currentIndex});
+  int selected = 0;
+  TrainerBtBar({super.key, required this.currentIndex, required this.selected});
 
   @override
   State<TrainerBtBar> createState() => _TrainerBtBarState();

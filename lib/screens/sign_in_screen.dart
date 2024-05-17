@@ -21,7 +21,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(top: statusBarHeight),
+          padding: EdgeInsets.only(top: statusBarHeight),
           height: size.height,
           color: const Color.fromRGBO(11, 34, 181, 1),
           child: Column(
@@ -104,13 +104,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainScreenMember()));
+                                          const MainScreenTrainee()));
                             } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainScreenTrainee()));
+                                          const MainScreenMember()));
                             }
                           },
                           style: ButtonStyle(
