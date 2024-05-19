@@ -8,7 +8,6 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> tabs = ["Paquetes", "Pago"];
 
     return DefaultTabController(
       length: 2,

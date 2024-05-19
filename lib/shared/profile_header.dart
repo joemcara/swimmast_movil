@@ -20,7 +20,7 @@ class ProfileHeader extends StatelessWidget {
         ),
         Container(
             decoration: const BoxDecoration(
-                color: system_blue,
+                color: swimmastBlue,
                 borderRadius:
                     BorderRadius.only(bottomLeft: Radius.circular(150))),
             height: 120,

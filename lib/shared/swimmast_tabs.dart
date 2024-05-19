@@ -8,7 +8,7 @@ class SwimmastTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(border: Border.all(color: system_blue)),
+      decoration: BoxDecoration(border: Border.all(color: swimmastBlue)),
       child: TabBar(
         tabAlignment: TabAlignment.fill,
         enableFeedback: false,
@@ -16,7 +16,7 @@ class SwimmastTabs extends StatelessWidget {
         unselectedLabelColor: Colors.black,
         indicatorSize: TabBarIndicatorSize.tab,
         indicator: BoxDecoration(
-          color: system_blue,
+          color: swimmastBlue,
           borderRadius: BorderRadius.circular(0),
         ),
         tabs: tabNames

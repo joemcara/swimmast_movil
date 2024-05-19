@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/screens/memberScreens/packages_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/custom_date_dropdown.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
+import 'package:swimmast_movil/widgets/swimmast_card.dart';
+import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -41,22 +44,89 @@ class _HistoryScrenState extends State<HistoryScreen> {
                     });
                   },
                 ),
-                _schedule(sessions: [
-                  {"name": "500 Freestyle", "time": "5:09"}
+                const Schedule(sessions: [
+                  {"name": "500 Freestyle", "time": "5:09"},
+                  {"name": "500 Freestyle", "time": "5:09"},
+                  {"name": "500 Freestyle", "time": "5:09"},
                 ])
               ],
             ),
-            Container(
-              width: 20,
+            Column(
+              children: [
+                CustomTextButton(
+                    text: "Paquetes inscritos",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PackageScreen()));
+                    }),
+                const Session(),
+              ],
             )
           ])),
     );
   }
 }
 
-class _schedule extends StatelessWidget {
+class Session extends StatelessWidget {
+  const Session({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: Card.outlined(
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        child: ListView.builder(
+          itemCount: 2,
+          itemBuilder: (_, index) {
+            return const SwimmastCard(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(children: []),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Nombre de rutina 1",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SwimmastIconText(
+                        text: "Lunes",
+                        icon: Icon(Icons.calendar_month_outlined),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SwimmastIconText(
+                        text: "9:30 - 11:00",
+                        icon: Icon(Icons.watch_later_outlined),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    ));
+  }
+}
+
+class Schedule extends StatelessWidget {
   final List<Map<String, String>> sessions;
-  const _schedule({
+  const Schedule({
     super.key,
     required this.sessions,
   });
@@ -65,25 +135,36 @@ class _schedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(2),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(20)),
+            borderRadius: BorderRadius.circular(10)),
         child: ListView.builder(
             itemCount: sessions.length,
-            padding: const EdgeInsets.all(6),
-            itemBuilder: (_, index) => Container(
-                  padding: const EdgeInsets.all(0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ListTile(
-                    title: Text(sessions[index]["name"] ?? ""),
-                    subtitle: Text(sessions[index]["time"] ?? ""),
-                  ),
-                )),
+            itemBuilder: (_, index) => SwimmastCard(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      sessions[index]["name"] ?? "",
+                      // "500 Freestyle",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SwimmastIconText(
+                      text: sessions[index]["time"] ?? "",
+                      icon: const Icon(
+                        Icons.watch_later_outlined,
+                        size: 16,
+                      ),
+                    ),
+                  ],
+                ))),
       ),
     );
   }
