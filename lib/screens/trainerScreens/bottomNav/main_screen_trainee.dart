@@ -15,11 +15,12 @@ class MainScreenTrainee extends StatefulWidget {
 
 class MainScreenTraineeState extends State<MainScreenTrainee> {
   int index = 0;
-  TrainerBtBar? trainerBtBar;
+  SportBtBar? trainerBtBar;
+
   @override
   void initState() {
     super.initState();
-    trainerBtBar = TrainerBtBar(
+    trainerBtBar = SportBtBar(
       currentIndex: (index) {
         setState(() {
           this.index = index;
@@ -41,7 +42,7 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
                   onAvatarTap: () {
                     setState(() {
                       index = 4;
-                      trainerBtBar = TrainerBtBar(
+                      trainerBtBar = SportBtBar(
                         currentIndex: (index) {
                           setState(() {
                             this.index = index;

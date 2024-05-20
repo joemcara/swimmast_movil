@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
+
 
 class SwimmastCard extends StatelessWidget {
   final Color? color;

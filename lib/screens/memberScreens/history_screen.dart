@@ -19,7 +19,7 @@ class _HistoryScrenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const List<String> tabs = ["Horarios", "Sesiones"];
+    const List<String> tabs = ["Historial", "Sesiones"];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
