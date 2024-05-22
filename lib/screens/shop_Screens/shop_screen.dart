@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 
@@ -8,7 +9,7 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    const List<String> tabNames = ["  Paquetes \nDisponibles", "Comprados"];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -16,45 +17,42 @@ class ShopScreen extends StatelessWidget {
             automaticallyImplyLeading: false,
             bottom: const PreferredSize(
               preferredSize: Size(double.infinity, 10),
-              child: Text("Paquetes",
-                  style: TextStyle(
-                    fontSize: 23,
-                    
-                  )),
+              child: SwimmastTabs(
+                tabNames: tabNames
+                ),
             ),
           ),
-          body: Column(
+          body: TabBarView(
             children: [
-              Expanded(
-                child: Card.outlined(
-                  child: Container(
-                    height: 150,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(10),
-                      itemCount: 5,
-                      itemBuilder: (_, index) => PaquetesInscripcion(
-                        nomPaquete: 'Paquete',
-                        descPaquete: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                        button: ElevatedButton(
-                          onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const BuyScreen()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.yellow,
-                          
-                        ),
-                        child: const Text('Inscribirse'),
-                        ),
+              Card.outlined(
+                child: Container(
+                  height: 150,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(10),
+                    itemCount: 5,
+                    itemBuilder: (_, index) => PaquetesInscripcion(
+                      nomPaquete: 'Paquete',
+                      descPaquete: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                      button: ElevatedButton(
+                        onPressed: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BuyScreen()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.yellow,
+                        
+                      ),
+                      child: const Text('Inscribirse'),
                       ),
                     ),
                   ),
                 ),
               ),
+              const PurchasedScreen()
             ],
           )),
     );
@@ -145,3 +143,5 @@ class PaquetesInscripcion extends StatelessWidget {
     );
   }
 }
+
+
