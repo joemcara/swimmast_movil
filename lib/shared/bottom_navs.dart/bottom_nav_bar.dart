@@ -49,7 +49,7 @@ class _TrainerBtBarState extends State<TrainerBtBar> {
           label: 'notifications',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.group),
+          icon: Icon(Icons.person),
           label: 'group',
         )
       ],

@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
+import 'package:swimmast_movil/screens/trainerScreens/member_admin_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/shared/button.dart' as customText;
+import 'package:swimmast_movil/shared/buttonRectangle.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreenTrainer extends StatelessWidget {
+  const ProfileScreenTrainer({super.key});
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    const List<String> data = ["Curso: Entrenamientos", "Cursos a cargo: 4"];
-
-    const List<String> contactInfo = [
-      "Número de teléfono: 0995555412",
-      "Dirección: Av. 9 de Octubre y Chimborazo",
+    const List<String> data = [
+      "Número de teléfono: 1234567890",
+      "Dirección: Av.9 de octubre y Chimborazo "
     ];
+
+    const List<String> courses = ["Curso: Entrenamientos", "Cursos a cargo: 4"];
 
     return Scaffold(
       body: Container(
@@ -28,70 +32,53 @@ class ProfileScreen extends StatelessWidget {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: "Luis García",
+                      username: "Evelyn Smith",
                       onTap: () {},
                     ),
                   ),
                 ),
                 const Text(
-                  "Luis García",
+                  "Evelyn Smith",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                CustomTextButton(
-                  text: "Editar perfil",
-                  onPressed: () {},
-                  text_color: swimmastBlue,
-                ),
+                customText.CustomTextButton(
+                    text: "Editar Perfil", onPressed: () {}),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      _infoBox("Información general", data),
+                      _infoBox("Información general", courses),
                       const SizedBox(
                         height: 32,
                       ),
-                      _infoBox("Información de Contacto", contactInfo),
+                      _infoBox("Información de Contacto", data),
                     ],
                   ),
                 ),
+                const SizedBox(height: 40),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 48,
                   decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: swimmastBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100))),
-                            padding: const EdgeInsets.all(6),
-                            child: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Text(
-                            "Cambiar contraseña",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.keyboard_arrow_right_outlined,
-                      )
-                    ],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+                  width: 380,
+                  child: CustomButtonRectangle(
+                    text: "Manejar Miembros",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Memberadmin()));
+                    },
+                    icon: const Icon(
+                      Icons.lock,
+                      color: Colors.white,
+                    ),
                   ),
+                ),
+                const SizedBox(
+                  height: 35,
                 ),
                 CustomButton(
                     text: "Cerrar sesión",

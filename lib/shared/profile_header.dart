@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeader extends StatelessWidget {

@@ -13,9 +13,7 @@ class AttendanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onPressed() {
-      print("olap");
-    }
+    void onPressed() {}
 
     return Scaffold(
         body: Column(children: [
@@ -23,13 +21,13 @@ class AttendanceScreen extends StatelessWidget {
         height: 20,
       ),
       Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(color: Colors.grey),
               right: BorderSide(color: Colors.grey),
               left: BorderSide(color: Colors.grey),
             ),
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         child: Column(
           children: [
@@ -111,7 +109,7 @@ class ContainerList extends StatelessWidget {
     "Evelyn Smith",
     "Emily Atkison",
     "Olver Wilson",
-    "Ricardo Navas",
+    "Isaías Nolivos",
     "María Peralta"
   ];
 
@@ -154,7 +152,7 @@ class ContainerList extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
-        children: generateContainers(5), // Generamos 5 contenedores
+        children: generateContainers(5),
       ),
     );
   }
@@ -178,7 +176,12 @@ class _CheckboxState extends State<CheckboxYes> {
         shape: CircleBorder(),
         onChanged: (bool? value) {
           setState(() {
-            _isChecked = value ?? false;
+            if (_isChecked2 == false) {
+              _isChecked = true;
+            } else {
+              _isChecked2 = false;
+              _isChecked = true;
+            }
           });
         },
       ),
@@ -188,7 +191,12 @@ class _CheckboxState extends State<CheckboxYes> {
         shape: CircleBorder(),
         onChanged: (bool? value) {
           setState(() {
-            _isChecked2 = value ?? false;
+            if (_isChecked == false) {
+              _isChecked2 = true;
+            } else {
+              _isChecked = false;
+              _isChecked2 = true;
+            }
           });
         },
       ),
