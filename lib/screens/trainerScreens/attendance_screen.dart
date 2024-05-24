@@ -47,7 +47,7 @@ class AttendanceScreen extends StatelessWidget {
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(
                   children: [
@@ -58,7 +58,7 @@ class AttendanceScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(width: 100),
+                // const SizedBox(width: 70),
                 Row(
                   children: [
                     const Icon(Icons.schedule),
@@ -69,11 +69,11 @@ class AttendanceScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Miembros", style: TextStyle(fontSize: 17)),
-                const SizedBox(width: 50),
-                Text("Total: " + '${members}',
+                // const Text("Miembros", style: TextStyle(fontSize: 17)),
+                // const SizedBox(width: 50),
+                Text("Miembros: " + '${members}',
                     style: const TextStyle(fontSize: 17)),
                 const SizedBox(width: 50),
                 const Icon(
