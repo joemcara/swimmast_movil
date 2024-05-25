@@ -14,11 +14,11 @@ class MainScreenMember extends StatefulWidget {
 
 class _MainScreenMemberState extends State<MainScreenMember> {
   int index = 0;
-  MemberBtBar? trainerBtBar;
+  MemberBtBar? memberBtBar;
   @override
   void initState() {
     super.initState();
-    trainerBtBar = MemberBtBar(
+    memberBtBar = MemberBtBar(
       currentIndex: (index) {
         setState(() {
           this.index = index;
@@ -31,7 +31,7 @@ class _MainScreenMemberState extends State<MainScreenMember> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: trainerBtBar,
+      bottomNavigationBar: memberBtBar,
       appBar: index != 4
           ? AppBar(
               actions: [
@@ -40,7 +40,7 @@ class _MainScreenMemberState extends State<MainScreenMember> {
                   onAvatarTap: () {
                     setState(() {
                       index = 4;
-                      trainerBtBar = MemberBtBar(
+                      memberBtBar = MemberBtBar(
                         currentIndex: (index) {
                           setState(() {
                             this.index = index;

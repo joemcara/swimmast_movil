@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
+import 'package:swimmast_movil/screens/sportPerson/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
@@ -13,7 +14,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  var member = true;
+  var member = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(top: statusBarHeight),
+          padding: EdgeInsets.only(top: statusBarHeight),
           height: size.height,
           color: const Color.fromRGBO(11, 34, 181, 1),
           child: Column(
@@ -104,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainScreenMember()));
+                                          const MainScreenTrainee()));
                             } else {
                               Navigator.push(
                                   context,

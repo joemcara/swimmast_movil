@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/find_locale.dart';
-import 'package:swimmast_movil/screens/memberScreens/shop_Screens/shop_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/shop_screen.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 
@@ -8,7 +9,7 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    const List<String> tabNames = ["  Paquetes \nDisponibles", "Comprados"];
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -16,16 +17,14 @@ class ShopScreen extends StatelessWidget {
             automaticallyImplyLeading: false,
             bottom: const PreferredSize(
               preferredSize: Size(double.infinity, 10),
-              child: Text("Paquetes",
-                  style: TextStyle(
-                    fontSize: 23,
-                    
-                  )),
+              child: SwimmastTabs(
+                tabNames: tabNames
+                ),
             ),
           ),
-          body: Column(
+          body: TabBarView(
             children: [
-              Expanded(
+              Card.outlined(
                 child: Container(
                   height: 150,
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -53,6 +52,7 @@ class ShopScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const PurchasedScreen()
             ],
           )),
     );
@@ -143,3 +143,5 @@ class PaquetesInscripcion extends StatelessWidget {
     );
   }
 }
+
+
