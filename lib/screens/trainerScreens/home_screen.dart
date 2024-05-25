@@ -1,13 +1,16 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
+import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
+import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-  final String clases = "Lunes y Miércoles";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,47 +23,79 @@ class HomeScreen extends StatelessWidget {
             children: [
               Text(
                 "Horarios asignados",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: styleTitles,
               )
             ],
           ),
           const SizedBox(height: 15),
-
-          //contenedor uno
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            width: 330,
-            height: 200,
-            child: Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                child: Text(
-                  clases,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w500),
-                )),
-          ),
-
-          SizedBox(height: 10),
-          //contenedor dos
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            width: 330,
-            height: 200,
-            child: Container(
-                padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
-                child: Text(
-                  clases,
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.w500),
-                )),
-          ),
+          Flexible(
+            child: classesCard(),
+          )
         ],
       ),
     );
   }
 }
 
-List<String> horariosAsignados() {
-  List<String> horarios = ["09:00", "10:00"];
-  return horarios;
+class classesCard extends StatelessWidget {
+  List<Widget> generateContainers(int count, BuildContext context) {
+    List<Widget> containers = [];
+    for (int i = 0; i < count; i++) {
+      containers.add(Container(
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromARGB(255, 226, 219, 219)),
+            color: Colors.white),
+        width: 330,
+        height: 200,
+        child: Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Lunes y Miércoles",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 211, 202, 202)
+                              .withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 4,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    width: 60,
+                    child: const Text(
+                      "9:30",
+                      style: styleSubtitles,
+                    ),
+                  ),
+                  onTap: () => {},
+                ),
+              ],
+            )),
+      ));
+    }
+    return containers;
+  }
+
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Builder(builder: (BuildContext context) {
+        return Column(children: generateContainers(3, context));
+      }),
+    );
+  }
 }
