@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/screens/edit_profile.dart';
 import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/member_admin_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
@@ -38,11 +39,18 @@ class ProfileScreenTrainer extends StatelessWidget {
                   ),
                 ),
                 const Text(
-                  "Evelyn Smith",
+                  "Luis García",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 customText.CustomTextButton(
-                    text: "Editar Perfil", onPressed: () {}),
+                    text: "Editar Perfil",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfile(),
+                          ));
+                    }),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(

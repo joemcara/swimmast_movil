@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 
 class SportBtBar extends StatefulWidget {
   final Function currentIndex;
-  const SportBtBar({super.key, required this.currentIndex, required int selected});
+  int selected = 0;
+  SportBtBar({super.key, required this.currentIndex, required this.selected});
 
   @override
-  State<SportBtBar> createState() => _SportBtBarState();
+  State<SportBtBar> createState() => SportBtBarState();
 }
 
-class _SportBtBarState extends State<SportBtBar> {
+class SportBtBarState extends State<SportBtBar> {
   int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: selectedIndex,
+      currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
-          selectedIndex = index;
+          widget.selected = index;
           widget.currentIndex(index);
         });
       },
@@ -117,7 +119,8 @@ class _MemberBtBarState extends State<MemberBtBar> {
 class SportPerBtBar extends StatefulWidget {
   final Function currentIndex;
   int selected = 0;
-  SportPerBtBar({super.key, required this.currentIndex, required this.selected});
+  SportPerBtBar(
+      {super.key, required this.currentIndex, required this.selected});
 
   @override
   State<SportPerBtBar> createState() => _SportPerBtBarState();
@@ -130,7 +133,6 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
       currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
-          // selectedIndex = index;
           widget.selected = index;
           widget.currentIndex(index);
         });

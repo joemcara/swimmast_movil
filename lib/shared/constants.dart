@@ -12,3 +12,4 @@ const TextStyle styleSubtitles =
 const TextStyle styleTitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 int global = 3;
+var attendanceStateModal = false;

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    MainScreenTraineeState parentState =
+        context.findAncestorStateOfType<MainScreenTraineeState>()!;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
       alignment: Alignment.topLeft,
@@ -29,7 +26,9 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           Flexible(
-            child: classesCard(),
+            child: classesCard(
+              state: parentState,
+            ),
           )
         ],
       ),
@@ -38,6 +37,10 @@ class HomeScreen extends StatelessWidget {
 }
 
 class classesCard extends StatelessWidget {
+  MainScreenTraineeState state;
+
+  classesCard({super.key, required this.state});
+
   List<Widget> generateContainers(int count, BuildContext context) {
     List<Widget> containers = [];
     for (int i = 0; i < count; i++) {
@@ -78,11 +81,13 @@ class classesCard extends StatelessWidget {
                     width: 60,
                     child: const Text(
                       "9:30",
-                      style: styleSubtitles,
                     ),
                   ),
-                  onTap: () => {},
-                ),
+                  onTap: () {
+                    attendanceStateModal = true;
+                    state.changeSelected();
+                  },
+                )
               ],
             )),
       ));

@@ -25,12 +25,12 @@ class Memberadmin extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     )),
-                ProfileHeader(username: "Luis")
+                const ProfileHeader(username: "Luis")
               ]),
           const SizedBox(height: 10),
-          Container(
+          const SizedBox(
             width: 360,
-            child: const TextField(
+            child: TextField(
                 decoration: InputDecoration(
                     suffixIcon: Icon(
                       Icons.search,
