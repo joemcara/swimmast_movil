@@ -37,12 +37,17 @@ class ProfileHeaderTrainee extends StatelessWidget {
                         color: Colors.white),
                   ),
                   Spacer(),
-                  const Stack(children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      minRadius: 40,
+                  Stack(children: [
+                    GestureDetector(
+                      onTap: () {
+                        if (onAvatarTap != null) onAvatarTap!();
+                      },
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.white,
+                        minRadius: 40,
+                      ),
                     ),
-                    Positioned(
+                    const Positioned(
                       right: -2,
                       child: Icon(
                         Icons.brightness_1,

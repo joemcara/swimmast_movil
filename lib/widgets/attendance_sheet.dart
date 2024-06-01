@@ -110,7 +110,7 @@ class ContainerList extends StatelessWidget {
     "Ricardo Navas"
   ];
 
-  List<Widget> generateContainers(int count) {
+  List<Widget> generateContainers(int count, BuildContext context) {
     List<Widget> containers = [];
     for (int i = 0; i < count; i++) {
       containers.add(
@@ -141,7 +141,47 @@ class ContainerList extends StatelessWidget {
             )),
       );
     }
-    containers.add(CustomButton(text: "Guardar Asistencia", onPressed: () {}));
+    containers.add(CustomButton(
+        text: "Guardar Asistencia",
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                surfaceTintColor: Colors.white,
+                content: Container(
+                  padding: const EdgeInsets.all(10),
+                  height: 125,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.info_rounded,
+                        color: Colors.green,
+                        size: 50,
+                      ),
+                      SizedBox(height: 5),
+                      Text('Se ha registrado la asistencia',
+                          style: TextStyle(fontSize: 18))
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      'Aceptar',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            },
+          );
+        }));
     return containers;
   }
 
@@ -150,7 +190,7 @@ class ContainerList extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
-        children: generateContainers(6),
+        children: generateContainers(6, context),
       ),
     );
   }

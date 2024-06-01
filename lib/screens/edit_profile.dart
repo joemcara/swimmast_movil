@@ -1,11 +1,38 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart' as input;
 import 'package:swimmast_movil/shared/profile_header.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
+  EditProfile({Key? key}) : super(key: key);
+
+  @override
+  State<EditProfile> createState() => EditProfileState();
+}
+
+class EditProfileState extends State<EditProfile> {
+  File? image;
+
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      final imageTemp = File(image.path);
+
+      setState(() => this.image = imageTemp);
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
@@ -39,6 +66,7 @@ class EditProfile extends StatelessWidget {
                         child: CustomAvatar(
                           username: "Luis García",
                           onTap: () {},
+                          image: image,
                         ),
                       ),
                       const Text(
@@ -47,8 +75,11 @@ class EditProfile extends StatelessWidget {
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       customText.CustomTextButton(
-                          text: "Cambiar foto", onPressed: () {}),
-                      SizedBox(height: 30),
+                          text: "Cambiar foto",
+                          onPressed: () {
+                            pickImage();
+                          }),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),

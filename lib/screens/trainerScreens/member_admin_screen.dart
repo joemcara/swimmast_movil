@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';

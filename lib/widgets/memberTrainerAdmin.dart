@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/customableIcon.dart';
 
@@ -27,23 +25,23 @@ class MemberAdminState extends State<Membertraineradmin> {
             padding: EdgeInsets.all(5),
             child: Row(
               children: [
-                Text("500 FreeStyle"),
-                SizedBox(
+                const Text("500 FreeStyle"),
+                const SizedBox(
                   width: 170,
                 ),
                 Container(
-                    padding: EdgeInsets.all(3),
+                    padding: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border:
                           Border.all(color: Color.fromARGB(255, 245, 239, 239)),
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      borderRadius: const BorderRadius.all(Radius.circular(5)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 4,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
