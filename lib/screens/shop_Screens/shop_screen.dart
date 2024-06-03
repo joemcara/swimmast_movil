@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
 import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
-import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+  String loren = 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+                      
+  List<Map<String, String>> items = [
+    {'paquete': 'Paquete 1', 'descripcion': loren, 'price': '10'},
+    {'paquete': 'Paquete 2', 'descripcion': loren, 'price': '23'},
+    {'paquete': 'Paquete 3', 'descripcion': loren, 'price': '60'},
+    {'paquete': 'Paquete 4', 'descripcion': loren, 'price': '100'},
+  ];
+
     const List<String> tabNames = ["  Paquetes \nDisponibles", "Comprados"];
     return DefaultTabController(
       length: 2,
@@ -30,16 +38,21 @@ class ShopScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(10),
-                    itemCount: 5,
+                    itemCount: items.length,
                     itemBuilder: (_, index) => PaquetesInscripcion(
-                      nomPaquete: 'Paquete',
-                      descPaquete: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                      nomPaquete: items[index]['paquete']!,
+                      descPaquete: items[index]['descripcion']!,
+                      precio: items[index]['price']!,
                       button: ElevatedButton(
                         onPressed: (){
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const BuyScreen()));
+                                builder: (context) => 
+                                BuyScreen(
+                                  nomPaquete: items[index]['paquete']!,
+                                  precio: items[index]['price']!,
+                                  )));
                       },
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.black,
@@ -63,12 +76,14 @@ class DetallePaquete extends StatelessWidget {
   final String nomPaquete;
   final String descPaquete;
   final ElevatedButton button;
+  final String precio;
 
   const DetallePaquete({
     super.key,
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
+    required this.precio,
   });
 
   @override
@@ -81,7 +96,7 @@ class DetallePaquete extends StatelessWidget {
           children: [
             Text(
               nomPaquete,
-              maxLines: 5,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 18,
@@ -92,7 +107,7 @@ class DetallePaquete extends StatelessWidget {
             Expanded(
               child: Text(
                 descPaquete,
-                maxLines: 5,
+                maxLines: 7,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 15,
@@ -101,8 +116,14 @@ class DetallePaquete extends StatelessWidget {
               ),
             ),
             const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
-            
-            Center(child: button,)
+            //add a text widget
+            Text('Precio: \$$precio',
+             style: const TextStyle(
+              fontSize: 15, 
+              fontWeight: FontWeight.bold,
+               color: Colors.black)),
+
+            Center(child: button,),
           ],
         ),
       ),
@@ -114,19 +135,22 @@ class PaquetesInscripcion extends StatelessWidget {
   final String nomPaquete;
   final String descPaquete;
   final ElevatedButton button;
-
+  final String precio;
+  
   const PaquetesInscripcion(
       {super.key,
       required this.nomPaquete,
       required this.descPaquete,
-      required this.button});
+      required this.button,
+      required this.precio
+      });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
       child: SizedBox(
-        height: 225,
+        height: 250,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -135,6 +159,7 @@ class PaquetesInscripcion extends StatelessWidget {
                 nomPaquete: nomPaquete,
                 descPaquete: descPaquete,
                 button: button,
+                precio: precio,
               ),
             ),
           ],

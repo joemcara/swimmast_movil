@@ -127,6 +127,7 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      
       currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
