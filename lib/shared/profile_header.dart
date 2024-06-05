@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
+import 'package:get/get.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -37,9 +39,11 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class CustomAvatar extends StatelessWidget {
-  const CustomAvatar({super.key, required this.username, required this.onTap});
   final String username;
   final Function onTap;
+  File? image;
+  CustomAvatar(
+      {super.key, required this.username, required this.onTap, this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +66,20 @@ class CustomAvatar extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(1000))),
                   child: CircleAvatar(
-                    child: Text(
-                      username[0],
-                      style: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.w600),
-                    ),
-                  ),
+                      child: image != null
+                          ? ClipOval(
+                              child: Image.file(
+                                image!,
+                                fit: BoxFit.cover,
+                                height: 120,
+                                width: 120,
+                              ),
+                            )
+                          : Text(
+                              username[0],
+                              style: const TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w600),
+                            )),
                 ),
               ),
               const Positioned(

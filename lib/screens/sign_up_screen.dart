@@ -34,8 +34,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: TextStyle(fontSize: 20),
                 ),
                 const TextInput(
-                  hintText: "Nombres y Apellidos",
-                  label: "Nombres y Apellidos",
+                  hintText: "Nombres",
+                  label: "Nombres",
+                ),
+                const TextInput(
+                  hintText: "Apellidos",
+                  label: "Apellidos",
                 ),
                 const TextInput(
                   hintText: "Teléfono",
