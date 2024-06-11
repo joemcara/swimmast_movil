@@ -80,112 +80,117 @@ class ListItemsState extends State<ListItems> {
                               color: Colors.white),
                         ),
                       ),
-                      content: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: borderColor)),
-                        height: 320,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                                padding: const EdgeInsets.all(19),
-                                child: const DropdownMenu(
-                                    width: 200,
-                                    hintText: "Seleccione estilo",
-                                    menuStyle: MenuStyle(
-                                        backgroundColor: WidgetStatePropertyAll(
-                                            Colors.white)),
-                                    inputDecorationTheme: InputDecorationTheme(
-                                        hoverColor: Colors.cyan),
-                                    dropdownMenuEntries: <DropdownMenuEntry<
-                                        String>>[
-                                      DropdownMenuEntry(
-                                          value: "500 Freestyle",
-                                          label: "500 Freestyle"),
-                                      DropdownMenuEntry(
-                                          value: "500 Kick", label: "500 Kick"),
-                                      DropdownMenuEntry(
-                                          value: "500 Freestyle",
-                                          label: "500 Freestyle"),
-                                      DropdownMenuEntry(
-                                          value: "500 Freestyle",
-                                          label: "500 Freestyle")
-                                    ])),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                  child: (const Text("Seleccionar tiempo")),
-                                ),
-                                Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                  child: Container(
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: borderColor)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 50,
-                                            height: 250,
-                                            child: SpinBox(
-                                              incrementIcon: const Icon(
-                                                  Icons.keyboard_arrow_up),
-                                              decrementIcon: const Icon(
-                                                  Icons.keyboard_arrow_down),
-                                              textStyle:
-                                                  const TextStyle(fontSize: 12),
-                                              direction: Axis.vertical,
-                                              spacing: 5,
-                                              min: 1,
-                                              max: 100,
-                                              value: 10,
-                                              onChanged: (value) =>
-                                                  print(value),
+                      content: SingleChildScrollView(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: borderColor)),
+                          height: 320,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.all(19),
+                                  child: const DropdownMenu(
+                                      width: 200,
+                                      hintText: "Seleccione estilo",
+                                      menuStyle: MenuStyle(
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(
+                                                  Colors.white)),
+                                      inputDecorationTheme:
+                                          InputDecorationTheme(
+                                              hoverColor: Colors.cyan),
+                                      dropdownMenuEntries: <DropdownMenuEntry<
+                                          String>>[
+                                        DropdownMenuEntry(
+                                            value: "500 Freestyle",
+                                            label: "500 Freestyle"),
+                                        DropdownMenuEntry(
+                                            value: "500 Kick",
+                                            label: "500 Kick"),
+                                        DropdownMenuEntry(
+                                            value: "500 Freestyle",
+                                            label: "500 Freestyle"),
+                                        DropdownMenuEntry(
+                                            value: "500 Freestyle",
+                                            label: "500 Freestyle")
+                                      ])),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                    child: (const Text("Seleccionar tiempo")),
+                                  ),
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: Container(
+                                        height: 180,
+                                        decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: borderColor)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 50,
+                                              height: 250,
+                                              child: SpinBox(
+                                                incrementIcon: const Icon(
+                                                    Icons.keyboard_arrow_up),
+                                                decrementIcon: const Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                textStyle: const TextStyle(
+                                                    fontSize: 12),
+                                                direction: Axis.vertical,
+                                                spacing: 5,
+                                                min: 1,
+                                                max: 100,
+                                                value: 10,
+                                                onChanged: (value) =>
+                                                    print(value),
+                                              ),
                                             ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(10),
-                                            child: const Text(":"),
-                                          ),
-                                          SizedBox(
-                                            width: 50,
-                                            height: 250,
-                                            child: SpinBox(
-                                              incrementIcon: const Icon(
-                                                  Icons.keyboard_arrow_up),
-                                              decrementIcon: const Icon(
-                                                  Icons.keyboard_arrow_down),
-                                              textStyle:
-                                                  const TextStyle(fontSize: 12),
-                                              direction: Axis.vertical,
-                                              spacing: 5,
-                                              min: 1,
-                                              max: 100,
-                                              value: 10,
-                                              onChanged: (value) =>
-                                                  print(value),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: const Text(":"),
                                             ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(10),
-                                            child: const Text("min"),
-                                          ),
-                                        ],
-                                      )),
-                                )
-                              ],
-                            ),
-                          ],
+                                            SizedBox(
+                                              width: 50,
+                                              height: 250,
+                                              child: SpinBox(
+                                                incrementIcon: const Icon(
+                                                    Icons.keyboard_arrow_up),
+                                                decrementIcon: const Icon(
+                                                    Icons.keyboard_arrow_down),
+                                                textStyle: const TextStyle(
+                                                    fontSize: 12),
+                                                direction: Axis.vertical,
+                                                spacing: 5,
+                                                min: 1,
+                                                max: 60,
+                                                value: 10,
+                                                onChanged: (value) =>
+                                                    print(value),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: const Text("seg"),
+                                            ),
+                                          ],
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       actions: <Widget>[
@@ -194,7 +199,7 @@ class ListItemsState extends State<ListItems> {
                           children: [
                             TextButton(
                               child: const Text(
-                                'Aceptar',
+                                'Cancelar',
                                 style: TextStyle(fontSize: 15),
                               ),
                               onPressed: () {
@@ -203,7 +208,7 @@ class ListItemsState extends State<ListItems> {
                             ),
                             TextButton(
                               child: const Text(
-                                'Cancelar',
+                                'Aceptar',
                                 style: TextStyle(fontSize: 15),
                               ),
                               onPressed: () {
