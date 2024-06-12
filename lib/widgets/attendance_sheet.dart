@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -141,47 +142,53 @@ class ContainerList extends StatelessWidget {
             )),
       );
     }
-    containers.add(CustomButton(
-        text: "Guardar Asistencia",
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                surfaceTintColor: Colors.white,
-                content: Container(
-                  padding: const EdgeInsets.all(10),
-                  height: 125,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.info_rounded,
-                        color: Colors.green,
-                        size: 50,
-                      ),
-                      SizedBox(height: 5),
-                      Text('Se ha registrado la asistencia',
-                          style: TextStyle(fontSize: 18))
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text(
-                      'Aceptar',
-                      style: TextStyle(fontSize: 15),
+    containers.add(Container(
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
+      child: CustomButton(
+          text: "Guardar Asistencia",
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  surfaceTintColor: Colors.white,
+                  content: Container(
+                    padding: const EdgeInsets.all(10),
+                    height: MediaQuery.of(context).size.height / 7.5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(
+                          Icons.info_rounded,
+                          color: Colors.green,
+                          size: 50,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          child: const Text('Se ha registrado la asistencia',
+                              style: TextStyle(fontSize: 16)),
+                        )
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              );
-            },
-          );
-        }));
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text(
+                        'Aceptar',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }),
+    ));
+
     return containers;
   }
 
