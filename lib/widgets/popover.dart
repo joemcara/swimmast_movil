@@ -95,7 +95,7 @@ class ListItemsState extends State<ListItems> {
                                       hintText: "Seleccione estilo",
                                       menuStyle: MenuStyle(
                                           backgroundColor:
-                                              WidgetStatePropertyAll(
+                                              MaterialStatePropertyAll(
                                                   Colors.white)),
                                       inputDecorationTheme:
                                           InputDecorationTheme(

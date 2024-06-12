@@ -90,7 +90,7 @@ class WorkoutScreen extends StatelessWidget {
                                         hintText: "Seleccione estilo",
                                         menuStyle: MenuStyle(
                                             backgroundColor:
-                                                WidgetStatePropertyAll(
+                                                MaterialStatePropertyAll(
                                                     Colors.white)),
                                         inputDecorationTheme:
                                             InputDecorationTheme(
