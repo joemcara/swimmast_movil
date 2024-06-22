@@ -105,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainScreenMember()));
+                                          const MainScreenTrainee()));
                             } else {
                               Navigator.push(
                                   context,
