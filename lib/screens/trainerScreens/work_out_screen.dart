@@ -3,7 +3,6 @@ import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/inputs.dart';
 
 class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});

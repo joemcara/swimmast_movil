@@ -17,9 +17,9 @@ class Memberadmin extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(20, 40, 0, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 40, 0, 20),
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -100,6 +100,7 @@ class MemberAdminCardsState extends State<MemberAdminCards> {
     return containers;
   }
 
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,

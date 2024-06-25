@@ -45,14 +45,14 @@ class classesCard extends StatelessWidget {
     List<Widget> containers = [];
     for (int i = 0; i < count; i++) {
       containers.add(Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
             border: Border.all(color: const Color.fromARGB(255, 226, 219, 219)),
             color: Colors.white),
         width: 330,
         height: 200,
         child: Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -67,14 +67,14 @@ class classesCard extends StatelessWidget {
                     margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromARGB(255, 211, 202, 202)
+                          color: const Color.fromARGB(255, 211, 202, 202)
                               .withOpacity(0.5),
                           spreadRadius: 1,
                           blurRadius: 4,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -95,6 +95,7 @@ class classesCard extends StatelessWidget {
     return containers;
   }
 
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/edit_profile.dart';
-import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainerScreens/member_admin_screen.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/buttonRectangle.dart';
-import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';
 
 class ProfileScreenTrainer extends StatelessWidget {
@@ -48,7 +45,7 @@ class ProfileScreenTrainer extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditProfile(),
+                            builder: (context) => const EditProfile(),
                           ));
                     }),
                 Container(
@@ -77,7 +74,7 @@ class ProfileScreenTrainer extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Memberadmin()));
+                              builder: (context) => const Memberadmin()));
                     },
                     icon: const Icon(
                       Icons.lock,

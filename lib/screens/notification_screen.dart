@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
 import 'package:swimmast_movil/widgets/widget_notification.dart';
 
 class NotificationScreen extends StatefulWidget {

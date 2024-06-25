@@ -10,7 +10,7 @@ import 'package:swimmast_movil/shared/inputs.dart' as input;
 import 'package:swimmast_movil/shared/profile_header.dart';
 
 class EditProfile extends StatefulWidget {
-  EditProfile({Key? key}) : super(key: key);
+  const EditProfile({super.key});
 
   @override
   State<EditProfile> createState() => EditProfileState();
@@ -47,17 +47,17 @@ class EditProfileState extends State<EditProfile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
                     SizedBox(width: (MediaQuery.of(context).size.width) / 3.7),
-                    Text("Editar perfil", style: styleTitles),
+                    const Text("Editar perfil", style: styleTitles),
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: [
                       SizedBox(

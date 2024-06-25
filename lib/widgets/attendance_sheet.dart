@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart';
 
 class AttendanceSheet extends StatelessWidget {
@@ -16,7 +12,7 @@ class AttendanceSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     void onPressed() {}
 
-    return Container(
+    return SizedBox(
         height: 800,
         child: Column(children: [
           const SizedBox(
@@ -71,7 +67,7 @@ class AttendanceSheet extends StatelessWidget {
                   children: [
                     // const Text("Miembros", style: TextStyle(fontSize: 17)),
                     // const SizedBox(width: 50),
-                    Text("Miembros: " + '${members}',
+                    Text("Miembros: $members",
                         style: const TextStyle(fontSize: 17)),
                     const SizedBox(width: 50),
                     const Icon(
@@ -111,13 +107,15 @@ class ContainerList extends StatelessWidget {
     "Ricardo Navas"
   ];
 
+  ContainerList({super.key});
+
   List<Widget> generateContainers(int count, BuildContext context) {
     List<Widget> containers = [];
     for (int i = 0; i < count; i++) {
       containers.add(
         Container(
-            margin: EdgeInsets.all(10),
-            padding: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(20),
             width: 350,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
@@ -137,13 +135,13 @@ class ContainerList extends StatelessWidget {
                     const Text("12 años"),
                   ],
                 ),
-                CheckboxYes()
+                const CheckboxYes()
               ],
             )),
       );
     }
     containers.add(Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
       child: CustomButton(
           text: "Guardar Asistencia",
           onPressed: () {
@@ -204,6 +202,8 @@ class ContainerList extends StatelessWidget {
 }
 
 class CheckboxYes extends StatefulWidget {
+  const CheckboxYes({super.key});
+
   @override
   _CheckboxState createState() => _CheckboxState();
 }
@@ -218,7 +218,7 @@ class _CheckboxState extends State<CheckboxYes> {
       Checkbox(
         value: _isChecked,
         activeColor: Colors.green,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         onChanged: (bool? value) {
           setState(() {
             if (_isChecked2 == false) {
@@ -233,7 +233,7 @@ class _CheckboxState extends State<CheckboxYes> {
       Checkbox(
         value: _isChecked2,
         activeColor: Colors.red,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         onChanged: (bool? value) {
           setState(() {
             if (_isChecked == false) {

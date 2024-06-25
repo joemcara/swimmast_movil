@@ -80,7 +80,7 @@ class _PackageScreenState extends State<PackageScreen> {
           const SizedBox(
             width: 10,
           ),
-          Text("Paquete X . Lunes ${8}:30 - 11:00 am")
+          const Text("Paquete X . Lunes ${8}:30 - 11:00 am")
         ],
       ),
     );

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
 
 class HomeScreenMember extends StatelessWidget {
   const HomeScreenMember({super.key});

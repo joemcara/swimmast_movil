@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeaderTrainee extends StatelessWidget {
@@ -26,17 +25,17 @@ class ProfileHeaderTrainee extends StatelessWidget {
             height: 120,
             padding: const EdgeInsets.fromLTRB(35, 5, 5, 35),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(5, 20, 5, 0),
+              padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
               child: Row(
                 children: [
                   Text(
-                    "Hola, " + (username),
+                    "Hola, $username",
                     style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
                         color: Colors.white),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Stack(children: [
                     GestureDetector(
                       onTap: () {

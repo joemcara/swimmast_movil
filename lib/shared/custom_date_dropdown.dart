@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomDatePicker extends StatefulWidget {
@@ -61,9 +60,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.calendar_month),
+          const Icon(Icons.calendar_month),
           Text(_formatDate(_date)),
-          Icon(Icons.keyboard_arrow_down_outlined)
+          const Icon(Icons.keyboard_arrow_down_outlined)
         ],
       ),
     );

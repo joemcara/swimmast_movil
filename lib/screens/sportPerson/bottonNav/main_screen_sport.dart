@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';
 import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
 

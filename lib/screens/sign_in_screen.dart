@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
-import 'package:swimmast_movil/screens/sportPerson/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
@@ -27,31 +27,33 @@ class _SignInScreenState extends State<SignInScreen> {
           color: const Color.fromRGBO(11, 34, 181, 1),
           child: Column(
             children: [
-              SizedBox(
-                height: size.height * .45,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        "lib/assets/swim.png",
-                        height: size.height * .40,
-                        fit: BoxFit.cover,
+              Expanded(
+                child: SizedBox(
+                  height: size.height * .45,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Image.asset(
+                          "lib/assets/swim.png",
+                          height: size.height * .40,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        "lib/assets/swimmast_logo.png",
-                        height: 100,
-                        width: 100,
-                      ),
-                    )
-                  ],
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Image.asset(
+                          "lib/assets/swimmast_logo.png",
+                          height: 100,
+                          width: 100,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Padding(

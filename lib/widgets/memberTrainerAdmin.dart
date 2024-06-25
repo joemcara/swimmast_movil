@@ -22,7 +22,7 @@ class MemberAdminState extends State<Membertraineradmin> {
     for (int i = 0; i < count; i++) {
       containers.add(
         Container(
-            padding: EdgeInsets.all(5),
+            padding: const EdgeInsets.all(5),
             child: Row(
               children: [
                 const Text("500 FreeStyle"),
@@ -34,7 +34,7 @@ class MemberAdminState extends State<Membertraineradmin> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border:
-                          Border.all(color: Color.fromARGB(255, 245, 239, 239)),
+                          Border.all(color: const Color.fromARGB(255, 245, 239, 239)),
                       borderRadius: const BorderRadius.all(Radius.circular(5)),
                       boxShadow: [
                         BoxShadow(
@@ -65,6 +65,7 @@ class MemberAdminState extends State<Membertraineradmin> {
     return bestTimes;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(

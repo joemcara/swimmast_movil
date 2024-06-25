@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';

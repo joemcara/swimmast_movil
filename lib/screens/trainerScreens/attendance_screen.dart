@@ -30,15 +30,15 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         context: contextParent,
         isScrollControlled: true,
         builder: (context) {
-          return AttendanceSheet();
+          return const AttendanceSheet();
         });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -46,10 +46,10 @@ class AttendanceScreenState extends State<AttendanceScreen> {
               "Grupos de clases",
               style: styleTitles,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             GestureDetector(
                 child: Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   width: 350,
                   height: 150,
                   decoration: BoxDecoration(
