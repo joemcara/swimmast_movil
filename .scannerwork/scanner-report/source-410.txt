@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/shared/inputs.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  bool _checkboxValue = false;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Wrap(
+              runSpacing: 15.0,
+              alignment: WrapAlignment.center,
+              children: [
+                Center(
+                  child: Image.asset(
+                    'lib/assets/swimmast_logo.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                const Text(
+                  "Creación de cuenta",
+                  style: TextStyle(fontSize: 20),
+                ),
+                const TextInput(
+                  hintText: "Nombres",
+                  label: "Nombres",
+                ),
+                const TextInput(
+                  hintText: "Apellidos",
+                  label: "Apellidos",
+                ),
+                const TextInput(
+                  hintText: "Teléfono",
+                  label: "Número de teléfono",
+                ),
+                const TextInput(
+                  hintText: "Correo electrónico",
+                  label: "Correo electrónico",
+                ),
+                const PasswordInput(
+                  hintText: "Contraseña",
+                  label: "Contraseña",
+                ),
+                const TextInput(
+                  hintText: "Dirección",
+                  label: "Dirección ",
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _checkboxValue = !_checkboxValue;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                          value: _checkboxValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _checkboxValue = value!;
+                            });
+                          }),
+                      const Text("Aceptar condiciones"),
+                    ],
+                  ),
+                ),
+                CustomButton(
+                    text: "Crear",
+                    onPressed: () {
+                      print("IMPRIMIENDO");
+                    })
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

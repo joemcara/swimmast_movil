@@ -7,7 +7,7 @@ class TextInput extends StatelessWidget {
   final bool? signIn;
   @override
   Widget build(BuildContext context) {
-    final inputDecoration = InputDecoration(
+    var inputDecoration = InputDecoration(
       hintText: hintText,
       hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
       border: InputBorder.none,
@@ -50,7 +50,7 @@ class _PasswordInputState extends State<PasswordInput> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    final inputDecoration = InputDecoration(
+    var inputDecoration = InputDecoration(
         hintText: widget.hintText,
         hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
         border: InputBorder.none,

@@ -12,7 +12,7 @@ class LoginInput extends StatelessWidget {
   final String placeholder;
   @override
   Widget build(BuildContext context) {
-    final inputDecoration = InputDecoration(
+    var inputDecoration = InputDecoration(
       hintText: placeholder,
       hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
       border: InputBorder.none,
