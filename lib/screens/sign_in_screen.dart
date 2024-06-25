@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
+import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const MainScreenTrainee()));
+                                          const MainScreenMember()));
                             } else {
                               Navigator.push(
                                   context,

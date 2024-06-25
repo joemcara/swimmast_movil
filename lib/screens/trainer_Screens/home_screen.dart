@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class HomeScreen extends StatelessWidget {

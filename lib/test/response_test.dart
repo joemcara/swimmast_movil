@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swimmast_movil/main.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
 import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/screens/shop_Screens/shop_screen.dart';
 

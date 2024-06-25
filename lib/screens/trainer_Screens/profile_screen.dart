@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/edit_profile.dart';
-import 'package:swimmast_movil/screens/trainerScreens/member_admin_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/member_admin_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
-import 'package:swimmast_movil/shared/buttonRectangle.dart';
+import 'package:swimmast_movil/shared/button_Rectangle.dart';
 import 'package:swimmast_movil/shared/profile_header.dart';
 
 class ProfileScreenTrainer extends StatelessWidget {
