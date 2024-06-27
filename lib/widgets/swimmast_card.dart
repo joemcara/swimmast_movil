@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
+
 
 class SwimmastCard extends StatelessWidget {
   final Color? color;
@@ -16,7 +15,7 @@ class SwimmastCard extends StatelessWidget {
     return Container(
         height: height ?? 80,
         // padding: const EdgeInsets.all(10),
-        margin: margin ?? EdgeInsets.symmetric(vertical: 8),
+        margin: margin ?? const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(10),

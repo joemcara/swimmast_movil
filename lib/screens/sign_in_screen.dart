@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/memberScreens/bottomNav/main_screen_member.dart';
+import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -13,7 +15,31 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  var member = true;
+  
+  
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  late Member member;
+
+  Future<void> _login() async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'login_user/',
+        data: {
+          'username': _userName.text,
+          'password': _password.text,
+        },
+      );
+
+      member = Member.fromJson(response.data);
+      setState(() {});
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,36 +47,38 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(top: statusBarHeight),
+          padding: EdgeInsets.only(top: statusBarHeight),
           height: size.height,
           color: const Color.fromRGBO(11, 34, 181, 1),
           child: Column(
             children: [
-              SizedBox(
-                height: size.height * .45,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        "lib/assets/swim.png",
-                        height: size.height * .40,
-                        fit: BoxFit.cover,
+              Expanded(
+                child: SizedBox(
+                  height: size.height * .45,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Image.asset(
+                          "lib/assets/swim.png",
+                          height: size.height * .40,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Image.asset(
-                        "lib/assets/swimmast_logo.png",
-                        height: 100,
-                        width: 100,
-                      ),
-                    )
-                  ],
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Image.asset(
+                          "lib/assets/swimmast_logo.png",
+                          height: 100,
+                          width: 100,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Padding(
@@ -62,13 +90,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: TextStyle(
                           fontSize: 30, color: Colors.white, letterSpacing: 2),
                     ),
-                    const Form(
+                    Form(
                         child: Column(
                       children: [
                         SizedBox(
                           height: 25,
                         ),
                         TextInput(
+                          controller: _userName,
                           hintText: "Ingrese su correo",
                           signIn: true,
                         ),
@@ -76,6 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           height: 25,
                         ),
                         PasswordInput(
+                          controller: _password,
                           hintText: "Contraseña",
                           signIn: true,
                         ),
@@ -99,7 +129,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 50,
                       child: FilledButton(
                           onPressed: () {
-                            if (member) {
+                            _login();
+                            if (member.user.role.name == "MIEMBRO") {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
