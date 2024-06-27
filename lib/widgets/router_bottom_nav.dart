@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:swimmast_movil/screens/memberScreens/history_screen.dart';
-import 'package:swimmast_movil/screens/memberScreens/home_screen.dart';
-import 'package:swimmast_movil/screens/memberScreens/profile_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
 import 'package:swimmast_movil/screens/shop_Screens/shop_screen.dart';
-import 'package:swimmast_movil/screens/sportPerson/history_screen_sport.dart';
-import 'package:swimmast_movil/screens/sportPerson/home_screen_sport.dart';
-import 'package:swimmast_movil/screens/trainerScreens/attendance_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/home_screen.dart';
 import 'package:swimmast_movil/screens/notification_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/profile_screen.dart';
-import 'package:swimmast_movil/screens/trainerScreens/work_out_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 
 class BottomRouteTrainee extends StatelessWidget {
   final int index;

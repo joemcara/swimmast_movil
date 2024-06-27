@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/customableIcon.dart';
+import 'package:swimmast_movil/shared/customable_Icon.dart';
 
 class Membertraineradmin extends StatefulWidget {
   const Membertraineradmin({super.key});

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -14,7 +15,31 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  var member = true;
+  
+  
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
+  late Member member;
+
+  Future<void> _login() async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'login_user/',
+        data: {
+          'username': _userName.text,
+          'password': _password.text,
+        },
+      );
+
+      member = Member.fromJson(response.data);
+      setState(() {});
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -65,13 +90,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       style: TextStyle(
                           fontSize: 30, color: Colors.white, letterSpacing: 2),
                     ),
-                    const Form(
+                    Form(
                         child: Column(
                       children: [
                         SizedBox(
                           height: 25,
                         ),
                         TextInput(
+                          controller: _userName,
                           hintText: "Ingrese su correo",
                           signIn: true,
                         ),
@@ -79,6 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           height: 25,
                         ),
                         PasswordInput(
+                          controller: _password,
                           hintText: "Contraseña",
                           signIn: true,
                         ),
@@ -102,7 +129,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       height: 50,
                       child: FilledButton(
                           onPressed: () {
-                            if (member) {
+                            _login();
+                            if (member.user.role.name == "MIEMBRO") {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

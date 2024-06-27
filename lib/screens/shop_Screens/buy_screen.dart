@@ -21,6 +21,9 @@ class BuyScreen extends StatefulWidget {
 class _BuyScreenState extends State<BuyScreen> {
   bool _isVisible = true;
   bool _photoVisible = false;
+  final TextEditingController _cantPay = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -229,9 +232,10 @@ class _BuyScreenState extends State<BuyScreen> {
                           const SizedBox(width: 30),
                           Visibility(
                             visible: _photoVisible,
-                            child: const SizedBox(
+                            child: SizedBox(
                               width: 100,
                               child: TextInput(
+                                controller: _cantPay,
                                 hintText: '\$0.00',
                               ),
                             ),

@@ -93,23 +93,24 @@ class EditProfileState extends State<EditProfile> {
                             runSpacing: 30.0,
                             alignment: WrapAlignment.center,
                             children: [
-                              input.TextInput(
-                                hintText: "Nombres y apellidos",
-                                label: "Nombres y apellidos",
-                              ),
-                              SizedBox(height: 10),
-                              input.TextInput(
-                                label: "Email",
-                                hintText: "Email",
-                              ),
-                              input.TextInput(
-                                hintText: "Número de Teléfono",
-                                label: "Número de Teléfono",
-                              ),
-                              input.TextInput(
-                                hintText: "Dirección",
-                                label: "Dirección",
-                              )
+                              // input.TextInput(
+                              //   controller: ,
+                              //   hintText: "Nombres y apellidos",
+                              //   label: "Nombres y apellidos",
+                              // ),
+                              // SizedBox(height: 10),
+                              // input.TextInput(
+                              //   label: "Email",
+                              //   hintText: "Email",
+                              // ),
+                              // input.TextInput(
+                              //   hintText: "Número de Teléfono",
+                              //   label: "Número de Teléfono",
+                              // ),
+                              // input.TextInput(
+                              //   hintText: "Dirección",
+                              //   label: "Dirección",
+                              // )
                             ],
                           ),
                         )))),

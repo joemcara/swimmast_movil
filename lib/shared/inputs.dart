@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class TextInput extends StatelessWidget {
-  const TextInput({super.key, required this.hintText, this.label, this.signIn});
+  const TextInput({super.key, required this.hintText, this.label, this.signIn, required this.controller});
   final String hintText;
   final String? label;
   final bool? signIn;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     var inputDecoration = InputDecoration(
@@ -23,6 +24,7 @@ class TextInput extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              controller: controller,
               style: const TextStyle(fontSize: 16, letterSpacing: 2),
               decoration: inputDecoration,
               enableSuggestions: true,
@@ -34,11 +36,13 @@ class TextInput extends StatelessWidget {
 }
 
 class PasswordInput extends StatefulWidget {
-  const PasswordInput(
-      {super.key, required this.hintText, this.label, this.signIn});
+  const PasswordInput({super.key, required this.hintText, this.label, this.signIn, required this.controller});
   final String hintText;
   final String? label;
   final bool? signIn;
+
+  final TextEditingController controller;
+
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -73,6 +77,7 @@ class _PasswordInputState extends State<PasswordInput> {
         child: Column(
           children: [
             TextField(
+              controller: widget.controller,
               style: const TextStyle(fontSize: 16, letterSpacing: 2),
               decoration: inputDecoration,
               obscureText: _obscureText,
