@@ -1,13 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen(BuildContext context, {super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
+    Future _logout() async {
+      try{
+        await Dio().post(
+          urlBack + 'logout_user/',
+          options: Options(
+            headers: {
+              'Authorization': 'Token $token'
+            }
+          )
+        );
+
+      } catch(e){
+        print(e);
+      }
+      miembro = null;
+    }
 
     const List<String> data = [
       "Número de teléfono: 1234567890",
@@ -31,13 +51,13 @@ class ProfileScreen extends StatelessWidget {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: "Evelyn Smith",
+                      username: miembro!.user.firstName,
                       onTap: () {},
                     ),
                   ),
                 ),
-                const Text(
-                  "Evelyn Smith",
+                Text(
+                  miembro!.user.firstName + " " + miembro!.user.lastName,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 CustomTextButton(
@@ -98,7 +118,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 CustomButton(
                     text: "Cerrar sesión",
-                    onPressed: () {
+                    onPressed: () async{
+                      await _logout();
                       Navigator.pop(context);
                     })
               ],

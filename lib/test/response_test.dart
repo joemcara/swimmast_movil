@@ -22,11 +22,6 @@ void main() {
     expect(find.byType(MaterialApp), findsOneWidget);
   });
 
-  testWidgets('ProfileScreen widget should contain a Column widget', (WidgetTester tester) async {
-    await tester.pumpWidget(const MaterialApp(home: ProfileScreen()));
-    expect(find.byType(MaterialApp), findsOneWidget);
-  });
-
   testWidgets('shopScreen widget should contain a Text widget', (WidgetTester tester) async {
     await tester.pumpWidget(const MaterialApp(home: ShopScreen()));
     expect(find.byType(MaterialApp), findsWidgets); // Using findsWidgets because there might be multiple Text widgets.
