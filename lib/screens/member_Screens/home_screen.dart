@@ -1,25 +1,57 @@
-import 'package:flutter/material.dart';
+import 'package:swimmast_movil/models/course.dart';
 
-class HomeScreenMember extends StatelessWidget {
-  const HomeScreenMember({super.key});
+import '../../shared/constants.dart';
+
+class HomeScreenMember extends StatefulWidget {
+
+  final int? idUser;
+  final String? token;
+
+  const HomeScreenMember({super.key, this.idUser, this.token});
+  
+  @override
+  State<HomeScreenMember> createState() => _HomeScreenMemberState();
+}
+
+class _HomeScreenMemberState extends State<HomeScreenMember> {
+  List<Map<String, String>> courseList = []; 
+
+  @override
+  void initState() {
+    super.initState();
+    _AvilableCourse();
+  }
+
+    Future<void> _AvilableCourse() async {
+    try {
+      final response = await Dio().get(
+        urlBack + 'course/swimmer/' + idUser.toString(),
+        options: Options(
+          headers: {
+            'Authorization': 'Token $token'
+          }
+        )
+      );
+      for (var item in response.data) {
+        Course course = Course.fromJson(item);
+        Map<String, String> courseMap = {
+          'day': course.description,
+          'hour': course.startTime + ' - ' + course.endTime,
+          'trainer': course.instructor.firstName + ' ' + course.instructor.lastName,
+        };
+        courseList.add(courseMap);
+      }
+      setState(() {});
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    const List<Map<String, String>> scheduleList = [
-      {
-        "day": "Lunes",
-        "hour": "9:30",
-        "trainer": "Pedro",
-        "image_url": "lib/assets/swim.png"
-      },
-      {
-        "day": "Martes",
-        "hour": "10:30",
-        "trainer": "Pedro",
-        "image_url": "lib/assets/swimmast_logo.png"
-      },
-    ];
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: statusBarHeight),
@@ -35,13 +67,13 @@ class HomeScreenMember extends StatelessWidget {
             Expanded(
               child: Container(
                 child: ListView.builder(
-                  itemCount: scheduleList.length,
+                  itemCount: courseList.length,
                   padding: const EdgeInsets.all(12),
                   itemBuilder: (_, index) => _scheduleBox(
-                    scheduleList[index]['day'],
-                    scheduleList[index]['hour']!,
-                    scheduleList[index]['trainer']!,
-                    scheduleList[index]["image_url"],
+                    courseList[index]['day'],
+                    courseList[index]['hour'],
+                    courseList[index]['trainer'],
+                    courseList[index]['course'],
                   ),
                 ),
               ),
@@ -119,12 +151,12 @@ Widget _scheduleBox(
                             height: 2,
                             fontWeight: FontWeight.bold),
                       ),
+                    ],
+                  ),
                       Text(
                         trainer ?? "no disponible",
                         style: const TextStyle(fontSize: 16, height: 2),
                       )
-                    ],
-                  ),
                 ],
               ),
             ],

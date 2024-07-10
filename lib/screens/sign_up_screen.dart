@@ -1,7 +1,5 @@
-
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/shared/datefield.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -13,46 +11,52 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool _checkboxValue = false;
+
+
   final TextEditingController _names = TextEditingController();
   final TextEditingController _lastNames = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final TextEditingController _passwordtwo = TextEditingController();
+  final TextEditingController _date = TextEditingController();
+  TextEditingController nameRepresentative = TextEditingController();
+  TextEditingController relationship = TextEditingController();
 
 
   Future<void> _createAccount() async {
-    try {
-
-      final response = await Dio().post(
-        urlBack + 'register/',
-        data: {
-          'first_name': _names.text,
-          'last_name': _lastNames.text,
-          'cell_phone': _phone.text,
-          'email': _email.text,
-          'password': _password.text,
-          'confirm_password': _password.text,
-          "date_of_birth":"2002-12-27",
-          "age": 17,
-          "role": 1,
-          "representative_name": "yo",
-          "representative_relationship": "papa"
-        },
-      );
-
-      print(response.data);
-    } catch (e) {
-      print(e);
+    if (_checkboxValue) {
+      try {
+        final response = await Dio().post(
+          urlBack + 'register/',
+          data: {
+            'first_name': _names.text,
+            'last_name': _lastNames.text,
+            'cell_phone': _phone.text,
+            'email': _email.text,
+            'password': _password.text,
+            'confirm_password': _password.text,
+            "date_of_birth": _date.text,
+            "age": 17,
+            "role": 3,
+            "representative_name": nameRepresentative.text,
+            "representative_relationship": relationship.text,
+            "pass_web":false
+          },
+        );
+        print(response.data);
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
         child: Center(
           child: SingleChildScrollView(
             child: Wrap(
@@ -70,30 +74,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   "Creación de cuenta",
                   style: TextStyle(fontSize: 20),
                 ),
-                 TextInput(
+                TextInput(
                   controller: _names,
                   hintText: "Nombres",
                   label: "Nombres",
                 ),
-                 TextInput(
+                TextInput(
                   controller: _lastNames,
                   hintText: "Apellidos",
                   label: "Apellidos",
                 ),
-                 TextInput(
+                TextInput(
                   controller: _phone,
                   hintText: "Teléfono",
                   label: "Número de teléfono",
                 ),
-                 TextInput(
+                TextInput(
                   controller: _email,
                   hintText: "Correo electrónico",
                   label: "Correo electrónico",
                 ),
-                 PasswordInput(
+                PasswordInput(
                   controller: _password,
                   hintText: "Contraseña",
                   label: "Contraseña",
+                ),               
+                PasswordInput(
+                  controller: _passwordtwo,
+                  hintText: "Repetir contraseña",
+                  label: "Contraseña",
+                ),
+                DateField(
+                  dateController: _date,
+                  nameRepresentative: nameRepresentative,
+                  relationship: relationship,
                 ),
                 GestureDetector(
                   onTap: () {

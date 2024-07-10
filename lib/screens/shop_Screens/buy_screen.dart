@@ -36,9 +36,9 @@ class _BuyScreenState extends State<BuyScreen> {
             ), // adjust as needed
             child: AlertWidget(),
           ),
-          actions: const [
+          actions: [
             ProfileHeader(
-              username: "Username",
+              username: miembro!.user.firstName,
             ),
           ],
         ),

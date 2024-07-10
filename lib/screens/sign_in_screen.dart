@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
@@ -20,25 +18,52 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
-  late Member member;
 
-  Future<void> _login() async {
-    try {
-      final response = await Dio().post(
-        urlBack + 'login_user/',
-        data: {
-          'username': _userName.text,
-          'password': _password.text,
-        },
+   void showError(String errorMessage) {
+     showDialog(
+       context: context,
+       builder: (BuildContext context) {
+         return AlertDialog(
+           title: const Text("Error!"),
+           content: Text(errorMessage),
+           actions: <Widget>[
+            new TextButton(
+               child: const Text("OK"),
+               onPressed: () {
+                 Navigator.of(context).pop();
+               },
+             ),
+           ],
+         );
+       },
+     );
+ }
+
+Future<void> _login() async {
+  try {
+    final response = await Dio().post(
+      urlBack + 'login_user/',
+      data: {
+        'username': _userName.text,
+        'password': _password.text,
+      },
+      
+    );
+    
+    if (response.data['status'] == 400) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User not registered. Please sign up.')),
       );
-
-      member = Member.fromJson(response.data);
-      setState(() {});
-
-    } catch (e) {
-      print(e);
+    } else {
+      miembro = Member.fromJson(response.data);
+      token = response.data['token'];
+      idUser = response.data['user']['id'];
     }
+
+  } catch (e) {
+    print(e);
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -128,9 +153,12 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: size.width,
                       height: 50,
                       child: FilledButton(
-                          onPressed: () {
-                            _login();
-                            if (member.user.role.name == "MIEMBRO") {
+                          onPressed: () async{
+                            await _login();
+                            if (miembro == null) {
+                              showError("Usuario no registrado. Por favor regístrese.");
+                            }else{
+                            if (miembro!.user.role.name == "MIEMBRO") {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -142,6 +170,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           const MainScreenTrainee()));
+                            }
                             }
                           },
                           style: ButtonStyle(

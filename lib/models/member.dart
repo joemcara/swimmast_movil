@@ -8,23 +8,27 @@ class Member {
     final User user;
     final String message;
     final String token;
+    final String device;
 
     Member({
         required this.user,
         required this.message,
         required this.token,
+        required this.device,
     });
 
     factory Member.fromJson(Map<String, dynamic> json) => Member(
         user: User.fromJson(json["user"]),
         message: json["message"],
         token: json["token"],
+        device: json["device"],
     );
 
     Map<String, dynamic> toJson() => {
         "user": user.toJson(),
         "message": message,
         "token": token,
+        "device": device,
     };
 }
 
@@ -35,8 +39,8 @@ class User {
     final String firstName;
     final String lastName;
     final String username;
-    final DateTime dateOfBirth;
-    final String cellPhone;
+    final DateTime birthdate;
+    final String cellphone;
 
     User({
         required this.id,
@@ -45,8 +49,8 @@ class User {
         required this.firstName,
         required this.lastName,
         required this.username,
-        required this.dateOfBirth,
-        required this.cellPhone,
+        required this.birthdate,
+        required this.cellphone,
     });
 
     factory User.fromJson(Map<String, dynamic> json) => User(
@@ -56,8 +60,8 @@ class User {
         firstName: json["first_name"],
         lastName: json["last_name"],
         username: json["username"],
-        dateOfBirth: DateTime.parse(json["date_of_birth"]),
-        cellPhone: json["cell_phone"],
+        birthdate: DateTime.parse(json["birthdate"]),
+        cellphone: json["cellphone"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -67,8 +71,8 @@ class User {
         "first_name": firstName,
         "last_name": lastName,
         "username": username,
-        "date_of_birth": "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}",
-        "cell_phone": cellPhone,
+        "birthdate": "${birthdate.year.toString().padLeft(4, '0')}-${birthdate.month.toString().padLeft(2, '0')}-${birthdate.day.toString().padLeft(2, '0')}",
+        "cellphone": cellphone,
     };
 }
 
