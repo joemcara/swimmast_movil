@@ -19,7 +19,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
   @override
   void initState() {
     super.initState();
-    _AvilableCourse();
+    // _AvilableCourse();
   }
 
     Future<void> _AvilableCourse() async {

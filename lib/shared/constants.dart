@@ -8,7 +8,7 @@ export 'package:flutter/material.dart';
 export 'package:swimmast_movil/shared/button.dart';
 export 'package:swimmast_movil/shared/profile_header.dart';
 
-const String urlBack = 'http://10.0.2.2:8000/api/v1/';
+const String urlBack = 'http://10.0.2.2:8000/api/v2/';
 var token = '';
 var idUser = 0;
 

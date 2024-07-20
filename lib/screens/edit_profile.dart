@@ -1,13 +1,8 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/inputs.dart' as input;
-import 'package:swimmast_movil/shared/profile_header.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});

@@ -42,26 +42,30 @@ class _SignInScreenState extends State<SignInScreen> {
 Future<void> _login() async {
   try {
     final response = await Dio().post(
-      urlBack + 'login_user/',
+      urlBack + 'administration/login_user/',
       data: {
         'username': _userName.text,
         'password': _password.text,
       },
       
     );
-    
-    if (response.data['status'] == 400) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User not registered. Please sign up.')),
-      );
-    } else {
+    // print(response.data['status']);
+    // if (response.data['status'] == 400) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('User not registered. Please sign up.')),
+    //   );
+    // } else {
       miembro = Member.fromJson(response.data);
       token = response.data['token'];
       idUser = response.data['user']['id'];
-    }
+    // }
 
   } catch (e) {
     print(e);
+              if (e is DioException) {
+    print('Status Code: ${e.response?.statusCode}');
+    print('Data: ${e.response?.data}');
+  }
   }
 }
 
@@ -158,7 +162,7 @@ Future<void> _login() async {
                             if (miembro == null) {
                               showError("Usuario no registrado. Por favor regístrese.");
                             }else{
-                            if (miembro!.user.role.name == "MIEMBRO") {
+                            if (miembro!.roleName == "MIEMBRO") {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
