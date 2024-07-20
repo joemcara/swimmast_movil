@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class DateField extends StatefulWidget {
@@ -6,12 +10,18 @@ class DateField extends StatefulWidget {
   super.key, 
   required this.dateController,
   required this.nameRepresentative,
-  required this.relationship
+  required this.relationship,
+  required this.userName,
+  required this.names,
+  required this.lastNames
   });
 
   final TextEditingController dateController;
+  TextEditingController userName;
   TextEditingController nameRepresentative;
   TextEditingController relationship;
+  TextEditingController names;
+  TextEditingController lastNames;
 
   @override
   State<DateField> createState() => _DateFieldState();
@@ -19,6 +29,8 @@ class DateField extends StatefulWidget {
 
 class _DateFieldState extends State<DateField> {
   bool _isChildren = false;
+  bool _userName = false;
+  int _selectedOption = 1;
 
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
@@ -26,6 +38,7 @@ class _DateFieldState extends State<DateField> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2300),
+      
     );
     if (picked != null)
       setState(() {
@@ -45,6 +58,77 @@ class _DateFieldState extends State<DateField> {
     var difference = now.difference(birth);
     return difference.inDays ~/ 365;
   }
+
+
+
+  Future<void> _selectUser(String name, String lastName, String date) async{
+    List<String> users = [];
+    try {
+      final response = await Dio().post(
+        urlBack + 'administration/usernames/',
+        data: {
+          'first_name': name,
+          'last_name': lastName,
+          'role': 3,
+          'birthdate': date,
+        },
+      );
+      for (var item in response.data) {
+        users.add(item);
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Selecione uno de los usuarios disponibles"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+            RadioListTile<int>(
+              value: 1,
+              groupValue: _selectedOption,
+              title: Text(users[0]),
+              onChanged: (int? value) {
+                setState(() {
+                  _userName = true;
+                  widget.userName.text = users[0];
+                  Navigator.of(context).pop(); 
+                });
+              },
+            ),
+            RadioListTile<int>(
+              value: 2,
+              groupValue: _selectedOption,
+              title: Text(users[1]),
+              onChanged: (int? value) {
+                setState(() {
+                  Navigator.of(context).pop(); // Optionally close the dialog
+                });
+              },
+            ),
+            RadioListTile<int>(
+              value: 3,
+              groupValue: _selectedOption,
+              title: Text(users[2]),
+              onChanged: (int? value) {
+                setState(() {
+                  Navigator.of(context).pop(); // Optionally close the dialog
+                });
+              },
+            ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                // Add more options as needed
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -61,6 +145,12 @@ class _DateFieldState extends State<DateField> {
     return Wrap(
       runSpacing: 15.0,
       children: [
+        Visibility(
+          visible: _userName,
+          child:Text(
+            widget.userName.text,          
+          ) 
+          ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
@@ -74,11 +164,11 @@ class _DateFieldState extends State<DateField> {
             readOnly: true,
             onTap: () async{
               await _selectDate();
-            },
+              await _selectUser(widget.names.text, widget.lastNames.text, widget.dateController.text);
+             },
         
           ),
         ),
-        
         Visibility(
           visible: _isChildren,
           child:TextInput(

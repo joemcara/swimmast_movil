@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -31,10 +30,10 @@ class _PackageScreenState extends State<PackageScreen> {
                     child: Column(
                       children: [
                         TableCalendar(
-                          // onDaySelected: (DateTime start, DateTime end) {
-                          //   print(start);
-                          //   print(end);
-                          // },
+                          onDaySelected: (DateTime start, DateTime end) {
+                            print(start);
+                            print(end);
+                          },
                           onRangeSelected: (DateTime? start, DateTime? middle,
                               DateTime end) {},
                           focusedDay: DateTime.now(),

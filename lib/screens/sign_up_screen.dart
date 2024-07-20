@@ -1,3 +1,6 @@
+import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
+import 'package:swimmast_movil/screens/sign_in_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/datefield.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
@@ -15,6 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final TextEditingController _names = TextEditingController();
   final TextEditingController _lastNames = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
@@ -27,29 +31,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _createAccount() async {
     if (_checkboxValue) {
       try {
+        if(nameRepresentative.text == '' && relationship.text == ''){
+          nameRepresentative.text = 'null';
+          relationship.text = 'null';
+        }
         final response = await Dio().post(
-          urlBack + 'register/',
+          urlBack + 'administration/register_user/',
           data: {
             'first_name': _names.text,
             'last_name': _lastNames.text,
-            'cell_phone': _phone.text,
+            'username': _userName.text,
             'email': _email.text,
             'password': _password.text,
             'confirm_password': _password.text,
-            "date_of_birth": _date.text,
-            "age": 17,
+            "birthdate": _date.text,
+            "age": _age(_date.text),
+            'phone_number': _phone.text,
             "role": 3,
+            "pass_web":false,
             "representative_name": nameRepresentative.text,
             "representative_relationship": relationship.text,
-            "pass_web":false
           },
         );
+        if(response.statusCode == 201){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      const SignInScreen()));
+        }
+
         print(response.data);
       } catch (e) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('usuario invalido')),
+      // );
         print(e);
+          if (e is DioException) {
+    print('Status Code: ${e.response?.statusCode}');
+    print('Data: ${e.response?.data}');
+  }
       }
     }
   }
+
+  int _age(String date) {
+    var now = DateTime.now();
+    var birth = DateTime.parse(date);
+    var difference = now.difference(birth);
+    return difference.inDays ~/ 365;
+  }
+  
 
 
   @override
@@ -84,6 +116,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: "Apellidos",
                   label: "Apellidos",
                 ),
+                DateField(
+                  names: _names,
+                  lastNames: _lastNames,
+                  dateController: _date,
+                  nameRepresentative: nameRepresentative,
+                  relationship: relationship,
+                  userName: _userName
+                ),
                 TextInput(
                   controller: _phone,
                   hintText: "Teléfono",
@@ -103,11 +143,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _passwordtwo,
                   hintText: "Repetir contraseña",
                   label: "Contraseña",
-                ),
-                DateField(
-                  dateController: _date,
-                  nameRepresentative: nameRepresentative,
-                  relationship: relationship,
                 ),
                 GestureDetector(
                   onTap: () {
