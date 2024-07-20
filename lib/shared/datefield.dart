@@ -6,15 +6,14 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
 class DateField extends StatefulWidget {
-  DateField({
-  super.key, 
-  required this.dateController,
-  required this.nameRepresentative,
-  required this.relationship,
-  required this.userName,
-  required this.names,
-  required this.lastNames
-  });
+  DateField(
+      {super.key,
+      required this.dateController,
+      required this.nameRepresentative,
+      required this.relationship,
+      required this.userName,
+      required this.names,
+      required this.lastNames});
 
   final TextEditingController dateController;
   TextEditingController userName;
@@ -38,19 +37,17 @@ class _DateFieldState extends State<DateField> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2300),
-      
     );
     if (picked != null)
       setState(() {
         widget.dateController.text = picked.toString().split(" ")[0];
         if (_adult(widget.dateController.text) < 18) {
           _isChildren = true;
-        }else{
+        } else {
           _isChildren = false;
         }
       });
   }
-
 
   int _adult(String date) {
     var now = DateTime.now();
@@ -59,9 +56,7 @@ class _DateFieldState extends State<DateField> {
     return difference.inDays ~/ 365;
   }
 
-
-
-  Future<void> _selectUser(String name, String lastName, String date) async{
+  Future<void> _selectUser(String name, String lastName, String date) async {
     List<String> users = [];
     try {
       final response = await Dio().post(
@@ -88,38 +83,42 @@ class _DateFieldState extends State<DateField> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-            RadioListTile<int>(
-              value: 1,
-              groupValue: _selectedOption,
-              title: Text(users[0]),
-              onChanged: (int? value) {
-                setState(() {
-                  _userName = true;
-                  widget.userName.text = users[0];
-                  Navigator.of(context).pop(); 
-                });
-              },
-            ),
-            RadioListTile<int>(
-              value: 2,
-              groupValue: _selectedOption,
-              title: Text(users[1]),
-              onChanged: (int? value) {
-                setState(() {
-                  Navigator.of(context).pop(); // Optionally close the dialog
-                });
-              },
-            ),
-            RadioListTile<int>(
-              value: 3,
-              groupValue: _selectedOption,
-              title: Text(users[2]),
-              onChanged: (int? value) {
-                setState(() {
-                  Navigator.of(context).pop(); // Optionally close the dialog
-                });
-              },
-            ),
+                RadioListTile<int>(
+                  value: 1,
+                  groupValue: _selectedOption,
+                  title: Text(users[0]),
+                  onChanged: (int? value) {
+                    setState(() {
+                      _userName = true;
+                      widget.userName.text = users[0];
+                      Navigator.of(context).pop();
+                    });
+                  },
+                ),
+                RadioListTile<int>(
+                  value: 2,
+                  groupValue: _selectedOption,
+                  title: Text(users[1]),
+                  onChanged: (int? value) {
+                    setState(() {
+                      _userName = true;
+                      widget.userName.text = users[1];
+                      Navigator.of(context).pop();
+                    });
+                  },
+                ),
+                RadioListTile<int>(
+                  value: 3,
+                  groupValue: _selectedOption,
+                  title: Text(users[2]),
+                  onChanged: (int? value) {
+                    setState(() {
+                      _userName = true;
+                      widget.userName.text = users[2];
+                      Navigator.of(context).pop();
+                    });
+                  },
+                ),
                 Padding(padding: EdgeInsets.all(8.0)),
                 // Add more options as needed
               ],
@@ -129,10 +128,9 @@ class _DateFieldState extends State<DateField> {
       },
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     var inputDecoration = InputDecoration(
       hintStyle: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.33)),
       labelText: 'Año de nacimiento',
@@ -140,17 +138,14 @@ class _DateFieldState extends State<DateField> {
       prefixIcon: const Icon(Icons.calendar_today),
     );
 
-    
-
     return Wrap(
       runSpacing: 15.0,
       children: [
         Visibility(
-          visible: _userName,
-          child:Text(
-            widget.userName.text,          
-          ) 
-          ),
+            visible: _userName,
+            child: Text(
+              widget.userName.text,
+            )),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
@@ -162,25 +157,25 @@ class _DateFieldState extends State<DateField> {
             style: const TextStyle(fontSize: 16, letterSpacing: 2),
             decoration: inputDecoration,
             readOnly: true,
-            onTap: () async{
+            onTap: () async {
               await _selectDate();
-              await _selectUser(widget.names.text, widget.lastNames.text, widget.dateController.text);
-             },
-        
+              await _selectUser(widget.names.text, widget.lastNames.text,
+                  widget.dateController.text);
+            },
           ),
         ),
         Visibility(
           visible: _isChildren,
-          child:TextInput(
-          hintText: 'Nombre del representante',
-          controller: widget.nameRepresentative,
+          child: TextInput(
+            hintText: 'Nombre del representante',
+            controller: widget.nameRepresentative,
           ),
         ),
         Visibility(
           visible: _isChildren,
-          child:TextInput(
-          hintText: 'Parentesco con el menor',
-          controller: widget.relationship,
+          child: TextInput(
+            hintText: 'Parentesco con el menor',
+            controller: widget.relationship,
           ),
         )
       ],

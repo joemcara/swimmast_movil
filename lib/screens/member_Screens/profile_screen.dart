@@ -1,3 +1,4 @@
+import 'package:swimmast_movil/shared/change_password.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -88,28 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: swimmastBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100))),
-                            padding: const EdgeInsets.all(6),
-                            child: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Text(
-                            "Cambiar contraseña",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
+                      ChangePassword(),
                       const Icon(
                         Icons.keyboard_arrow_right_outlined,
                       )
@@ -128,6 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+
 
 Widget _infoBox(String title, List<String> data) {
   return Column(

@@ -63,9 +63,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         print(response.data);
       } catch (e) {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text('usuario invalido')),
-      // );
+        ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('usuario invalido')),
+      );
         print(e);
           if (e is DioException) {
     print('Status Code: ${e.response?.statusCode}');
