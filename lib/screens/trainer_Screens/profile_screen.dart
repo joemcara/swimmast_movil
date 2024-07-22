@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/edit_profile.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/member_admin_screen.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/button_Rectangle.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileScreenTrainer extends StatelessWidget {
   const ProfileScreenTrainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
@@ -30,13 +29,13 @@ class ProfileScreenTrainer extends StatelessWidget {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: "Evelyn Smith",
+                      username: username,
                       onTap: () {},
                     ),
                   ),
                 ),
-                const Text(
-                  "Luis García",
+                Text(
+                  miembro!.user.firstName + " " + miembro!.user.lastName,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 customText.CustomTextButton(

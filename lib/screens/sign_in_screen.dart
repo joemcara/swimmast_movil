@@ -13,61 +13,57 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  
-  
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
-
-   void showError(String errorMessage) {
-     showDialog(
-       context: context,
-       builder: (BuildContext context) {
-         return AlertDialog(
-           title: const Text("Error!"),
-           content: Text(errorMessage),
-           actions: <Widget>[
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
             new TextButton(
-               child: const Text("OK"),
-               onPressed: () {
-                 Navigator.of(context).pop();
-               },
-             ),
-           ],
-         );
-       },
-     );
- }
-
-Future<void> _login() async {
-  try {
-    final response = await Dio().post(
-      urlBack + 'administration/login_user/',
-      data: {
-        'username': _userName.text,
-        'password': _password.text,
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
       },
-      
     );
-    // print(response.data['status']);
-    // if (response.data['status'] == 400) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('User not registered. Please sign up.')),
-    //   );
-    // } else {
+  }
+
+  Future<void> _login() async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'administration/login_user/',
+        data: {
+          'username': _userName.text,
+          'password': _password.text,
+        },
+      );
+      print(response.data);
+      // print(response.data['status']);
+      // if (response.data['status'] == 400) {
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     SnackBar(content: Text('User not registered. Please sign up.')),
+      //   );
+      // } else {
       miembro = Member.fromJson(response.data);
       token = response.data['token'];
       idUser = response.data['user']['id'];
-    // }
-
-  } catch (e) {
-    print(e);
-              if (e is DioException) {
-    print('Status Code: ${e.response?.statusCode}');
-    print('Data: ${e.response?.data}');
+      // }
+    } catch (e) {
+      print(e);
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
+    }
   }
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -157,24 +153,25 @@ Future<void> _login() async {
                       width: size.width,
                       height: 50,
                       child: FilledButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             await _login();
                             if (miembro == null) {
-                              showError("Usuario no registrado. Por favor regístrese.");
-                            }else{
-                            if (miembro!.roleName == "MIEMBRO") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreenMember()));
+                              showError(
+                                  "Usuario no registrado. Por favor regístrese.");
                             } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreenTrainee()));
-                            }
+                              if (miembro!.roleName == "MIEMBRO") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MainScreenMember()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MainScreenTrainee()));
+                              }
                             }
                           },
                           style: ButtonStyle(

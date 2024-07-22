@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -75,7 +73,7 @@ class CustomAvatar extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              username[0],
+                              username,
                               style: const TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.w600),
                             )),

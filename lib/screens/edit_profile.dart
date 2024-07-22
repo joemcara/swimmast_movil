@@ -59,13 +59,13 @@ class EditProfileState extends State<EditProfile> {
                         height: 150,
                         width: 150,
                         child: CustomAvatar(
-                          username: "Luis García",
+                          username: username,
                           onTap: () {},
                           image: image,
                         ),
                       ),
-                      const Text(
-                        "Luis García",
+                      Text(
+                        miembro!.user.firstName + " " + miembro!.user.lastName,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),

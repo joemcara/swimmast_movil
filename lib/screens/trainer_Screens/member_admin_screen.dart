@@ -24,7 +24,7 @@ class Memberadmin extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     )),
-                const ProfileHeader(username: "Luis")
+                ProfileHeader(username: username)
               ]),
           const SizedBox(height: 10),
           const SizedBox(
