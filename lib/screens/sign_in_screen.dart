@@ -49,20 +49,16 @@ Future<void> _login() async {
       },
       
     );
-    // print(response.data['status']);
-    // if (response.data['status'] == 400) {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(content: Text('User not registered. Please sign up.')),
-    //   );
-    // } else {
+      print(response.data);
       miembro = Member.fromJson(response.data);
       token = response.data['token'];
       idUser = response.data['user']['id'];
-    // }
-
+      userName = response.data['user']['username'];
+      birthDate = response.data['user']['birthdate'];
+      phoneNumber = response.data['phone_number'];
+      
   } catch (e) {
-    print(e);
-              if (e is DioException) {
+    if (e is DioException) {
     print('Status Code: ${e.response?.statusCode}');
     print('Data: ${e.response?.data}');
   }

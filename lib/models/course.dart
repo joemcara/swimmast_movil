@@ -1,15 +1,18 @@
+// To parse this JSON data, do
+//
+//     final course = courseFromJson(jsonString);
 
 import 'dart:convert';
 
-List<Course> courseFromJson(String str) => List<Course>.from(json.decode(str).map((x) => Course.fromJson(x)));
+Course courseFromJson(String str) => Course.fromJson(json.decode(str));
 
-String courseToJson(List<Course> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String courseToJson(Course data) => json.encode(data.toJson());
 
 class Course {
     int id;
     Instructor instructor;
-    CourseStatus courseType;
-    CourseStatus courseStatus;
+    CourseStatusClass courseType;
+    CourseStatusClass courseStatus;
     DateTime startDate;
     DateTime dueDate;
     String startTime;
@@ -17,6 +20,7 @@ class Course {
     String name;
     String price;
     String description;
+    bool available;
 
     Course({
         required this.id,
@@ -30,13 +34,14 @@ class Course {
         required this.name,
         required this.price,
         required this.description,
+        required this.available,
     });
 
     factory Course.fromJson(Map<String, dynamic> json) => Course(
         id: json["id"],
         instructor: Instructor.fromJson(json["instructor"]),
-        courseType: CourseStatus.fromJson(json["course_type"]),
-        courseStatus: CourseStatus.fromJson(json["course_status"]),
+        courseType: CourseStatusClass.fromJson(json["course_type"]),
+        courseStatus: CourseStatusClass.fromJson(json["course_status"]),
         startDate: DateTime.parse(json["start_date"]),
         dueDate: DateTime.parse(json["due_date"]),
         startTime: json["start_time"],
@@ -44,6 +49,7 @@ class Course {
         name: json["name"],
         price: json["price"],
         description: json["description"],
+        available: json["available"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -58,23 +64,24 @@ class Course {
         "name": name,
         "price": price,
         "description": description,
+        "available": available,
     };
 }
 
-class CourseStatus {
+class CourseStatusClass {
     int id;
     String name;
     String description;
     String? code;
 
-    CourseStatus({
+    CourseStatusClass({
         required this.id,
         required this.name,
         required this.description,
         this.code,
     });
 
-    factory CourseStatus.fromJson(Map<String, dynamic> json) => CourseStatus(
+    factory CourseStatusClass.fromJson(Map<String, dynamic> json) => CourseStatusClass(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -91,32 +98,24 @@ class CourseStatus {
 
 class Instructor {
     int id;
-    CourseStatus role;
     String firstName;
     String lastName;
-    String username;
 
     Instructor({
         required this.id,
-        required this.role,
         required this.firstName,
         required this.lastName,
-        required this.username,
     });
 
     factory Instructor.fromJson(Map<String, dynamic> json) => Instructor(
         id: json["id"],
-        role: CourseStatus.fromJson(json["role"]),
         firstName: json["first_name"],
         lastName: json["last_name"],
-        username: json["username"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "role": role.toJson(),
         "first_name": firstName,
         "last_name": lastName,
-        "username": username,
     };
 }

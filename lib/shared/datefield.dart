@@ -29,7 +29,7 @@ class DateField extends StatefulWidget {
 class _DateFieldState extends State<DateField> {
   bool _isChildren = false;
   bool _userName = false;
-  int _selectedOption = 1;
+  int _selectedOption = 0;
 
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
@@ -143,8 +143,24 @@ class _DateFieldState extends State<DateField> {
       children: [
         Visibility(
             visible: _userName,
-            child: Text(
-              widget.userName.text,
+            child: Center(
+              child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.circular(5),
+              border: Border.all(color: const Color.fromARGB(255, 65, 65, 65)),
+              color: Colors.white),
+                child: Row(
+                  children: [
+                    Text("Username:\t\t\t\t"),
+      
+                    Text(
+                      widget.userName.text,
+                    ),
+                  ],
+                ),
+              ),
             )),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),

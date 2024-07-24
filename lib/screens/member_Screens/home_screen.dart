@@ -19,7 +19,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
   @override
   void initState() {
     super.initState();
-    // _AvilableCourse();
+    _AvilableCourse();
   }
 
     Future<void> _AvilableCourse() async {
@@ -40,6 +40,9 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
           'trainer': course.instructor.firstName + ' ' + course.instructor.lastName,
         };
         courseList.add(courseMap);
+        userCourse.clear();
+        userCourse.add("${course.name}  ${course.description}");
+        
       }
       setState(() {});
     } catch (e) {

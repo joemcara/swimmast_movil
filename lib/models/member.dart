@@ -10,6 +10,8 @@ String memberToJson(Member data) => json.encode(data.toJson());
 
 class Member {
     User user;
+    String username;
+    String phoneNumber;
     String message;
     String token;
     int roleId;
@@ -18,6 +20,8 @@ class Member {
 
     Member({
         required this.user,
+        required this.username,
+        required this.phoneNumber,
         required this.message,
         required this.token,
         required this.roleId,
@@ -27,6 +31,8 @@ class Member {
 
     factory Member.fromJson(Map<String, dynamic> json) => Member(
         user: User.fromJson(json["user"]),
+        username: json["username"],
+        phoneNumber: json["phone_number"],
         message: json["message"],
         token: json["token"],
         roleId: json["role_id"],
@@ -36,6 +42,8 @@ class Member {
 
     Map<String, dynamic> toJson() => {
         "user": user.toJson(),
+        "username": username,
+        "phone_number": phoneNumber,
         "message": message,
         "token": token,
         "role_id": roleId,

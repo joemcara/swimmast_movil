@@ -1,3 +1,4 @@
+import 'package:swimmast_movil/screens/edit_profile.dart';
 import 'package:swimmast_movil/shared/change_password.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
@@ -30,16 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       miembro = null;
     }
 
-    const List<String> data = [
-      "Número de teléfono: 1234567890",
-      "Dirección: Av.9 de octubre y Chimborazo "
+    List<String> data = [
+      "Número de teléfono: $phoneNumber",
+      "Fecha de nacimiento: $birthDate",
     ];
 
-    const List<String> packages = [
-      "Paquete X - Lunes 8:30 - 11:00am",
-      "Paquete Y - Lunes 10:30 - 13:00am",
-      "Paquete Z - Lunes 8:30 - 11:00am",
-    ];
+    List<String> packages = userCourse.cast<String>();
+
 
     return Scaffold(
       body: Container(
@@ -63,7 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 CustomTextButton(
                   text: "Editar perfil",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditProfile()));
+                  },
                   text_color: swimmastBlue,
                 ),
                 Container(
@@ -74,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 32,
                       ),
-                      _infoBox("Paquetes inscritos", packages),
+                      _infoBox("Cursos Inscritos", packages),
                     ],
                   ),
                 ),

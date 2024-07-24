@@ -9,11 +9,6 @@ export 'package:swimmast_movil/shared/button.dart';
 export 'package:swimmast_movil/shared/profile_header.dart';
 
 const String urlBack = 'http://10.0.2.2:8000/api/v2/';
-var token = '';
-var idUser = 0;
-
-Member? miembro;
-
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
 const Color swimmastYellow = Color.fromRGBO(244, 232, 105, 1);
@@ -28,4 +23,16 @@ const TextStyle styleTitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 int global = 3;
 var attendanceStateModal = false;
+
+
+//Member constans
+var phoneNumber;
+var birthDate;
+var token;
+var idUser;
+var userName;
+var userCourse = [];
+
+
+Member? miembro;
 
