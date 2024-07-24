@@ -16,7 +16,10 @@ class ProfileScreenTrainer extends StatelessWidget {
       "Dirección: Av.9 de octubre y Chimborazo "
     ];
 
-    const List<String> courses = ["Curso: Entrenamientos", "Cursos a cargo: 4"];
+    List<String> courses = [
+      "Curso: Entrenamientos",
+      'Cursos a cargo: ${coursesList.length}'
+    ];
 
     return Scaffold(
       body: Container(

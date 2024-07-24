@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/button.dart';
 
-class AttendanceSheet extends StatelessWidget {
+class AttendanceSheet extends StatefulWidget {
   final String day;
   final String hour;
   final int membersCount;
@@ -14,6 +15,21 @@ class AttendanceSheet extends StatelessWidget {
       required this.hour,
       required this.members,
       required this.membersCount});
+
+  @override
+  _AttendanceSheetState createState() => _AttendanceSheetState();
+}
+
+class _AttendanceSheetState extends State<AttendanceSheet> {
+  List<bool> _isCheckedYes = [];
+  List<bool> _isCheckedNo = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _isCheckedYes = List<bool>.filled(widget.membersCount, false);
+    _isCheckedNo = List<bool>.filled(widget.membersCount, false);
+  }
 
   int calculateAge(DateTime birthDate) {
     DateTime currentDate = DateTime.now();
@@ -73,7 +89,7 @@ class AttendanceSheet extends StatelessWidget {
                       children: [
                         const Icon(Icons.calendar_month),
                         Text(
-                          day,
+                          widget.day,
                           style: const TextStyle(fontSize: 17),
                         ),
                       ],
@@ -82,7 +98,7 @@ class AttendanceSheet extends StatelessWidget {
                       children: [
                         const Icon(Icons.schedule),
                         Text(
-                          hour,
+                          widget.hour,
                           style: const TextStyle(fontSize: 17),
                         ),
                       ],
@@ -94,7 +110,7 @@ class AttendanceSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "Miembros: $membersCount",
+                      "Miembros: ${widget.membersCount}",
                       style: const TextStyle(fontSize: 17),
                     ),
                     const SizedBox(width: 50),
@@ -130,13 +146,13 @@ class AttendanceSheet extends StatelessWidget {
           Expanded(
             child: Container(
               child: ListView.builder(
-                itemCount: members.length,
+                itemCount: widget.members.length,
                 padding: const EdgeInsets.all(12),
                 itemBuilder: (_, index) {
-                  String name = members[index]['firstName'] +
+                  String name = widget.members[index]['firstName'] +
                       " " +
-                      members[index]['lastName'];
-                  int age = calculateAge(members[index]['birthdate']);
+                      widget.members[index]['lastName'];
+                  int age = calculateAge(widget.members[index]['birthdate']);
 
                   return ContainerList(
                     name,

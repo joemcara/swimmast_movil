@@ -77,11 +77,14 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         context: contextParent,
         isScrollControlled: true,
         builder: (context) {
-          return AttendanceSheet(
-            day: this.day,
-            hour: this.hour,
-            members: this.membersList,
-            membersCount: this.membersList.length,
+          return FractionallySizedBox(
+            heightFactor: 0.5,
+            child: AttendanceSheet(
+              day: this.day,
+              hour: this.hour,
+              members: this.membersList,
+              membersCount: this.membersList.length,
+            ),
           );
         });
   }
