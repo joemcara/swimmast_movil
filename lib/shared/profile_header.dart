@@ -22,7 +22,7 @@ class ProfileHeader extends StatelessWidget {
             width: 120,
             padding: const EdgeInsets.fromLTRB(35, 5, 5, 35),
             child: CustomAvatar(
-                username: username,
+                username: username[0].toUpperCase(),
                 onTap: () {
                   if (onAvatarTap != null) onAvatarTap!();
                 }))
@@ -65,7 +65,7 @@ class CustomAvatar extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              username[0],
+                              username,
                               style: const TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.w600),
                             )),

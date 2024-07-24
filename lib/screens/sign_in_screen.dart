@@ -13,31 +13,28 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  
-  
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
-
-   void showError(String errorMessage) {
-     showDialog(
-       context: context,
-       builder: (BuildContext context) {
-         return AlertDialog(
-           title: const Text("Error!"),
-           content: Text(errorMessage),
-           actions: <Widget>[
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
             new TextButton(
-               child: const Text("OK"),
-               onPressed: () {
-                 Navigator.of(context).pop();
-               },
-             ),
-           ],
-         );
-       },
-     );
- }
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 Future<void> _login() async {
   try {
@@ -153,24 +150,25 @@ Future<void> _login() async {
                       width: size.width,
                       height: 50,
                       child: FilledButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             await _login();
                             if (miembro == null) {
-                              showError("Usuario no registrado. Por favor regístrese.");
-                            }else{
-                            if (miembro!.roleName == "MIEMBRO") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreenMember()));
+                              showError(
+                                  "Usuario no registrado. Por favor regístrese.");
                             } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreenTrainee()));
-                            }
+                              if (miembro!.roleName == "MIEMBRO") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MainScreenMember()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const MainScreenTrainee()));
+                              }
                             }
                           },
                           style: ButtonStyle(

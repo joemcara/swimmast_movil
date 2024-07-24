@@ -17,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Future _logout() async {
       try{
         await Dio().post(
-          urlBack + 'logout_user/',
+          urlBack + 'administration/logout_user/',
           options: Options(
             headers: {
               'Authorization': 'Token $token'
@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: miembro!.user.firstName,
+                      username: miembro!.user.firstName[0].toUpperCase(),
                       onTap: () {},
                     ),
                   ),
