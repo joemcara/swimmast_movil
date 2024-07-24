@@ -30,10 +30,11 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
     );
   }
 
-  void changeSelected() {
+  void changeSelected(int id) {
     setState(() {
       index = 1;
-
+      courseSelected = id;
+      print("yei");
       trainerBtBar = SportBtBar(
         currentIndex: (index) {
           setState(() {

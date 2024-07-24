@@ -1,6 +1,9 @@
+import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
+import 'package:provider/provider.dart';
+import 'package:swimmast_movil/models/courseSelected.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;
@@ -72,14 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Flexible(
             child: Container(
               child: ListView.builder(
-                itemCount: courseList.length,
-                padding: const EdgeInsets.all(12),
-                itemBuilder: (_, index) => classCard(
-                    courseList[index]['day'],
-                    courseList[index]['hour'],
-                    parentState,
-                    courseList[index]['id']),
-              ),
+                  itemCount: courseList.length,
+                  padding: const EdgeInsets.all(12),
+                  itemBuilder: (_, index) => classCard(
+                      courseList[index]['day'],
+                      courseList[index]['hour'],
+                      parentState,
+                      courseList[index]['id'])),
             ),
           )
         ],
@@ -131,10 +133,10 @@ Widget classCard(
               ),
               onTap: () {
                 courseSelected = id;
+                state.changeSelected(id);
                 attendanceStateModal = true;
-                state.changeSelected();
 
-                print(courseSelected);
+                ;
               },
             )
           ],

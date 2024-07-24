@@ -15,7 +15,7 @@ var username = '';
 
 Member? miembro;
 List<Map<String, dynamic>> coursesList = [];
-var courseSelected;
+int courseSelected = 0;
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
 const Color swimmastYellow = Color.fromRGBO(244, 232, 105, 1);

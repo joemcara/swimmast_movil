@@ -15,14 +15,12 @@ class AttendanceScreenState extends State<AttendanceScreen> {
   List<Map<String, dynamic>> membersList = [];
   String day = "Today";
   String hour = "00:00";
-  int courseSelected = 1; // Variable para el curso seleccionado
 
   @override
   void initState() {
     super.initState();
-    _MembersByCourse();
     if (attendanceStateModal == true) {
-      stateLinkHome();
+      _MembersByCourse();
     }
   }
 
@@ -36,9 +34,8 @@ class AttendanceScreenState extends State<AttendanceScreen> {
     try {
       final response = await Dio().get(
           urlBack + 'swimmer/course/' + courseSelected.toString(),
-          options: Options(headers: {'Authorization': 'Token $token'}));
+          options: Options(headers: {'Authorization': 'Token ${token}'}));
 
-      // Limpiar lista antes de agregar nuevos datos
       membersList.clear();
       for (var item in response.data) {
         User member = User.fromJson(item);
@@ -52,14 +49,16 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         membersList.add(membersMap);
       }
 
-      // Actualizar día y hora según el curso seleccionado
       final selectedCourse = coursesList.firstWhere(
           (course) => course['id'] == courseSelected,
           orElse: () => {});
       if (selectedCourse.isNotEmpty) {
         setState(() {
-          day = selectedCourse['day'];
-          hour = selectedCourse['hour'];
+          this.day = selectedCourse['day'];
+          this.hour = selectedCourse['hour'];
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showModal(context);
+          });
         });
       } else {
         setState(() {
@@ -79,10 +78,10 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         isScrollControlled: true,
         builder: (context) {
           return AttendanceSheet(
-            day: day,
-            hour: hour,
-            members: membersList,
-            membersCount: membersList.length,
+            day: this.day,
+            hour: this.hour,
+            members: this.membersList,
+            membersCount: this.membersList.length,
           );
         });
   }
@@ -107,10 +106,8 @@ class AttendanceScreenState extends State<AttendanceScreen> {
               itemCount: courses.length,
               padding: const EdgeInsets.all(12),
               itemBuilder: (_, index) => classGroups(() async {
-                courseSelected =
-                    courses[index]['id']; // Actualizar curso seleccionado
-                await _MembersByCourse(); // Obtener miembros
-                _showModal(context); // Mostrar modal después de obtener datos
+                courseSelected = courses[index]['id'];
+                await _MembersByCourse();
               }, context, courses[index]['course_type'], courses[index]['day'],
                   courses[index]['hour'], courses[index]['id']),
             ))
@@ -131,16 +128,14 @@ Widget classGroups(void Function() onTap, BuildContext context,
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  30, 8, 30, 8), // Padding on all sides
+              padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
               child: Text(
                 courseType,
                 style: styleTitles,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  30, 8, 30, 8), // Padding on all sides
+              padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
