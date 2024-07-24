@@ -174,3 +174,36 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
     );
   }
 }
+
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+
+  const CustomBottomNavigationBar({
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Inicio',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: 'Notificaciones',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Perfil',
+        ),
+      ],
+      currentIndex: currentIndex,
+      selectedItemColor: Color.fromARGB(255, 10, 5, 59),
+      onTap: onTap,
+    );
+  }
+}

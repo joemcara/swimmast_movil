@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/widgets/widget_notification.dart';
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/screens/home.dart';
+import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -9,6 +12,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  int _selectedIndex = 1;
   List<Map<String, String>> items = [
     {'id': '1', 'title': 'titulo 1', 'description': 'descripcion 1'},
     {'id': '2', 'title': 'titulo 2', 'description': 'descripcion 2'},
@@ -17,6 +21,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
   ];
 
   String notificaciones = 'Notificaciones';
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index != 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    }else if(index == 2){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NotificationScreen()),
+      );
+    }
+  }
 
   void deleteNotification(String id) {
     setState(() {
@@ -31,34 +52,43 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    return Container(
-      padding: EdgeInsets.only(top: statusBarHeight),
-      child: Column(
-        children: [
-          Center(
-            child: Text(
-              notificaciones,
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: Card.outlined(
-              child: ListView.builder(
-                itemCount: items.length,
-                padding: const EdgeInsets.all(6),
-                itemBuilder: (_, index) => NotificationWidget(
-                  notificationId: items[index]['id']!,
-                  title: items[index]['title']!,
-                  description: items[index]['description']!,
-                  deleteNotification: deleteNotification,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notificaciones'),
+      ),
+      body: Container(
+        padding: EdgeInsets.only(top: statusBarHeight),
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                notificaciones,
+                style: const TextStyle(
+                  fontSize: 20,
                 ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            Expanded(
+              child: Card.outlined(
+                child: ListView.builder(
+                  itemCount: items.length,
+                  padding: const EdgeInsets.all(6),
+                  itemBuilder: (_, index) => NotificationWidget(
+                    notificationId: items[index]['id']!,
+                    title: items[index]['title']!,
+                    description: items[index]['description']!,
+                    deleteNotification: deleteNotification,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }

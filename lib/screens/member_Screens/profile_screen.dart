@@ -13,17 +13,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     Future _logout() async {
-      try{
-        await Dio().post(
-          urlBack + 'logout_user/',
-          options: Options(
-            headers: {
-              'Authorization': 'Token $token'
-            }
-          )
-        );
-
-      } catch(e){
+      try {
+        await Dio().post(urlBack + 'logout_user/',
+            options: Options(headers: {'Authorization': 'Token $token'}));
+      } catch (e) {
         print(e);
       }
       miembro = null;
@@ -104,6 +97,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(
                             width: 20,
                           ),
+                          const Icon(Icons.workspace_premium,
+                              color: Color.fromARGB(255, 209, 195, 0),
+                              size: 20),
+                          const SizedBox(width: 10),
+                          Text(
+                            "Competencias Pasadas",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 209, 195, 0)),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
                           const Text(
                             "Cambiar contraseña",
                             style: TextStyle(fontSize: 20),
@@ -118,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 CustomButton(
                     text: "Cerrar sesión",
-                    onPressed: () async{
+                    onPressed: () async {
                       await _logout();
                       Navigator.pop(context);
                     })

@@ -5,6 +5,6 @@ class HistoryScreenSport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('holap');
+    return const Text('Historial');
   }
 }
