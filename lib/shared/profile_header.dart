@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -16,19 +14,15 @@ class ProfileHeader extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 25),
           child: Text(
             username,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           ),
         ),
         Container(
-            decoration: const BoxDecoration(
-                color: swimmastBlue,
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(150))),
             height: 120,
             width: 120,
             padding: const EdgeInsets.fromLTRB(35, 5, 5, 35),
             child: CustomAvatar(
-                username: username,
+                username: username[0].toUpperCase(),
                 onTap: () {
                   if (onAvatarTap != null) onAvatarTap!();
                 }))
@@ -59,11 +53,7 @@ class CustomAvatar extends StatelessWidget {
                 top: 0,
                 bottom: 0,
                 child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(1000))),
+                  padding: const EdgeInsets.all(5),
                   child: CircleAvatar(
                       child: image != null
                           ? ClipOval(
@@ -75,20 +65,13 @@ class CustomAvatar extends StatelessWidget {
                               ),
                             )
                           : Text(
-                              username[0],
+                              username,
                               style: const TextStyle(
                                   fontSize: 25, fontWeight: FontWeight.w600),
                             )),
                 ),
               ),
-              const Positioned(
-                right: 5,
-                child: Icon(
-                  Icons.brightness_1,
-                  color: Colors.red,
-                  size: 25,
-                ),
-              )
+
             ],
           )),
     );

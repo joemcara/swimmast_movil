@@ -1,3 +1,5 @@
+import 'package:swimmast_movil/screens/edit_profile.dart';
+import 'package:swimmast_movil/shared/change_password.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -15,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Future _logout() async {
       try{
         await Dio().post(
-          urlBack + 'logout_user/',
+          urlBack + 'administration/logout_user/',
           options: Options(
             headers: {
               'Authorization': 'Token $token'
@@ -29,16 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       miembro = null;
     }
 
-    const List<String> data = [
-      "Número de teléfono: 1234567890",
-      "Dirección: Av.9 de octubre y Chimborazo "
+    List<String> data = [
+      "Número de teléfono: $phoneNumber",
+      "Fecha de nacimiento: $birthDate",
     ];
 
-    const List<String> packages = [
-      "Paquete X - Lunes 8:30 - 11:00am",
-      "Paquete Y - Lunes 10:30 - 13:00am",
-      "Paquete Z - Lunes 8:30 - 11:00am",
-    ];
+    List<String> packages = userCourse.cast<String>();
+
 
     return Scaffold(
       body: Container(
@@ -51,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: miembro!.user.firstName,
+                      username: miembro!.user.firstName[0].toUpperCase(),
                       onTap: () {},
                     ),
                   ),
@@ -62,7 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 CustomTextButton(
                   text: "Editar perfil",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditProfile()));
+                  },
                   text_color: swimmastBlue,
                 ),
                 Container(
@@ -73,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 32,
                       ),
-                      _infoBox("Paquetes inscritos", packages),
+                      _infoBox("Cursos Inscritos", packages),
                     ],
                   ),
                 ),
@@ -88,28 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: swimmastBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100))),
-                            padding: const EdgeInsets.all(6),
-                            child: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Text(
-                            "Cambiar contraseña",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
+                      ChangePassword(),
                       const Icon(
                         Icons.keyboard_arrow_right_outlined,
                       )
@@ -128,6 +111,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+
+
 
 Widget _infoBox(String title, List<String> data) {
   return Column(

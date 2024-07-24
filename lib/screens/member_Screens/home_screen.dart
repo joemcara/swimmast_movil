@@ -3,18 +3,17 @@ import 'package:swimmast_movil/models/course.dart';
 import '../../shared/constants.dart';
 
 class HomeScreenMember extends StatefulWidget {
-
   final int? idUser;
   final String? token;
 
   const HomeScreenMember({super.key, this.idUser, this.token});
-  
+
   @override
   State<HomeScreenMember> createState() => _HomeScreenMemberState();
 }
 
 class _HomeScreenMemberState extends State<HomeScreenMember> {
-  List<Map<String, String>> courseList = []; 
+  List<Map<String, String>> courseList = [];
 
   @override
   void initState() {
@@ -22,24 +21,23 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
     _AvilableCourse();
   }
 
-    Future<void> _AvilableCourse() async {
+  Future<void> _AvilableCourse() async {
     try {
       final response = await Dio().get(
-        urlBack + 'course/swimmer/' + idUser.toString(),
-        options: Options(
-          headers: {
-            'Authorization': 'Token $token'
-          }
-        )
-      );
+          urlBack + 'course/swimmer/' + idUser.toString(),
+          options: Options(headers: {'Authorization': 'Token $token'}));
       for (var item in response.data) {
         Course course = Course.fromJson(item);
         Map<String, String> courseMap = {
           'day': course.description,
           'hour': course.startTime + ' - ' + course.endTime,
-          'trainer': course.instructor.firstName + ' ' + course.instructor.lastName,
+          'trainer':
+              course.instructor.firstName + ' ' + course.instructor.lastName,
         };
         courseList.add(courseMap);
+        userCourse.clear();
+        userCourse.add("${course.name}  ${course.description}");
+        
       }
       setState(() {});
     } catch (e) {
@@ -153,10 +151,10 @@ Widget _scheduleBox(
                       ),
                     ],
                   ),
-                      Text(
-                        trainer ?? "no disponible",
-                        style: const TextStyle(fontSize: 16, height: 2),
-                      )
+                  Text(
+                    trainer ?? "no disponible",
+                    style: const TextStyle(fontSize: 16, height: 2),
+                  )
                 ],
               ),
             ],

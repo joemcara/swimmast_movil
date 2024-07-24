@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
+import 'package:provider/provider.dart';
+import './models/courseSelected.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CourseSelected(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
