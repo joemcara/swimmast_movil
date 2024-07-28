@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799602342900",
+    "project_id": "test-swimmast",
+    "storage_bucket": "test-swimmast.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799602342900:android:c1b42248c4052c8a8d97a1",
+        "android_client_info": {
+          "package_name": "com.example.swimmast_movil"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3QLsgG_0zmvhRLnFqzqpz2KbNibbS1X8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
