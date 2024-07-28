@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
-
 class SwimmastCard extends StatelessWidget {
   final Color? color;
   final Widget child;
@@ -33,7 +32,7 @@ class SwimmastCard extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            child,
+            Expanded(child: child),
           ],
         ));
   }

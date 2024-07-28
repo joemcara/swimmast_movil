@@ -11,6 +11,9 @@ import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
+import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+
 class BottomRouteTrainee extends StatelessWidget {
   final int index;
   const BottomRouteTrainee({super.key, required this.index});
@@ -55,11 +58,11 @@ class BottomRouteSportPerson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens =  [
-      HomeScreenSportPerson(),
+      HomeScreenSport(),
       HistoryScreenSport(),
       ShopScreen(),
-      NotificationScreen(),
-      ProfileScreen(context)
+      NotificationScreenSport(),
+      ProfileScreenSport(context),
     ];
     return screens[index];
   }
