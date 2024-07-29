@@ -17,12 +17,12 @@ class BottomRouteTrainee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = const [
+    List<Widget> screens = [
       HomeScreen(),
       AttendanceScreen(),
       WorkoutScreen(),
       NotificationScreen(),
-      ProfileScreenTrainer()
+      ProfileScreenTrainer(context)
     ];
     return screens[index];
   }
@@ -54,7 +54,7 @@ class BottomRouteSportPerson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens =  [
+    List<Widget> screens = [
       HomeScreenSportPerson(),
       HistoryScreenSport(),
       ShopScreen(),

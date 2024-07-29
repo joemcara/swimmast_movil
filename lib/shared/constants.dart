@@ -10,7 +10,6 @@ export 'package:swimmast_movil/shared/profile_header.dart';
 
 const String urlBack = 'http://10.0.2.2:8000/api/v2/';
 
-
 Member? miembro;
 List<Map<String, dynamic>> coursesList = [];
 int courseSelected = 0;
@@ -28,14 +27,19 @@ const TextStyle styleTitles =
 int global = 3;
 var attendanceStateModal = false;
 
-
 //Member constans
 var phoneNumber;
 var birthDate;
 var token;
 var idUser;
 var userName;
+var role;
 var userCourse = [];
+var userCourses;
 
-
-
+List<Color> colorsList = [
+  Colors.purpleAccent,
+  swimmastBlue,
+  Colors.amber,
+  Colors.orange
+];

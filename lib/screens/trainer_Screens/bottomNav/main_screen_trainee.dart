@@ -54,7 +54,7 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
             ? AppBar(
                 actions: [
                   ProfileHeaderTrainee(
-                    username: miembro!.user.firstName,
+                    username: userName,
                     onAvatarTap: () {
                       setState(() {
                         index = 4;

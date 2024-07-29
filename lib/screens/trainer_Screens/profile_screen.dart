@@ -4,12 +4,28 @@ import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/button_Rectangle.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
-class ProfileScreenTrainer extends StatelessWidget {
-  const ProfileScreenTrainer({super.key});
+class ProfileScreenTrainer extends StatefulWidget {
+  const ProfileScreenTrainer(BuildContext context);
 
+  @override
+  State<ProfileScreenTrainer> createState() => _ProfileScreenTrainerState();
+}
+
+class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
+    Future<void> _logout() async {
+      try {
+        await Dio().post(urlBack + 'administration/logout_user/',
+            options: Options(headers: {'Authorization': 'Token $token'}));
+        print("cerrado");
+      } catch (e) {
+        print(e);
+      }
+      miembro = null;
+    }
 
     const List<String> data = [
       "Número de teléfono: 1234567890",
@@ -32,7 +48,7 @@ class ProfileScreenTrainer extends StatelessWidget {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: miembro!.user.firstName[0].toUpperCase(),
+                      username: userName,
                       onTap: () {},
                     ),
                   ),
@@ -89,7 +105,8 @@ class ProfileScreenTrainer extends StatelessWidget {
                 ),
                 CustomButton(
                     text: "Cerrar sesión",
-                    onPressed: () {
+                    onPressed: () async {
+                      await _logout();
                       Navigator.pop(context);
                     })
               ],

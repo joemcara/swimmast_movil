@@ -15,17 +15,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     Future _logout() async {
-      try{
-        await Dio().post(
-          urlBack + 'administration/logout_user/',
-          options: Options(
-            headers: {
-              'Authorization': 'Token $token'
-            }
-          )
-        );
-
-      } catch(e){
+      try {
+        await Dio().post(urlBack + 'administration/logout_user/',
+            options: Options(headers: {'Authorization': 'Token $token'}));
+      } catch (e) {
         print(e);
       }
       miembro = null;
@@ -37,7 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ];
 
     List<String> packages = userCourse.cast<String>();
-
 
     return Scaffold(
       body: Container(
@@ -62,10 +54,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 CustomTextButton(
                   text: "Editar perfil",
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditProfile()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EditProfile()));
                   },
                   text_color: swimmastBlue,
                 ),
@@ -101,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 CustomButton(
                     text: "Cerrar sesión",
-                    onPressed: () async{
+                    onPressed: () async {
                       await _logout();
                       Navigator.pop(context);
                     })
@@ -111,8 +101,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
 
 Widget _infoBox(String title, List<String> data) {
   return Column(
