@@ -4,6 +4,7 @@ import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 
 
 class NotificationScreenSport extends StatefulWidget {

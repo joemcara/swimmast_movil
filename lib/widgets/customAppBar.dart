@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback? onBackPressed; 
+  final VoidCallback? onBackPressed;
   final PreferredSizeWidget? bottom;
 
   CustomAppBar({
     required this.title,
-    required this.onBackPressed, 
+    required this.onBackPressed,
     this.bottom,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: onBackPressed != null ? IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: onBackPressed,
-      ) : null, 
+      leading: onBackPressed != null
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back, color: defaultIconColor),
+              onPressed: onBackPressed,
+            )
+          : null,
       title: Text(
         title,
         style: const TextStyle(
-          color: Colors.white,
+          color: defaultIconTextColor,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
@@ -31,16 +34,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       flexibleSpace: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF2F4458),
-              Color(0xFF1E2A34),
-            ],
+            colors: defaultGradient,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
       ),
-      bottom: bottom, 
+      bottom: bottom,
     );
   }
 

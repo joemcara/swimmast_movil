@@ -76,7 +76,7 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xFF2F4458), Color(0xFF1E2A34)],
+              colors: defaultGradient,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -123,12 +123,6 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
       [Widget? nextPage]) {
     bool isSelected = _selectedIndex == index;
 
-    List<Color> defaultGradient = [Color(0xFF2F4458), Color(0xFF1E2A34)];
-    List<Color> selectedGradient = [
-      Color.fromARGB(255, 167, 167, 167),
-      Color.fromARGB(255, 223, 223, 223)
-    ];
-
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -141,49 +135,51 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
           );
         }
       },
-      child: Container(
-          margin: EdgeInsets.all(8.0), 
-          padding: EdgeInsets.all(8.0), 
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isSelected ? selectedGradient : defaultGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 5,
+      child: Expanded(
+        child: Container(
+            margin: EdgeInsets.all(8.0), 
+            padding: EdgeInsets.all(7.0), 
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: isSelected ? selectedGradient : defaultGradient,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ],
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  size: 80,
-                  color: isSelected
-                      ? Color.fromRGBO(9, 9, 41, 1)
-                      : Color.fromRGBO(255, 255, 255, 1),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: isSelected
-                        ? Color.fromRGBO(9, 9, 41, 1)
-                        : Color.fromRGBO(255, 255, 255, 1),
-                    fontSize: 16,
-                  ),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 207, 207, 207).withOpacity(0.2),
+                  spreadRadius: 2,
+                  blurRadius: 5,
                 ),
               ],
             ),
-          )),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    size: 80,
+                    color: isSelected
+                        ? selectIconTextColor 
+                        : defaultIconColor
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: isSelected
+                          ? selectIconTextColor 
+                          : defaultIconTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            )),
+      ),
     );
   }
 }
