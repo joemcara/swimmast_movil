@@ -114,11 +114,11 @@ class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 24,
+                                height: 20,
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
+                                    const EdgeInsets.symmetric(horizontal: 25),
                                 child: SwimmastIconText(
                                   text: competition.time,
                                   icon: Icon(Icons.watch_later_outlined),
