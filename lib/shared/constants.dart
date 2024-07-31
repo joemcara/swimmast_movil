@@ -27,13 +27,14 @@ const Color selectIconTextColor = Color.fromRGBO(9, 9, 41, 1);
 const Color selectBoxTextColor = Colors.white;
 const Color selectTextTextColor = Colors.white;
 
+const Color buttoncoloryellow = Color.fromARGB(255, 240, 204, 0);
+const Color buttoncolorblue = Color.fromRGBO(30, 42, 52, 1);
+
 List<Color> defaultGradient = [Color(0xFF2F4458), Color(0xFF1E2A34)];
 List<Color> selectedGradient = [
   Color.fromARGB(255, 167, 167, 167),
   Color.fromARGB(255, 223, 223, 223)
 ];
-
-
 
 const TextStyle styleSubtitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 16);

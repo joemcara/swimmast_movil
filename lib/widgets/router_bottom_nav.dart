@@ -57,12 +57,13 @@ class BottomRouteSportPerson extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens =  [
+    List<Widget> screens = [
       HomeScreenSport(),
       HistoryScreenSport(),
       ShopScreen(),
       NotificationScreenSport(),
-      ProfileScreenSport(context),
+      // ProfileScreenSport(context),
+      ProfileScreenSport(),
     ];
     return screens[index];
   }

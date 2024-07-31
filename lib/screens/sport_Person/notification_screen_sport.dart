@@ -6,7 +6,6 @@ import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
-
 class NotificationScreenSport extends StatefulWidget {
   const NotificationScreenSport({super.key});
 
@@ -32,10 +31,11 @@ class _NotificationScreenSportState extends State<NotificationScreenSport> {
         nextPage = HomeScreenSport();
         break;
       case 1:
-        nextPage = NotificationScreenSport(); 
+        nextPage = NotificationScreenSport();
         break;
       case 2:
-        nextPage = ProfileScreenSport(context); 
+        //nextPage = ProfileScreenSport(context);
+        nextPage = ProfileScreenSport();
         break;
       default:
         nextPage = HomeScreenSport();
@@ -65,13 +65,13 @@ class _NotificationScreenSportState extends State<NotificationScreenSport> {
     });
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
       appBar: CustomAppBar(
-        title: notificaciones, 
+        title: notificaciones,
         onBackPressed: () => Navigator.pop(context),
       ),
       body: Container(

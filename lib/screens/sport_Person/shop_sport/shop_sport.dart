@@ -3,8 +3,9 @@ import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
 import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
-
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/shared/constants.dart';
+import 'package:flutter/services.dart';
 
 class ShopSportScreen extends StatelessWidget {
   @override
@@ -30,9 +31,12 @@ class ShopSportScreen extends StatelessWidget {
               Tab(text: "Paquetes Disponibles"),
               Tab(text: "Comprados"),
             ],
-            labelColor: Color.fromARGB(255, 240, 204, 0), // Color del texto de la pestaña seleccionada
-            unselectedLabelColor: const Color.fromARGB(255, 255, 255, 255), // Color del texto de las pestañas no seleccionadas
-            indicatorColor: Color.fromARGB(255, 240, 204, 0), // Color de la línea de la pestaña seleccionada
+            labelColor: Color.fromARGB(
+                255, 240, 204, 0), // Color del texto de la pestaña seleccionada
+            unselectedLabelColor: const Color.fromARGB(255, 255, 255,
+                255), // Color del texto de las pestañas no seleccionadas
+            indicatorColor: Color.fromARGB(255, 240, 204,
+                0), // Color de la línea de la pestaña seleccionada
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
@@ -58,8 +62,8 @@ class ShopSportScreen extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.yellow,
+                    foregroundColor: buttoncolorblue,
+                    backgroundColor: buttoncoloryellow,
                   ),
                   child: const Text('Inscribirse'),
                 ),
@@ -68,7 +72,6 @@ class ShopSportScreen extends StatelessWidget {
             const PurchasedScreen(),
           ],
         ),
-        
       ),
     );
   }
@@ -160,15 +163,466 @@ class BuyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final List<Map<String, String>> _accountDetails = [
+      {'name': 'Espinoza Wilson', 'id': 'CI: 0956325689'},
+    ];
+
+    final List<Map<String, String>> _bankDetails = [
+      {
+        'bankName': 'Banco Guayaquil',
+        'account': 'Ahorro #0015095639',
+        'email': 'trasta7@gmail.com'
+      },
+      {
+        'bankName': 'Banco Pichincha',
+        'account': 'Ahorro #0015236789',
+        'email': 'trasta7@gmail.com'
+      },
+    ];
+
+    final List<Map<String, String>> _personDetails = [
+      {'name': 'Evelyn Smith', 'id': '0956325689'},
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(nomPaquete),
+        appBar: CustomAppBar(
+          title: 'Comprar $nomPaquete',
+          onBackPressed: () => Navigator.pop(context),
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    WidgetInfoBank(
+                        accountDetails: _accountDetails,
+                        bankDetails: _bankDetails),
+                    SizedBox(height: screenWidth * 0.02),
+                    WidgetInfoBuy(
+                        personDetails: _personDetails, nomPaquete: nomPaquete),
+                    SizedBox(height: screenWidth * 0.02),
+                    WidgetButtons(precio: double.parse(precio)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: buttoncoloryellow,
+                              foregroundColor: buttoncolorblue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenWidth * 0.04,
+                                  horizontal: screenWidth * 0.02),
+                            ),
+                            onPressed: () {},
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Enviar Pago",
+                                  style:
+                                      TextStyle(fontSize: screenWidth * 0.06),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16.0),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ));
+  }
+}
+
+class WidgetButtons extends StatefulWidget {
+  final double precio;
+
+  const WidgetButtons({
+    Key? key,
+    required this.precio,
+  }) : super(key: key);
+
+  @override
+  _WidgetButtonsState createState() => _WidgetButtonsState();
+}
+
+class _WidgetButtonsState extends State<WidgetButtons> {
+  bool _isAmountVisible = false;
+  TextEditingController _amountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _amountController.text = '00.00'; // No incluye el signo '$' aquí
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(8.0),
       ),
-      body: Center(
-        child: Text('Comprar $nomPaquete por \$$precio'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.credit_score, color: buttoncolorblue),
+              SizedBox(width: 8.0),
+              Text(
+                'Opciones de pago',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: buttoncolorblue,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
+            ],
+          ),
+          Divider(),
+          SizedBox(height: 8.0),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: buttoncolorblue,
+                          foregroundColor: buttoncoloryellow,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 20.0),
+                        ),
+                        onPressed: () {},
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "\$ ${widget.precio.toStringAsFixed(2)}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Pagar valor total",
+                              style: TextStyle(fontSize: screenWidth * 0.03),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: screenWidth * 0.02),
+                    Expanded(
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: buttoncolorblue,
+                          padding: EdgeInsets.symmetric(
+                              vertical: screenWidth * 0.02,
+                              horizontal: screenWidth * 0.02),
+                          backgroundColor: Colors.transparent,
+                          side: BorderSide.none,
+                        ),
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.upload_file, color: buttoncolorblue),
+                            SizedBox(width: screenWidth * 0.02),
+                            Text(
+                              "Subir\ncomprobante",
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.03,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenWidth * 0.02),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: buttoncolorblue,
+                        foregroundColor: buttoncoloryellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: screenWidth * 0.04,
+                            horizontal: screenWidth * 0.05),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isAmountVisible = !_isAmountVisible;
+                        });
+                      },
+                      child: Text(
+                        "Agregar monto",
+                        style: TextStyle(fontSize: screenWidth * 0.05),
+                      ),
+                    ),
+                    SizedBox(width: 16.0),
+                    Visibility(
+                      visible: _isAmountVisible,
+                      child: Container(
+                        width: screenWidth * 0.3,
+                        child: TextField(
+                          controller: _amountController,
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*\.?\d{0,2}')),
+                          ],
+                          decoration: InputDecoration(
+                            labelText: 'Monto',
+                            border: OutlineInputBorder(),
+                            prefixText: '\$',
+                          ),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
+}
+
+class WidgetInfoBuy extends StatelessWidget {
+  const WidgetInfoBuy({
+    super.key,
+    required List<Map<String, String>> personDetails,
+    required this.nomPaquete,
+  }) : _personDetails = personDetails;
+
+  final List<Map<String, String>> _personDetails;
+  final String nomPaquete;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final TextStyle textStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: buttoncolorblue,
+      fontSize: screenWidth * 0.04,
+    );
+
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.receipt, color: buttoncolorblue),
+              SizedBox(width: screenWidth * 0.02),
+              Text('Detalle de pago', style: textStyle),
+            ],
+          ),
+          Divider(),
+          SizedBox(height: screenWidth * 0.02),
+          Row(
+            children: [
+              Icon(Icons.person, color: buttoncolorblue),
+              SizedBox(width: screenWidth * 0.02),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Nombre: ${_personDetails[0]['name']}',
+                      style: textStyle),
+                  Text('Cédula: ${_personDetails[0]['id']}', style: textStyle),
+                ],
+              ),
+            ],
+          ),
+          Divider(),
+          SizedBox(height: screenWidth * 0.02),
+          Row(
+            children: [
+              Icon(Icons.shopping_cart, color: buttoncolorblue),
+              SizedBox(width: 8.0),
+              Text('Paquete: $nomPaquete', style: textStyle),
+            ],
+          ),
+          SizedBox(height: screenWidth * 0.04),
+          Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Total a pagar:', style: textStyle),
+              Text('\$10.00', style: textStyle),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WidgetInfoBank extends StatelessWidget {
+  const WidgetInfoBank({
+    super.key,
+    required List<Map<String, String>> accountDetails,
+    required List<Map<String, String>> bankDetails,
+  })  : _accountDetails = accountDetails,
+        _bankDetails = bankDetails;
+
+  final List<Map<String, String>> _accountDetails;
+  final List<Map<String, String>> _bankDetails;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Container(
+      padding: EdgeInsets.all(screenWidth * 0.02),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: defaultGradient,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.account_circle, color: Colors.white),
+              SizedBox(width: screenWidth * 0.02),
+              Text('Detalle de la cuenta a pagar',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: screenWidth * 0.04)),
+            ],
+          ),
+          Divider(),
+          SizedBox(height: screenWidth * 0.02),
+          for (var account in _accountDetails)
+            Row(
+              children: [
+                Icon(
+                  Icons.person,
+                  color: Colors.white,
+                  size: screenWidth * 0.07,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.02),
+                  child: _accountDetail(account['name']!, account['id']!),
+                ),
+              ],
+            ),
+          for (var bank in _bankDetails)
+            Row(
+              children: [
+                Icon(
+                  Icons.account_balance,
+                  color: Colors.white,
+                  size: screenWidth * 0.07,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.02),
+                  child: _bankDetail(
+                      bank['bankName']!, bank['account']!, bank['email']!),
+                ),
+              ],
+            ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+}
+
+Widget _accountDetail(String name, String id) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        name,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+      ),
+      Text(
+        id,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+      ),
+    ],
+  );
+}
+
+Widget _bankDetail(String bankName, String account, String email) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          bankName,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+        ),
+        Text(
+          account,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+        ),
+        Text(
+          email,
+          style: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+        ),
+      ],
+    ),
+  );
 }
 
 class PurchasedScreen extends StatelessWidget {

@@ -9,8 +9,8 @@ import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/calendar_button.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 
 class HistoryScreenSport extends StatefulWidget {
   const HistoryScreenSport({super.key});
@@ -39,7 +39,8 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
       case 2:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ProfileScreenSport(context)),
+          //MaterialPageRoute(builder: (context) => ProfileScreenSport(context)),
+          MaterialPageRoute(builder: (context) => ProfileScreenSport()),
         );
         break;
     }
@@ -116,10 +117,10 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
             margin: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
             padding: EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 240, 204, 0),
+              color: buttoncoloryellow,
               borderRadius: BorderRadius.circular(12.0), // Bordes redondeados
               border: Border.all(
-                color: Color.fromARGB(255, 240, 204, 0),// Color del borde
+                color: buttoncoloryellow, // Color del borde
                 width: 2.0, // Ancho del borde
               ),
             ),

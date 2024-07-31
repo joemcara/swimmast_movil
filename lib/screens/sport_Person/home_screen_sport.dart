@@ -35,7 +35,8 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
         nextPage = NotificationScreenSport(); 
         break;
       case 2:
-        nextPage = ProfileScreenSport(context); 
+        //nextPage = ProfileScreenSport(context); 
+        nextPage = ProfileScreenSport();
         break;
       default:
         nextPage = HomeScreenSport();

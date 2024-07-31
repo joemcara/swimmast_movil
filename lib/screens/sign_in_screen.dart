@@ -36,16 +36,15 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-Future<void> _login() async {
-  try {
-    final response = await Dio().post(
-      urlBack + 'administration/login_user/',
-      data: {
-        'username': _userName.text,
-        'password': _password.text,
-      },
-      
-    );
+  Future<void> _login() async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'administration/login_user/',
+        data: {
+          'username': _userName.text,
+          'password': _password.text,
+        },
+      );
       print(response.data);
       miembro = Member.fromJson(response.data);
       token = response.data['token'];
@@ -53,14 +52,13 @@ Future<void> _login() async {
       userName = response.data['user']['username'];
       birthDate = response.data['user']['birthdate'];
       phoneNumber = response.data['phone_number'];
-      
-  } catch (e) {
-    if (e is DioException) {
-    print('Status Code: ${e.response?.statusCode}');
-    print('Data: ${e.response?.data}');
+    } catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
+    }
   }
-  }
-}
 
   @override
   Widget build(BuildContext context) {
