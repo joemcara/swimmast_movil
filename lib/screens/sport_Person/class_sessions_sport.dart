@@ -11,6 +11,7 @@ import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/screens/sport_Person/widgets_sport/routine_info_cards.dart';
 import 'package:swimmast_movil/screens/sport_Person/widgets_sport/widget_performed.dart';
+import 'package:swimmast_movil/screens/sport_Person/widgets_sport/item_selection.dart';
 
 
 class ClassSessionsSport extends StatefulWidget {
@@ -34,7 +35,14 @@ class _ClassSessionsSportState extends State<ClassSessionsSport> {
         children: [
           SizedBox(height: 20),
           WidgetPerformed(),
-          SizedBox(height: 40),
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.fromLTRB(120.0, 0.0, 120.0, 0),
+            child: ItemSelection(
+              title: "Rutinas",
+              styles: ["Rutina Realizada", "Rutina No Realizada", "Rutinas"],)
+            ),
+          SizedBox(height: 10),
           RoutineInfoCards()
         ],
       ),
