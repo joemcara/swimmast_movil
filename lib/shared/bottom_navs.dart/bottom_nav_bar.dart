@@ -174,3 +174,45 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
     );
   }
 }
+
+class CustomBottomNavigationBar extends StatefulWidget {
+  final int selected;
+  final ValueChanged<int> currentIndex;
+
+  CustomBottomNavigationBar({required this.selected, required this.currentIndex});
+
+  @override
+  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: widget.selected,
+      onTap: (index) {
+        setState(() {
+          widget.currentIndex(index);
+        });
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home, color: Colors.grey),
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Inicio',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications, color: Colors.grey), 
+          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Notificaciones',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person, color: Colors.grey), 
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Perfil',
+        ),
+      ],
+      selectedItemColor: Color.fromARGB(255, 10, 5, 59),
+    );
+  }
+}

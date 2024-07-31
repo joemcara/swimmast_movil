@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
-import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/history_info_cards.dart';
-import 'package:swimmast_movil/screens/notification_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home:  MainScreenSportPerson(),
+      home:  HomeScreenSport(),
     );
   }
 }

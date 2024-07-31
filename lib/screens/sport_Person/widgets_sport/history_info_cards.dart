@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/sport_Person/history_cards.dart';
+import 'package:swimmast_movil/screens/sport_Person/widgets_sport/history_cards.dart';
 
 class HistoryInfoCards extends StatelessWidget {
   final List<Map<String, String>> history_info = [

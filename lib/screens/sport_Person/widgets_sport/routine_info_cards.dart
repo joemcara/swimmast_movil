@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/screens/sport_Person/routine_cards.dart';
+import 'package:swimmast_movil/screens/sport_Person/widgets_sport/routine_cards.dart';
 
 class RoutineInfoCards extends StatelessWidget {
   final List<Map<String, String>> routine_info = [
