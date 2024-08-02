@@ -166,19 +166,21 @@ class BuyScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     final List<Map<String, String>> _accountDetails = [
-      {'name': 'Espinoza Wilson', 'id': 'CI: 0956325689'},
+      {
+        'name': 'Espinoza Wilson',
+        'id': 'CI: 0956325689',
+        'email': 'trasta7@gmail.com',
+      },
     ];
 
     final List<Map<String, String>> _bankDetails = [
       {
         'bankName': 'Banco Guayaquil',
         'account': 'Ahorro #0015095639',
-        'email': 'trasta7@gmail.com'
       },
       {
         'bankName': 'Banco Pichincha',
         'account': 'Ahorro #0015236789',
-        'email': 'trasta7@gmail.com'
       },
     ];
 
@@ -195,7 +197,7 @@ class BuyScreen extends StatelessWidget {
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.02),
+                padding: EdgeInsets.all(screenWidth * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -230,7 +232,7 @@ class BuyScreen extends StatelessWidget {
                                 Text(
                                   "Enviar Pago",
                                   style:
-                                      TextStyle(fontSize: screenWidth * 0.06),
+                                      TextStyle(fontSize: screenWidth * 0.05),
                                 ),
                               ],
                             ),
@@ -315,7 +317,8 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                             borderRadius: BorderRadius.circular(18.0),
                           ),
                           padding: EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 20.0),
+                              vertical: screenWidth * 0.03,
+                              horizontal: screenWidth * 0.01),
                         ),
                         onPressed: () {},
                         child: Column(
@@ -325,7 +328,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                             Text(
                               "\$ ${widget.precio.toStringAsFixed(2)}",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -379,11 +382,11 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                         backgroundColor: buttoncolorblue,
                         foregroundColor: buttoncoloryellow,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         padding: EdgeInsets.symmetric(
-                            vertical: screenWidth * 0.04,
-                            horizontal: screenWidth * 0.05),
+                            vertical: screenWidth * 0.05,
+                            horizontal: screenWidth * 0.07),
                       ),
                       onPressed: () {
                         setState(() {
@@ -392,28 +395,33 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                       },
                       child: Text(
                         "Agregar monto",
-                        style: TextStyle(fontSize: screenWidth * 0.05),
+                        style: TextStyle(fontSize: screenWidth * 0.04),
                       ),
                     ),
-                    SizedBox(width: 16.0),
+                    SizedBox(width: screenWidth * 0.065),
                     Visibility(
                       visible: _isAmountVisible,
-                      child: Container(
-                        width: screenWidth * 0.3,
-                        child: TextField(
-                          controller: _amountController,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*\.?\d{0,2}')),
-                          ],
-                          decoration: InputDecoration(
-                            labelText: 'Monto',
-                            border: OutlineInputBorder(),
-                            prefixText: '\$',
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: screenWidth * 0.02,
+                            horizontal: screenWidth * 0.02),
+                        child: Container(
+                          width: screenWidth * 0.3,
+                          child: TextField(
+                            controller: _amountController,
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d*\.?\d{0,2}')),
+                            ],
+                            decoration: InputDecoration(
+                              labelText: 'Monto',
+                              border: OutlineInputBorder(),
+                              prefixText: '\$',
+                            ),
+                            style: TextStyle(fontSize: screenWidth * 0.04),
                           ),
-                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                       ),
                     ),
@@ -551,29 +559,29 @@ class WidgetInfoBank extends StatelessWidget {
                 Icon(
                   Icons.person,
                   color: Colors.white,
-                  size: screenWidth * 0.07,
+                  size: screenWidth * 0.09,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: screenWidth * 0.02),
-                  child: _accountDetail(account['name']!, account['id']!),
+                  child: _accountDetail(
+                      account['name']!, account['id']!, account['email']!),
                 ),
               ],
             ),
-          for (var bank in _bankDetails)
-            Row(
-              children: [
-                Icon(
-                  Icons.account_balance,
-                  color: Colors.white,
-                  size: screenWidth * 0.07,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.02),
-                  child: _bankDetail(
-                      bank['bankName']!, bank['account']!, bank['email']!),
-                ),
-              ],
-            ),
+          SizedBox(height: screenWidth * 0.02),
+          Divider(),
+          Row(
+            children: [
+              IconBank(screenWidth: screenWidth),
+              SizedBox(width: screenWidth * 0.02),
+              _buildBankColumn('Banco Guayaquil', _bankDetails, screenWidth),
+              SizedBox(width: screenWidth * 0.01),
+              IconBank(screenWidth: screenWidth),
+              SizedBox(width: screenWidth * 0.02),
+              _buildBankColumn('Banco Pichincha', _bankDetails, screenWidth),
+            ],
+          ),
+          SizedBox(height: screenWidth * 0.02),
           Divider(),
         ],
       ),
@@ -581,7 +589,25 @@ class WidgetInfoBank extends StatelessWidget {
   }
 }
 
-Widget _accountDetail(String name, String id) {
+class IconBank extends StatelessWidget {
+  const IconBank({
+    super.key,
+    required this.screenWidth,
+  });
+
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.account_balance,
+      color: Colors.white,
+      size: screenWidth * 0.07,
+    );
+  }
+}
+
+Widget _accountDetail(String name, String id, String email) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -595,11 +621,16 @@ Widget _accountDetail(String name, String id) {
         style: TextStyle(
             fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
       ),
+      Text(
+        email,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+      ),
     ],
   );
 }
 
-Widget _bankDetail(String bankName, String account, String email) {
+Widget _bankDetail(String bankName, String account) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4.0),
     child: Column(
@@ -615,11 +646,26 @@ Widget _bankDetail(String bankName, String account, String email) {
           style: TextStyle(
               fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
         ),
-        Text(
-          email,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
-        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildBankColumn(String bankName, List<Map<String, String>> _bankDetails,
+    double screenWidth) {
+  return Expanded(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var bank
+            in _bankDetails.where((bank) => bank['bankName'] == bankName))
+          Padding(
+            padding: EdgeInsets.only(top: screenWidth * 0.02),
+            child: _bankDetail(
+              bank['bankName']!,
+              bank['account']!,
+            ),
+          ),
       ],
     ),
   );

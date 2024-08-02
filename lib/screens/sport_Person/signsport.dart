@@ -4,6 +4,8 @@ import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_tra
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 import 'package:swimmast_movil/screens/sport_Person/sign_up_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/recover_password_sport.dart';
+import 'package:swimmast_movil/shared/inputs.dart';
 
 class SignSportScreen extends StatefulWidget {
   const SignSportScreen({super.key});
@@ -41,6 +43,8 @@ class _SignSportScreenState extends State<SignSportScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final TextEditingController _email = TextEditingController();
+    final TextEditingController _password = TextEditingController();
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
@@ -91,16 +95,17 @@ class _SignSportScreenState extends State<SignSportScreen> {
                                 color: Colors.white,
                                 letterSpacing: 2),
                           ),
-                          Form(
-                              child: Column(
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Wrap(
+                            runSpacing: 15.0,
+                            alignment: WrapAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 25,
-                              ),
                               TextInput(
-                                controller: _userName,
-                                hintText: "Ingrese su correo",
-                                signIn: true,
+                                controller: _email,
+                                hintText: "Correo electrónico",
+                                label: "Correo electrónico",
                               ),
                               SizedBox(
                                 height: 25,
@@ -108,10 +113,10 @@ class _SignSportScreenState extends State<SignSportScreen> {
                               PasswordInput(
                                 controller: _password,
                                 hintText: "Contraseña",
-                                signIn: true,
+                                label: "Contraseña",
                               ),
                             ],
-                          )),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -130,8 +135,14 @@ class _SignSportScreenState extends State<SignSportScreen> {
                             height: 0.5,
                           ),
                           CustomTextButton(
-                            onPressed: () {},
-                            text: "Olvide Contraseña",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RecoverPasswordSport()));
+                            },
+                            text: "Recuperar Contraseña",
                             text_color: Colors.white,
                           ),
                           const SizedBox(

@@ -19,6 +19,13 @@ class Btnlogout extends StatelessWidget {
       },
       child: Row(
         children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            child: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
           const SizedBox(
             width: 20,
           ),

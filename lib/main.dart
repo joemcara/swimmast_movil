@@ -35,8 +35,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //home: const SignInScreen(),
       //home: HomeScreenSport(),
-      //home: SignSportScreen(),
-      home: ProfileScreenSport(),
+
+      home: SignSportScreen(),
+      //home: ProfileScreenSport(),
     );
   }
 }
