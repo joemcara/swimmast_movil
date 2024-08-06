@@ -164,26 +164,6 @@ class BuyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    final List<Map<String, String>> _accountDetails = [
-      {
-        'name': 'Espinoza Wilson',
-        'id': 'CI: 0956325689',
-        'email': 'trasta7@gmail.com',
-      },
-    ];
-
-    final List<Map<String, String>> _bankDetails = [
-      {
-        'bankName': 'Banco Guayaquil',
-        'account': 'Ahorro #0015095639',
-      },
-      {
-        'bankName': 'Banco Pichincha',
-        'account': 'Ahorro #0015236789',
-      },
-    ];
-
     final List<Map<String, String>> _personDetails = [
       {'name': 'Evelyn Smith', 'id': '0956325689'},
     ];
@@ -201,9 +181,6 @@ class BuyScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    WidgetInfoBank(
-                        accountDetails: _accountDetails,
-                        bankDetails: _bankDetails),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
                         personDetails: _personDetails, nomPaquete: nomPaquete),
@@ -232,10 +209,31 @@ class WidgetButtons extends StatefulWidget {
 
 class _WidgetButtonsState extends State<WidgetButtons> {
   bool _isAmountVisible = false;
-  bool _isTransferVisible = false;
-  bool _isCashVisible = true;
   bool _isReserveButtonVisible = false;
   TextEditingController _amountController = TextEditingController();
+  bool _isTransferVisible = false;
+  bool _isCashVisible = false;
+  bool _isAnyButtonVisibleTran = true;
+  bool _isAnyButtonVisibleEfec = true;
+
+  final List<Map<String, String>> _accountDetails = [
+    {
+      'name': 'Espinoza Wilson',
+      'id': 'CI: 0956325689',
+      'email': 'trasta7@gmail.com',
+    },
+  ];
+
+  final List<Map<String, String>> _bankDetails = [
+    {
+      'bankName': 'Banco Guayaquil',
+      'account': 'Ahorro #0015095639',
+    },
+    {
+      'bankName': 'Banco Pichincha',
+      'account': 'Ahorro #0015236789',
+    },
+  ];
 
   @override
   void initState() {
@@ -245,27 +243,25 @@ class _WidgetButtonsState extends State<WidgetButtons> {
 
   void _toggleTransfer() {
     setState(() {
-      if (_isTransferVisible) {
-        _isTransferVisible = false;
-        _isCashVisible = true;
-        _isReserveButtonVisible = false;
-      } else {
-        _isTransferVisible = true;
-        _isCashVisible = false;
-        _isReserveButtonVisible = false;
-      }
+      if (_isAnyButtonVisibleTran) {
+        _isTransferVisible = !_isTransferVisible;
+        _isAnyButtonVisibleEfec = false;
+        if (!_isTransferVisible) {
+          _isAnyButtonVisibleEfec = true;
+        }
+      } 
     });
   }
 
   void _toggleEfectivo() {
     setState(() {
-      if (_isCashVisible) {
-        _isReserveButtonVisible = !_isReserveButtonVisible;
-      } else {
-        _isTransferVisible = false;
-        _isCashVisible = true;
-        _isReserveButtonVisible = true;
-      }
+      if (_isAnyButtonVisibleEfec) {
+        _isCashVisible = !_isCashVisible;
+        _isAnyButtonVisibleTran = false;
+        if (!_isCashVisible) {
+          _isAnyButtonVisibleTran = true;
+        }
+      } 
     });
   }
 
@@ -279,61 +275,77 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          children: [
+            Icon(Icons.credit_score, color: buttoncolorblue),
+            SizedBox(width: 8.0),
+            Text(
+              'Opciones de pago',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: buttoncolorblue,
+                fontSize: screenWidth * 0.04,
+              ),
+            ),
+          ],
+        ),
+        Divider(),
+        Visibility(
+          visible: _isAnyButtonVisibleTran,
+          child: Column(
             children: [
-              Icon(Icons.credit_score, color: buttoncolorblue),
-              SizedBox(width: 8.0),
-              Text(
-                'Opciones de pago',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: buttoncolorblue,
-                  fontSize: screenWidth * 0.04,
-                ),
+              PaymentOptionCard(
+                icon: Icons.account_balance,
+                title: 'Transferencia Bancaria',
+                description: 'Realiza una transferencia bancaria.',
+                onTap: _toggleTransfer,
+                isSelected: _isTransferVisible,
               ),
             ],
           ),
-          Divider(),
-          if (!_isTransferVisible) ...[
-            PaymentOptionCard(
-              icon: Icons.account_balance,
-              title: 'Transferencia Bancaria',
-              description: 'Realiza una transferencia bancaria.',
-              onTap: _toggleTransfer,
-            ),
-          ],
-          if (_isTransferVisible) ...[
-            SizedBox(height: 16),
-            PaymentOptionCard(
-              icon: Icons.account_balance,
-              title: 'Transferencia Bancaria',
-              description: 'Realiza una transferencia bancaria.',
-              onTap: _toggleTransfer,
-            ),
-            TransferSection(
-              precio: '${widget.precio.toStringAsFixed(2)}',
-              amountController: _amountController,
-              isAmountVisible: _isAmountVisible,
-              onToggleAmountVisibility: () {
-                setState(() {
-                  _isAmountVisible = !_isAmountVisible;
-                });
-              },
-            ),
-          ],
-          if (_isCashVisible) ...[
-            SizedBox(height: 16),
-            PaymentOptionCard(
-              icon: Icons.money,
-              title: 'Pago en Efectivo',
-              description: 'Paga en efectivo en nuestras oficinas.',
-              onTap: _toggleEfectivo,
-            ),
-            SizedBox(height: 16),
-            if (_isReserveButtonVisible) ...[
+        ),
+        Visibility(
+          visible: _isTransferVisible,
+          child: Column(
+            children: [
+              SizedBox(height: screenWidth * 0.02),
+              WidgetInfoBank(
+                accountDetails: _accountDetails,
+                bankDetails: _bankDetails,
+              ),
+              TransferSection(
+                precio: '100.00',
+                amountController: TextEditingController(),
+                isAmountVisible: _isAmountVisible,
+                onToggleAmountVisibility: () {
+                  setState(() {
+                    _isAmountVisible = !_isAmountVisible;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isAnyButtonVisibleEfec,
+          child: Column(
+            children: [
+              PaymentOptionCard(
+                icon: Icons.money,
+                title: 'Pago en Efectivo',
+                description: 'Paga en efectivo en nuestras oficinas.',
+                onTap: _toggleEfectivo,
+                isSelected: _isCashVisible,
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isCashVisible,
+          child: Column(
+            children: [
+              SizedBox(height: 16),
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -356,10 +368,9 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                 ),
               ),
             ],
-          ],
-          SizedBox(height: 8.0),
-        ],
-      ),
+          ),
+        ),
+      ]),
     );
   }
 }
@@ -459,7 +470,7 @@ class WidgetInfoBank extends StatelessWidget {
       padding: EdgeInsets.all(screenWidth * 0.02),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: defaultGradient,
+          colors: [Colors.black12, Colors.black12],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -470,12 +481,12 @@ class WidgetInfoBank extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_circle, color: Colors.white),
+              Icon(Icons.account_circle, color: buttoncolorblue),
               SizedBox(width: screenWidth * 0.02),
               Text('Detalle de la cuenta a pagar',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: buttoncolorblue,
                       fontSize: screenWidth * 0.04)),
             ],
           ),
@@ -486,7 +497,7 @@ class WidgetInfoBank extends StatelessWidget {
               children: [
                 Icon(
                   Icons.person,
-                  color: Colors.white,
+                  color: buttoncolorblue,
                   size: screenWidth * 0.09,
                 ),
                 Padding(
@@ -529,7 +540,7 @@ class IconBank extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       Icons.account_balance,
-      color: Colors.white,
+      color: buttoncolorblue,
       size: screenWidth * 0.07,
     );
   }
@@ -542,17 +553,17 @@ Widget _accountDetail(String name, String id, String email) {
       Text(
         name,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
       ),
       Text(
         id,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
       ),
       Text(
         email,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
       ),
     ],
   );
@@ -567,12 +578,16 @@ Widget _bankDetail(String bankName, String account) {
         Text(
           bankName,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+              fontWeight: FontWeight.bold,
+              color: buttoncolorblue,
+              fontSize: 14),
         ),
         Text(
           account,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+              fontWeight: FontWeight.bold,
+              color: buttoncolorblue,
+              fontSize: 14),
         ),
       ],
     ),
@@ -604,12 +619,14 @@ class PaymentOptionCard extends StatelessWidget {
   final String title;
   final String description;
   final VoidCallback onTap;
+  final bool isSelected;
 
   PaymentOptionCard({
     required this.icon,
     required this.title,
     required this.description,
     required this.onTap,
+    required this.isSelected,
   });
 
   @override
@@ -619,18 +636,27 @@ class PaymentOptionCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+      color: isSelected ? buttoncolorblue : Colors.white,
       child: ListTile(
         contentPadding: EdgeInsets.all(16.0),
         leading: Icon(
           icon,
           size: 40,
-          color: buttoncolorblue,
+          color: isSelected ? Colors.white : buttoncolorblue,
         ),
         title: Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isSelected ? Colors.white : buttoncolorblue,
+          ),
         ),
-        subtitle: Text(description),
+        subtitle: Text(
+          description,
+          style: TextStyle(
+            color: isSelected ? Colors.white : buttoncolorblue,
+          ),
+        ),
         onTap: onTap,
       ),
     );
