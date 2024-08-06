@@ -3,8 +3,8 @@ import 'package:swimmast_movil/shared/change_password.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen(BuildContext context, {super.key});
-
+  //const ProfileScreen(BuildContext context, {super.key});
+  const ProfileScreen({super.key});
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }

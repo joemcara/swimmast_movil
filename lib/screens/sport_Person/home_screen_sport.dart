@@ -8,6 +8,7 @@ import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreenSport extends StatefulWidget {
   @override
@@ -32,10 +33,10 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
         nextPage = HomeScreenSport();
         break;
       case 1:
-        nextPage = NotificationScreenSport(); 
+        nextPage = NotificationScreenSport();
         break;
       case 2:
-        //nextPage = ProfileScreenSport(context); 
+        //nextPage = ProfileScreenSport(context);
         nextPage = ProfileScreenSport();
         break;
       default:
@@ -96,17 +97,108 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  _buildGridItem(Icons.calendar_month, 'Horarios de clases', 0, ClassScheduleSport()),
-                  _buildGridItem(Icons.school, 'Sesiones de clases',
-                      1, ClassSessionsSport()),
-                  _buildGridItem(
-                      Icons.timer, 'Historial de tiempos', 2, HistoryScreenSport()),
-                  _buildGridItem(Icons.workspace_premium,
-                      'Competencias Pasadas', 3, CompetenciesScreenSport()),
-                  _buildGridItem(Icons.shopping_cart, 'Cursos Disponibles', 4,
-                      ShopSportScreen()),
-                  _buildGridItem(Icons.history, 'Cursos Pasados', 5,
-                      CompetenciesScreenSport()),
+                  GridItem(
+                    icon: Icons.calendar_month,
+                    title: 'Horarios de clases',
+                    index: 0,
+                    nextPage: ClassScheduleSport(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                  GridItem(
+                    icon: Icons.school,
+                    title: 'Sesiones de clases',
+                    index: 1,
+                    nextPage: ClassSessionsSport(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                  GridItem(
+                    icon: Icons.timer,
+                    title: 'Historial de tiempos',
+                    index: 2,
+                    nextPage: HistoryScreenSport(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                  GridItem(
+                    icon: Icons.workspace_premium,
+                    title: 'Competencias Pasadas',
+                    index: 3,
+                    nextPage: CompetenciesScreenSport(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                  GridItem(
+                    icon: Icons.shopping_cart,
+                    title: 'Cursos Disponibles',
+                    index: 4,
+                    nextPage: ShopSportScreen(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                  GridItem(
+                    icon: Icons.history,
+                    title: 'Cursos Pasados',
+                    index: 5,
+                    nextPage: CompetenciesScreenSport(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
                 ],
               ),
             ),
@@ -120,67 +212,4 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
     );
   }
 
-  Widget _buildGridItem(IconData icon, String title, int index,
-      [Widget? nextPage]) {
-    bool isSelected = _selectedIndex == index;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-        if (nextPage != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => nextPage),
-          );
-        }
-      },
-      child: Expanded(
-        child: Container(
-            margin: EdgeInsets.all(8.0), 
-            padding: EdgeInsets.all(7.0), 
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: isSelected ? selectedGradient : defaultGradient,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(255, 207, 207, 207).withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    icon,
-                    size: 80,
-                    color: isSelected
-                        ? selectIconTextColor 
-                        : defaultIconColor
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: isSelected
-                          ? selectIconTextColor 
-                          : defaultIconTextColor,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            )),
-      ),
-    );
-  }
 }

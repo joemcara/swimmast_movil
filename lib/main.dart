@@ -6,6 +6,7 @@ import './models/courseSelected.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/signsport.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
 
 void main() {
   runApp(
@@ -36,8 +37,9 @@ class MyApp extends StatelessWidget {
       //home: const SignInScreen(),
       //home: HomeScreenSport(),
 
-      home: SignSportScreen(),
+      //home: SignSportScreen(),
       //home: ProfileScreenSport(),
+      home: HomeScreenMember(),
     );
   }
 }

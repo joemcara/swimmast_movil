@@ -45,7 +45,8 @@ class BottomRouteMember extends StatelessWidget {
       HistoryScreen(),
       ShopScreen(),
       NotificationScreen(),
-      ProfileScreen(context)
+      //ProfileScreen(context)
+      ProfileScreen(),
     ];
     return screens[index];
   }
