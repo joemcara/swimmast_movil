@@ -43,6 +43,8 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
         index = 1;
       } else if (nameOption == 'Manejar Miembros') {
         index = 4;
+      } else if (nameOption == 'Home') {
+        index = 0;
       } else {
         index = 2;
       }

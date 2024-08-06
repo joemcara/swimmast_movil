@@ -1,10 +1,7 @@
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
+import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
-import 'package:provider/provider.dart';
-import 'package:swimmast_movil/models/courseSelected.dart';
-import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;
@@ -21,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> coursesTodayList = [];
   int _selectedIndex = 0;
   int _selectedtab = 0;
+  List<Map<String, dynamic>> membersList = [];
+  List<Map<String, dynamic>> allCourses = [];
 
   @override
   void initState() {
@@ -60,7 +59,51 @@ class _HomeScreenState extends State<HomeScreen> {
 
       coursesList = courseList;
       coursesToday = coursesTodayList;
+      await MembersByTrainer();
+      allCoursesMembers = allCourses;
       setState(() {});
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<void> MembersByTrainer() async {
+    for (var i = 0; i < coursesList.length; i++) {
+      Map<String, dynamic> courseMap = {
+        'id': coursesList[i]['id'],
+        'members': []
+      };
+      allCourses.add(courseMap);
+    }
+
+    onlyMembers.clear();
+    for (var i = 0; i < allCourses.length; i++) {
+      await _MembersByCourse(allCourses[i]['id']);
+      allCourses[i]['members'].addAll(membersList);
+      onlyMembers.addAll(membersList);
+      membersList.clear();
+    }
+  }
+
+  Future<void> _MembersByCourse(course) async {
+    try {
+      final response = await Dio().get(
+          urlBack + 'swimmer/course/' + course.toString(),
+          options: Options(headers: {'Authorization': 'Token ${token}'}));
+
+      membersList.clear();
+      for (var item in response.data) {
+        User member = User.fromJson(item);
+
+        Map<String, dynamic> membersMap = {
+          'id': member.id,
+          'firstName': member.firstName,
+          'lastName': member.lastName,
+          'birthdate': member.birthdate
+        };
+        membersList.add(membersMap);
+      }
     } catch (e) {
       print(e);
       throw e;
