@@ -14,27 +14,13 @@ class HistoryInfoCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        //body: 
-          //children:[
-            //HistoryCards(title_style: "Hola", time: "5:00"),
-            //Text("HOLAAAASDASD"),
-            ///HistoryCards(title_style: "Hola", time: "5:00"),
-            //HistoryCards(title_style: "Hola", time: "5:00"),
-            //Expanded(
-              //child:Card.outlined(
-                child: ListView.builder(
-                  itemCount: history_info.length,
-                  itemBuilder: (context, index) => HistoryCards(
-                    title_style: history_info[index]['title']!,
-                    time: history_info[index]['time']!,
-                  )
-                )
-              //)
-            //),   
-            //Text("HOLAAA"),
-            //Text("HOLAAA"),
-            //Text("HOLAAA"),
-            //Text("HOLAAA")
+      child: ListView.builder(
+        itemCount: history_info.length,
+        itemBuilder: (context, index) => HistoryCards(
+          title_style: history_info[index]['title']!,
+          time: history_info[index]['time']!,
+        )
+      )
     );
   }
 }

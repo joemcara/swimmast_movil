@@ -21,7 +21,7 @@ class WidgetPerformed extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            Text('Rutina Realizada',
+            Text('Realizada',
               style: TextStyle(
               fontSize: 20)
             ),
@@ -39,7 +39,7 @@ class WidgetPerformed extends StatelessWidget {
               ),
             ),
             SizedBox(width: 10),
-            Text('Rutina No Realizada',
+            Text('No Realizada',
               style: TextStyle(
               fontSize: 20)
             ),
