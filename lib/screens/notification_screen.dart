@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:swimmast_movil/widgets/widget_notification.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 
+import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
+import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+import 'package:swimmast_movil/shared/constants.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -10,9 +15,38 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  int _selectedtab = 1;
 
-  int _selectedIndex = 0;
-  
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedtab = index;
+    });
+    _navigateToScreen(index);
+  }
+
+  void _navigateToScreen(int index) {
+    Widget nextPage;
+    switch (index) {
+      case 0:
+        nextPage = HomeScreenSport();
+        break;
+      case 1:
+        nextPage = NotificationScreen();
+        break;
+      case 2:
+        //nextPage = ProfileScreenSport(context);
+        nextPage = ProfileScreenSport();
+        break;
+      default:
+        nextPage = HomeScreenSport();
+        break;
+    }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => nextPage),
+    );
+  }
+
   List<Map<String, String>> items = [
     {'id': '1', 'title': 'titulo 1', 'description': 'descripcion 1'},
     {'id': '2', 'title': 'titulo 2', 'description': 'descripcion 2'},
@@ -31,40 +65,39 @@ class _NotificationScreenState extends State<NotificationScreen> {
     });
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(top: statusBarHeight),
+      appBar: CustomAppBar(
+        title: notificaciones,
+        onBackPressed: () => Navigator.pop(context),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                notificaciones,
-                style: const TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
             const SizedBox(height: 20),
             Expanded(
-              child: Card(
-                child: ListView.builder(
-                  itemCount: items.length,
-                  padding: const EdgeInsets.all(6),
-                  itemBuilder: (_, index) => NotificationWidget(
-                    notificationId: items[index]['id']!,
-                    title: items[index]['title']!,
-                    description: items[index]['description']!,
-                    deleteNotification: deleteNotification,
-                  ),
+              child: ListView.builder(
+                itemCount: items.length,
+                padding: const EdgeInsets.all(6),
+                itemBuilder: (_, index) => NotificationWidget(
+                  notificationId: items[index]['id']!,
+                  title: items[index]['title']!,
+                  description: items[index]['description']!,
+                  deleteNotification: deleteNotification,
                 ),
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selected: _selectedtab,
+        currentIndex: _onItemTapped,
       ),
     );
   }

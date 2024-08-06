@@ -1,5 +1,5 @@
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/screens/sport_Person/signsport.dart';
+import 'package:swimmast_movil/screens/sign_in_screen.dart';
 
 class Btnlogout extends StatelessWidget {
   const Btnlogout({
@@ -13,7 +13,7 @@ class Btnlogout extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const SignSportScreen(),
+            builder: (context) => const SignInScreen(),
           ),
         );
       },

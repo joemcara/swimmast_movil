@@ -12,6 +12,7 @@ class SwimmastCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
         height: height ?? 80,
         // padding: const EdgeInsets.all(10),
         margin: margin ?? const EdgeInsets.symmetric(vertical: 8),

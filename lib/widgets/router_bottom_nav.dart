@@ -11,8 +11,7 @@ import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 
 class BottomRouteTrainee extends StatelessWidget {

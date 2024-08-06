@@ -1,9 +1,9 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
-import 'package:swimmast_movil/shared/change_password.dart';
+import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/btnlogout.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 
@@ -29,7 +29,7 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
           nextPage = HomeScreenSport();
           break;
         case 1:
-          nextPage = NotificationScreenSport();
+          nextPage = NotificationScreen();
           break;
         case 2:
           //nextPage = ProfileScreenSport(context);
@@ -130,7 +130,7 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ChangePassword(),
+                  ChangePasswordW(),
                   const Icon(
                     Icons.keyboard_arrow_right_outlined,
                   ),

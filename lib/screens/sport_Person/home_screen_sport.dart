@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+
 import 'package:swimmast_movil/screens/sport_Person/class_schedule_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/class_sessions_sport.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/competencies_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
@@ -33,7 +33,7 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
         nextPage = HomeScreenSport();
         break;
       case 1:
-        nextPage = NotificationScreenSport();
+        nextPage = NotificationScreen();
         break;
       case 2:
         //nextPage = ProfileScreenSport(context);
@@ -211,5 +211,4 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
       ),
     );
   }
-
 }

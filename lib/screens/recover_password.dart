@@ -3,16 +3,16 @@ import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_memb
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
-import 'package:swimmast_movil/screens/sport_Person/sign_up_screen_sport.dart';
+import 'package:swimmast_movil/screens/sign_up_screen.dart';
 
-class RecoverPasswordSport extends StatefulWidget {
-  const RecoverPasswordSport({super.key});
+class RecoverPassword extends StatefulWidget {
+  const RecoverPassword({super.key});
 
   @override
-  State<RecoverPasswordSport> createState() => _RecoverPasswordSportState();
+  State<RecoverPassword> createState() => _RecoverPasswordState();
 }
 
-class _RecoverPasswordSportState extends State<RecoverPasswordSport> {
+class _RecoverPasswordState extends State<RecoverPassword> {
   final TextEditingController _userName = TextEditingController();
 
   void showError(String errorMessage) {

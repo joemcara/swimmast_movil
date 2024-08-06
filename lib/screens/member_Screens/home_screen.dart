@@ -3,7 +3,7 @@ import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import '../../shared/constants.dart';
 import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
 import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreenMember extends StatefulWidget {
@@ -35,7 +35,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
         nextPage = HomeScreenMember();
         break;
       case 1:
-        nextPage = NotificationScreenSport();
+        nextPage = NotificationScreen();
         break;
       case 2:
         //nextPage = ProfileScreenSport(context);

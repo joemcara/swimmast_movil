@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 import './models/courseSelected.dart';
 
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/signsport.dart';
+import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
+import 'package:swimmast_movil/screens/sign_up_screen.dart';
+import 'package:swimmast_movil/screens/sign_in_screen.dart';
+
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -26,15 +28,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          surfaceTintColor: Colors.white,
-        ),
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainScreenSportPerson(),
+      home: HomeScreenSport(),
+      //home: SignInScreen(),
     );
   }
 }
