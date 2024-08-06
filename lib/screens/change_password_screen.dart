@@ -72,11 +72,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   style: TextStyle(fontSize: 25, color: buttoncolorblue),
                 ),
                 TextInput(
-                  controller: _email,
-                  hintText: "Correo electrónico",
-                  label: "Correo electrónico",
-                ),
-                TextInput(
                   controller: _password,
                   hintText: "Contraseña anterior",
                   label: "Contraseña anterior",

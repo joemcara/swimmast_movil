@@ -1,4 +1,4 @@
-import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/home_screen_member.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';

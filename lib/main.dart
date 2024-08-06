@@ -5,7 +5,7 @@ import './models/courseSelected.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
-import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
+import 'package:swimmast_movil/screens/member_Screens/home_screen_member.dart';
 import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
@@ -33,8 +33,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreenSport(),
+      //home: HomeScreenSport(),
       //home: SignInScreen(),
+      home : HomeScreenMember(),
     );
   }
 }
