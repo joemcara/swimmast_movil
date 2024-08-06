@@ -7,7 +7,7 @@ import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/signsport.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/screens/member_Screens/home_screen.dart';
-
+import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -34,12 +34,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      //home: const SignInScreen(),
-      home: HomeScreenSport(),
-
-      //home: SignSportScreen(),
-      //home: ProfileScreenSport(),
-      //home: HomeScreenMember(),
+      home: const MainScreenSportPerson(),
     );
   }
 }

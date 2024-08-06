@@ -5,6 +5,7 @@ import 'package:swimmast_movil/screens/shop_Screens/shop_screen.dart';
 import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/competitions_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
@@ -62,9 +63,9 @@ class BottomRouteSportPerson extends StatelessWidget {
       HomeScreenSport(),
       HistoryScreenSport(),
       ShopScreen(),
-      NotificationScreenSport(),
-      // ProfileScreenSport(context),
-      ProfileScreenSport(),
+      NotificationScreen(),
+      //ProfileScreen(context),
+      CompetitionsScreen(),
     ];
     return screens[index];
   }
