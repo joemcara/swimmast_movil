@@ -1,3 +1,5 @@
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/shared/profile_header_trainee.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
@@ -7,7 +9,22 @@ class Memberadmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SportBtBar? trainerBtBar;
+    int index = 0;
+
     return Scaffold(
+      appBar: index != 4
+          ? AppBar(
+              actions: [
+                ProfileHeaderTrainee(
+                  username: userName,
+                  message: "Hola, $userName",
+                )
+              ],
+              toolbarHeight: 120,
+              automaticallyImplyLeading: false,
+            )
+          : null,
       body: Column(
         children: [
           Row(
@@ -15,14 +32,13 @@ class Memberadmin extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 0, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back_ios),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     )),
-                ProfileHeader(username: userName)
               ]),
           const SizedBox(height: 10),
           const SizedBox(
@@ -80,7 +96,7 @@ class MemberAdminCardsState extends State<MemberAdminCards> {
                     ],
                   ),
                   SizedBox(width: 135),
-                  PopoverButton(),
+                  //PopoverButton(),
                 ],
               ),
               SizedBox(height: 10),

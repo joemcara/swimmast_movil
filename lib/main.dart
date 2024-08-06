@@ -3,6 +3,10 @@ import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:provider/provider.dart';
 import './models/courseSelected.dart';
 
+import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/signsport.dart';
+import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
+
 void main() {
   runApp(
     ChangeNotifierProvider(
@@ -24,10 +28,14 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           surfaceTintColor: Colors.white,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
+      //home: const SignInScreen(),
+      //home: HomeScreenSport(),
+      //home: SignSportScreen(),
       home: const SignInScreen(),
     );
   }

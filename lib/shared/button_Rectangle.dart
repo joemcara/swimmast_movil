@@ -6,24 +6,33 @@ class CustomButtonRectangle extends StatelessWidget {
       {super.key,
       required this.text,
       required this.onPressed,
-      required this.icon});
+      required this.icon,
+      required this.colorBackground});
   final String text;
   final Function onPressed;
-  final Icon icon;
+  final IconData icon;
+  final Color colorBackground;
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-        style: FilledButton.styleFrom(backgroundColor: Colors.white),
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorBackground,
+          textStyle:
+              TextStyle(color: Colors.white), // Color del texto y el ícono
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero, // Bordes rectangulares
+          ),
+        ),
         onPressed: () {
           onPressed();
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               backgroundColor: swimmastBlue,
-              child: Icon(Icons.group, color: Colors.white),
+              child: Icon(icon, color: Colors.white),
             ),
             const SizedBox(width: 10),
             Text(

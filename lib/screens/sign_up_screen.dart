@@ -5,6 +5,8 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/datefield.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
+
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 

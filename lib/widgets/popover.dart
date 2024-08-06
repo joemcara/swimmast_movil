@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
-import 'package:swimmast_movil/shared/constants.dart';
 import 'package:popover/popover.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 
 class PopoverButton extends StatelessWidget {
-  const PopoverButton({super.key});
+  final VoidCallback showModal;
+  final int id;
+  final MainScreenTraineeState state;
+  const PopoverButton(
+      {Key? key,
+      required this.showModal,
+      required this.id,
+      required this.state})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: const Icon(
+      child: Icon(
         Icons.more_vert,
-        color: swimmastBlue,
+        size: 20,
+        color: Colors.blue,
       ),
       onTap: () {
         showPopover(
           context: context,
-          bodyBuilder: (context) => const ListItems(),
+          bodyBuilder: (context) => ListItems(
+            id: id,
+            showAttendance: showModal,
+            state: state, // Pass the callback
+          ),
           direction: PopoverDirection.bottom,
           width: 150,
           arrowHeight: 0,
-          height: 50,
+          height: 70,
           barrierDismissible: true,
         );
       },
@@ -28,20 +43,16 @@ class PopoverButton extends StatelessWidget {
   }
 }
 
-class ListItems extends StatefulWidget {
-  const ListItems({super.key});
-
-  @override
-  ListItemsState createState() => ListItemsState();
-}
-
-class ListItemsState extends State<ListItems> {
-  String? selectedItem = "none";
-  int currentValue = 1;
-
-  _handleValueChanged(int value) {
-    currentValue = value;
-  }
+class ListItems extends StatelessWidget {
+  final VoidCallback showAttendance;
+  final int id;
+  final MainScreenTraineeState state;
+  const ListItems(
+      {Key? key,
+      required this.showAttendance,
+      required this.id,
+      required this.state})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,178 +67,38 @@ class ListItemsState extends State<ListItems> {
         children: [
           InkWell(
             onTap: () {
+              print("tap");
               Navigator.of(context).pop();
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 24.0),
-                      title: Container(
-                        width: 200,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: borderColor),
-                            color: swimmastBlue),
-                        child: const Text(
-                          "AGREGAR TIEMPO",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white),
-                        ),
-                      ),
-                      content: SingleChildScrollView(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: borderColor)),
-                          height: 320,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  padding: const EdgeInsets.all(19),
-                                  child: const DropdownMenu(
-                                      width: 200,
-                                      hintText: "Seleccione estilo",
-                                      menuStyle: MenuStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                                  Colors.white)),
-                                      inputDecorationTheme:
-                                          InputDecorationTheme(
-                                              hoverColor: Colors.cyan),
-                                      dropdownMenuEntries: <DropdownMenuEntry<
-                                          String>>[
-                                        DropdownMenuEntry(
-                                            value: "500 Freestyle",
-                                            label: "500 Freestyle"),
-                                        DropdownMenuEntry(
-                                            value: "500 Kick",
-                                            label: "500 Kick"),
-                                        DropdownMenuEntry(
-                                            value: "500 Freestyle",
-                                            label: "500 Freestyle"),
-                                        DropdownMenuEntry(
-                                            value: "500 Freestyle",
-                                            label: "500 Freestyle")
-                                      ])),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                    child: (const Text("Seleccionar tiempo")),
-                                  ),
-                                  Container(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                    child: Container(
-                                        height: 180,
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: borderColor)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              width: 50,
-                                              height: 250,
-                                              child: SpinBox(
-                                                incrementIcon: const Icon(
-                                                    Icons.keyboard_arrow_up),
-                                                decrementIcon: const Icon(
-                                                    Icons.keyboard_arrow_down),
-                                                textStyle: const TextStyle(
-                                                    fontSize: 12),
-                                                direction: Axis.vertical,
-                                                spacing: 5,
-                                                min: 1,
-                                                max: 100,
-                                                value: 10,
-                                                onChanged: (value) =>
-                                                    print(value),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: const EdgeInsets.all(10),
-                                              child: const Text(":"),
-                                            ),
-                                            SizedBox(
-                                              width: 50,
-                                              height: 250,
-                                              child: SpinBox(
-                                                incrementIcon: const Icon(
-                                                    Icons.keyboard_arrow_up),
-                                                decrementIcon: const Icon(
-                                                    Icons.keyboard_arrow_down),
-                                                textStyle: const TextStyle(
-                                                    fontSize: 12),
-                                                direction: Axis.vertical,
-                                                spacing: 5,
-                                                min: 1,
-                                                max: 60,
-                                                value: 10,
-                                                onChanged: (value) =>
-                                                    print(value),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: const EdgeInsets.all(10),
-                                              child: const Text("seg"),
-                                            ),
-                                          ],
-                                        )),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      actions: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton(
-                              child: const Text(
-                                'Cancelar',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text(
-                                'Aceptar',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )
-                          ],
-                        )
-                      ],
-                    );
-                  });
+              courseSelected = id;
+              attendanceStateModal = true;
+              showAttendance(); // Correctly call the callback
             },
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.zero,
               ),
               height: 25,
-              child: const Center(
-                  child: Text(
-                'Agregar Tiempo',
-                style: TextStyle(fontSize: 15),
-              )),
+              child: const Text(
+                'Registrar Asistencia',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+              print("op");
+              state.changeSelected(2, 'Agregar Rutina');
+            },
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.zero,
+              ),
+              height: 25,
+              child: const Text(
+                'Agregar Rutina',
+                style: TextStyle(fontSize: 14),
+              ),
             ),
           ),
         ],

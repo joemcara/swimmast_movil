@@ -86,6 +86,7 @@ class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
                   width: 380,
                   child: CustomButtonRectangle(
+                    colorBackground: Colors.white,
                     text: "Manejar Miembros",
                     onPressed: () {
                       Navigator.push(
@@ -93,10 +94,7 @@ class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
                           MaterialPageRoute(
                               builder: (context) => const Memberadmin()));
                     },
-                    icon: const Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                    ),
+                    icon: Icons.lock,
                   ),
                 ),
                 const SizedBox(

@@ -80,35 +80,37 @@ class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
                 ),
                 const SizedBox(height: 40),
                 Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(5)),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
                   width: 380,
-                  child: CustomButtonRectangle(
-                    text: "Manejar Miembros",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Memberadmin()));
-                    },
-                    icon: const Icon(
-                      Icons.lock,
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      CustomButtonRectangle(
+                        text: "Cambiar Contraseña",
+                        colorBackground: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Memberadmin()));
+                        },
+                        icon: Icons.lock,
+                      ),
+                      CustomButtonRectangle(
+                        text: "Cerrar Sesión",
+                        colorBackground: defaultGradient[0],
+                        onPressed: () async {
+                          await _logout();
+                          Navigator.pop(context);
+                        },
+                        icon: Icons.lock,
+                      )
+                    ],
                   ),
                 ),
                 const SizedBox(
                   height: 35,
-                ),
-                CustomButton(
-                    text: "Cerrar sesión",
-                    onPressed: () async {
-                      await _logout();
-                      Navigator.pop(context);
-                    })
+                )
               ],
             ),
           )),
