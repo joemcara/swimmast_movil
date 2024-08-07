@@ -1,5 +1,8 @@
 import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
+import 'package:swimmast_movil/screens/member_Screens/home_screen_member.dart';
+import 'package:swimmast_movil/screens/sign_up_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
@@ -48,12 +51,21 @@ class _SignInScreenState extends State<SignInScreen> {
         },
       );
       print(response.data);
+
       miembro = Member.fromJson(response.data);
       token = response.data['token'];
       idUser = response.data['user']['id'];
-      userName = response.data['user']['username'];
-      birthDate = response.data['user']['birthdate'];
-      phoneNumber = response.data['phone_number'];
+
+      if (miembro!.roleName == "MIEMBRO") {
+        birthDate = response.data['user']['birthdate'];
+        phoneNumber = response.data['phone_number'];
+        userName = response.data['user']['username'];
+      } else if (miembro!.roleName == "INSTRUCTOR") {
+        userName = response.data['user']['first_name'];
+      } else if (miembro!.roleName == "DEPORTISTA") {
+        userName = response.data['user']['first_name'];
+      }
+
     } catch (e) {
       if (e is DioException) {
         print('Status Code: ${e.response?.statusCode}');
@@ -65,8 +77,6 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final TextEditingController _email = TextEditingController();
-    final TextEditingController _password = TextEditingController();
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
@@ -125,9 +135,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             alignment: WrapAlignment.center,
                             children: [
                               TextInput(
-                                controller: _email,
-                                hintText: "Correo electrónico",
-                                label: "Correo electrónico",
+                                controller: _userName,
+                                hintText: "Ingrese su Usuario",
+                                label: "Ingrese su Usuario",
                               ),
                               SizedBox(
                                 height: 25,
@@ -185,14 +195,20 @@ class _SignInScreenState extends State<SignInScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const MainScreenMember()));
-                                    } else {
+                                                  const HomeScreenMember()));
+                                    } else if (miembro!.roleName == "INSTRUCTOR") {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const MainScreenTrainee()));
-                                    }
+                                    } else if (miembro!.roleName == "DEPORTISTA") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HomeScreenSport()));
+                              }
                                   }
                                 },
                                 style: ButtonStyle(
