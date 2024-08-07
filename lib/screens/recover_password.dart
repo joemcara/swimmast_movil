@@ -1,9 +1,5 @@
-import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
-import 'package:swimmast_movil/screens/sign_up_screen.dart';
 
 class RecoverPassword extends StatefulWidget {
   const RecoverPassword({super.key});

@@ -1,9 +1,6 @@
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
-import 'package:provider/provider.dart';
-import 'package:swimmast_movil/models/courseSelected.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;

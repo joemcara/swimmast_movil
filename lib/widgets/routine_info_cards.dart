@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/routine_cards.dart';
 

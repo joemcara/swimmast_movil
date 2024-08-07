@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/button.dart';
 
 class AttendanceSheet extends StatefulWidget {
   final String day;

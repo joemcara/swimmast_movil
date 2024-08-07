@@ -1,26 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback? onBackPressed;
   final PreferredSizeWidget? bottom;
 
   CustomAppBar({
     required this.title,
-    required this.onBackPressed,
     this.bottom,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: onBackPressed != null
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: defaultIconColor),
-              onPressed: onBackPressed,
-            )
-          : null,
       title: Text(
         title,
         style: const TextStyle(

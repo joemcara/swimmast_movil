@@ -5,9 +5,6 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/competencies_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
-import 'package:swimmast_movil/screens/notification_screen.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreenSport extends StatefulWidget {
@@ -17,37 +14,6 @@ class HomeScreenSport extends StatefulWidget {
 
 class _HomeScreenSportState extends State<HomeScreenSport> {
   int _selectedIndex = -1;
-  int _selectedtab = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedtab = index;
-    });
-    _navigateToScreen(index);
-  }
-
-  void _navigateToScreen(int index) {
-    Widget nextPage;
-    switch (index) {
-      case 0:
-        nextPage = HomeScreenSport();
-        break;
-      case 1:
-        nextPage = NotificationScreen();
-        break;
-      case 2:
-        //nextPage = ProfileScreenSport(context);
-        nextPage = ProfileScreenSport();
-        break;
-      default:
-        nextPage = HomeScreenSport();
-        break;
-    }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextPage),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +21,14 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Hola Katherine',
+                child: Text(
+                  '\t\t Hola '+ miembro!.user.firstName,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -205,10 +172,10 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        selected: _selectedtab,
-        currentIndex: _onItemTapped,
-      ),
+      // bottomNavigationBar: CustomBottomNavigationBar(
+      //   selected: _selectedtab,
+      //   currentIndex: _onItemTapped,
+      // ),
     );
   }
 }

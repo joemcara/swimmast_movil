@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';

@@ -1,9 +1,6 @@
 import 'package:swimmast_movil/models/course.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import '../../shared/constants.dart';
 import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
-import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
-import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreenMember extends StatefulWidget {
@@ -18,37 +15,8 @@ class HomeScreenMember extends StatefulWidget {
 
 class _HomeScreenMemberState extends State<HomeScreenMember> {
   int _selectedIndex = -1;
-  int _selectedtab = 0;
   List<Map<String, String>> courseList = [];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedtab = index;
-    });
-    _navigateToScreen(index);
-  }
-
-  void _navigateToScreen(int index) {
-    Widget nextPage;
-    switch (index) {
-      case 0:
-        nextPage = HomeScreenMember();
-        break;
-      case 1:
-        nextPage = NotificationScreen();
-        break;
-      case 2:
-        nextPage = ProfileScreen();
-        break;
-      default:
-        nextPage = HomeScreenMember();
-        break;
-    }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextPage),
-    );
-  }
 
   @override
   void initState() {
@@ -87,13 +55,14 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Expanded(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: const Text(
-                  'Hola Katherine',
+                child: Text(
+                  '\t\t Hola ' + miembro!.user.firstName,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -221,10 +190,6 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        selected: _selectedtab,
-        currentIndex: _onItemTapped,
       ),
     );
   }

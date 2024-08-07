@@ -1,14 +1,11 @@
 import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
-import 'package:swimmast_movil/screens/member_Screens/home_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
-import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 import 'package:swimmast_movil/screens/recover_password.dart';
-import 'package:swimmast_movil/shared/inputs.dart';
-import 'package:swimmast_movil/screens/sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -195,7 +192,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const HomeScreenMember()));
+                                                  const MainScreenMember()));
                                     } else if (miembro!.roleName == "INSTRUCTOR") {
                                       Navigator.push(
                                           context,
@@ -207,7 +204,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            HomeScreenSport()));
+                                            MainScreenSportPerson()));
                               }
                                   }
                                 },

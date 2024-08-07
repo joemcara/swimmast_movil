@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
-import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
-import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
 
@@ -25,7 +20,6 @@ class ShopSportScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: "Cursos Disponibles",
-          onBackPressed: () => Navigator.pop(context),
           bottom: TabBar(
             tabs: [
               Tab(text: "Paquetes Disponibles"),
@@ -171,7 +165,6 @@ class BuyScreen extends StatelessWidget {
     return Scaffold(
         appBar: CustomAppBar(
           title: 'Comprar $nomPaquete',
-          onBackPressed: () => Navigator.pop(context),
         ),
         body: LayoutBuilder(
           builder: (context, constraints) {

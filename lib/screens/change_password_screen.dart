@@ -1,9 +1,5 @@
-import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
-import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -14,7 +10,6 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
-  final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
   void showError(String errorMessage) {
@@ -37,17 +32,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  Future<void> _login() async {}
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    final TextEditingController _email = TextEditingController();
 
     return Scaffold(
       appBar: CustomAppBar(
         title: "Cambiar Contraseña",
-        onBackPressed: () => Navigator.pop(context),
       ),
       body: Container(
         decoration: BoxDecoration(

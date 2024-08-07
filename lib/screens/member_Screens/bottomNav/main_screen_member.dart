@@ -29,30 +29,6 @@ class _MainScreenMemberState extends State<MainScreenMember> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: memberBtBar,
-      appBar: index != 4
-          ? AppBar(
-              actions: [
-                ProfileHeader(
-                  username: miembro!.user.firstName,
-                  onAvatarTap: () {
-                    setState(() {
-                      index = 4;
-                      memberBtBar = MemberBtBar(
-                        currentIndex: (index) {
-                          setState(() {
-                            this.index = index;
-                          });
-                        },
-                        selected: index,
-                      );
-                    });
-                  },
-                )
-              ],
-              toolbarHeight: 120,
-              automaticallyImplyLeading: false,
-            )
-          : null,
       body: BottomRouteMember(index: index),
     );
   }
