@@ -114,19 +114,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: "Apellidos",
                   label: "Apellidos",
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: DateField(
-                    names: _names,
-                    lastNames: _lastNames,
-                    dateController: _date,
-                    nameRepresentative: nameRepresentative,
-                    relationship: relationship,
-                    userName: _userName,
-                  ),
+                DateField(
+                  names: _names,
+                  lastNames: _lastNames,
+                  dateController: _date,
+                  nameRepresentative: nameRepresentative,
+                  relationship: relationship,
+                  userName: _userName,
                 ),
                 TextInput(
                   controller: _phone,

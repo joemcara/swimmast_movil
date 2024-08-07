@@ -1,25 +1,62 @@
+import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
 
-class ShopSportScreen extends StatelessWidget {
+import 'package:swimmast_movil/models/courseAvailable.dart';
+
+class ShopSportScreen extends StatefulWidget {
+  
+  @override
+  State<ShopSportScreen> createState() => _ShopSportScreenState();
+}
+
+class _ShopSportScreenState extends State<ShopSportScreen> {
+
+    List<Map<String, String>> items = [];
+
+    Future<void> _AvilableShopCourse() async{
+      try{
+        final response = await Dio().get(
+          urlBack + 'course/catalog/swimmer/' + idUser.toString(),  
+        );
+        
+        for (var item in response.data){
+          CourseAvailable course = CourseAvailable.fromJson(item);
+          Map<String, String> courseMap = {
+            'paquete': course.name,
+            'descripcion': course.description,
+            'price': course.price,
+            'startDate': course.startDate.toString().split(' ')[0],
+            'dueDate': course.dueDate.toString().split(' ')[0],
+          };
+          items.add(courseMap);
+        }
+        setState(() {
+          
+        });
+      } catch (e){
+        print(e);
+        throw e;
+      }
+    }
+
+    @override
+    void initState() {
+      super.initState();
+      _AvilableShopCourse();
+      
+    }
+  
   @override
   Widget build(BuildContext context) {
-    String loren =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
-    List<Map<String, String>> items = [
-      {'paquete': 'Paquete 1', 'descripcion': loren, 'price': '10'},
-      {'paquete': 'Paquete 2', 'descripcion': loren, 'price': '23'},
-      {'paquete': 'Paquete 3', 'descripcion': loren, 'price': '60'},
-      {'paquete': 'Paquete 4', 'descripcion': loren, 'price': '100'},
-    ];
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: CustomAppBar(
           title: "Cursos Disponibles",
+          back: true,
           bottom: TabBar(
             tabs: [
               Tab(text: "Paquetes Disponibles"),
@@ -34,7 +71,8 @@ class ShopSportScreen extends StatelessWidget {
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
-        body: TabBarView(
+        body: 
+        TabBarView(
           children: [
             ListView.builder(
               padding: const EdgeInsets.all(10),
@@ -43,6 +81,8 @@ class ShopSportScreen extends StatelessWidget {
                 nomPaquete: items[index]['paquete']!,
                 descPaquete: items[index]['descripcion']!,
                 precio: items[index]['price']!,
+                startDate: items[index]['startDate']!,
+                dueDate: items[index]['dueDate']!,
                 button: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -76,13 +116,17 @@ class DetallePaquete extends StatelessWidget {
   final String descPaquete;
   final ElevatedButton button;
   final String precio;
+  final String startDate;
+  final String dueDate;
 
   const DetallePaquete({
     Key? key,
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
+    required this.precio, 
+    required this.startDate, 
+    required this.dueDate,
   }) : super(key: key);
 
   @override
@@ -115,6 +159,23 @@ class DetallePaquete extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 10),
+            Text(              
+            'Fecha inicio: $startDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(height: 10),            
+            Text(              
+            'Fecha Fin: $dueDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(height: 10),
             Center(child: button),
           ],
         ),
@@ -128,13 +189,17 @@ class PaquetesInscripcion extends StatelessWidget {
   final String descPaquete;
   final ElevatedButton button;
   final String precio;
+  final String startDate;
+  final String dueDate;
 
   const PaquetesInscripcion({
     Key? key,
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
+    required this.precio, 
+    required this.startDate, 
+    required this.dueDate,
   }) : super(key: key);
 
   @override
@@ -143,6 +208,8 @@ class PaquetesInscripcion extends StatelessWidget {
       nomPaquete: nomPaquete,
       descPaquete: descPaquete,
       button: button,
+      startDate: startDate,
+      dueDate: dueDate,
       precio: precio,
     );
   }
@@ -159,13 +226,41 @@ class BuyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final List<Map<String, String>> _personDetails = [
-      {'name': 'Evelyn Smith', 'id': '0956325689'},
+      {'name': '${miembro!.user.firstName}${miembro!.user.lastName}'},
     ];
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: 'Comprar $nomPaquete',
+        appBar:AppBar(
+        leading: AlertWidget(),
+        title: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Comprar $nomPaquete',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: defaultGradient,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -176,7 +271,10 @@ class BuyScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
-                        personDetails: _personDetails, nomPaquete: nomPaquete),
+                        personDetails: _personDetails,
+                         nomPaquete: nomPaquete,
+                         precio: precio,
+                         ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(precio: double.parse(precio)),
                   ],
@@ -369,14 +467,16 @@ class _WidgetButtonsState extends State<WidgetButtons> {
 }
 
 class WidgetInfoBuy extends StatelessWidget {
-  const WidgetInfoBuy({
+  WidgetInfoBuy({
     super.key,
     required List<Map<String, String>> personDetails,
     required this.nomPaquete,
+    required this.precio,
   }) : _personDetails = personDetails;
 
   final List<Map<String, String>> _personDetails;
   final String nomPaquete;
+  var precio;
 
   @override
   Widget build(BuildContext context) {
@@ -385,7 +485,7 @@ class WidgetInfoBuy extends StatelessWidget {
     final TextStyle textStyle = TextStyle(
       fontWeight: FontWeight.bold,
       color: buttoncolorblue,
-      fontSize: screenWidth * 0.04,
+      fontSize: screenWidth * 0.004,
     );
 
     return Container(
@@ -415,7 +515,6 @@ class WidgetInfoBuy extends StatelessWidget {
                 children: [
                   Text('Nombre: ${_personDetails[0]['name']}',
                       style: textStyle),
-                  Text('Cédula: ${_personDetails[0]['id']}', style: textStyle),
                 ],
               ),
             ],
@@ -435,7 +534,7 @@ class WidgetInfoBuy extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Total a pagar:', style: textStyle),
-              Text('\$10.00', style: textStyle),
+              Text('\$ $precio', style: textStyle),
             ],
           ),
         ],
@@ -776,7 +875,7 @@ class TransferSection extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.02,
-                      horizontal: screenWidth * 0.01),
+                      horizontal: screenWidth * 0.002),
                   child: Container(
                     width: screenWidth * 0.3,
                     child: TextField(
@@ -837,13 +936,53 @@ class TransferSection extends StatelessWidget {
   }
 }
 
-class PurchasedScreen extends StatelessWidget {
-  const PurchasedScreen({Key? key}) : super(key: key);
+class AlertWidget extends StatelessWidget {
+  const AlertWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('No hay paquetes comprados.'),
+    return IconButton(
+      icon: const BackButtonIcon(),
+      iconSize: 25,
+      color: Colors.white,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              surfaceTintColor: Colors.white,
+              title: const Text('Salir de compra'),
+              content: const Text(
+                'Si usted sale de la compra, no se guardaran los datos ingresados.\n¿Desea salir?',
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text(
+                    'SI',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text(
+                    'NO',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // close the dialog
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

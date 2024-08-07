@@ -163,6 +163,7 @@ class _DateFieldState extends State<DateField> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.black),
           ),

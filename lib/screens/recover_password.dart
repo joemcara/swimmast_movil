@@ -9,7 +9,6 @@ class RecoverPassword extends StatefulWidget {
 }
 
 class _RecoverPasswordState extends State<RecoverPassword> {
-  final TextEditingController _userName = TextEditingController();
 
   void showError(String errorMessage) {
     showDialog(
@@ -31,11 +30,8 @@ class _RecoverPasswordState extends State<RecoverPassword> {
     );
   }
 
-  Future<void> _login() async {}
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final TextEditingController _email = TextEditingController();
 
     return Scaffold(

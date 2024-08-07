@@ -27,7 +27,7 @@ class CompetenciesScreenSport extends StatefulWidget {
 }
 
 class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
-  DateTime _selectedDate = DateTime.now();
+ 
 
   final List<Competition> competitions = [
     Competition(

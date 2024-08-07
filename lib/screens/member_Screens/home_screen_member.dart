@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/models/course.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import '../../shared/constants.dart';
 import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
@@ -16,6 +17,7 @@ class HomeScreenMember extends StatefulWidget {
 class _HomeScreenMemberState extends State<HomeScreenMember> {
   int _selectedIndex = -1;
   List<Map<String, String>> courseList = [];
+  
 
 
   @override
@@ -62,7 +64,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '\t\t Hola ' + miembro!.user.firstName,
+                  '\t\t Hola ' + miembro!.user.firstName[0].toUpperCase() + miembro!.user.firstName.substring(1),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -73,9 +75,8 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
             ),
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 200, 200, 201),
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: kToolbarHeight + statusBarHeight,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -170,7 +171,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
                         icon: Icons.shopping_cart,
                         title: 'Cursos Disponibles',
                         index: 3,
-                        nextPage: HistoryScreen(),
+                        nextPage: ShopSportScreen(),
                         selectedIndex: _selectedIndex,
                         onSelect: (int index) {
                           setState(() {

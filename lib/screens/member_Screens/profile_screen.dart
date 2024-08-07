@@ -1,6 +1,7 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
 import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 
 class ProfileScreen extends StatefulWidget {
   //const ProfileScreen(BuildContext context, {super.key});
@@ -32,6 +33,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     List<String> packages = userCourse.cast<String>();
 
     return Scaffold(
+      appBar: CustomAppBar(
+        title: "Perfil",
+      ),
       body: Container(
           padding: EdgeInsets.only(top: statusBarHeight * 1.5),
           child: SingleChildScrollView(
