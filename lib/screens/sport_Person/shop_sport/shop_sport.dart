@@ -485,7 +485,7 @@ class WidgetInfoBuy extends StatelessWidget {
     final TextStyle textStyle = TextStyle(
       fontWeight: FontWeight.bold,
       color: buttoncolorblue,
-      fontSize: screenWidth * 0.004,
+      fontSize: screenWidth * 0.04,
     );
 
     return Container(
@@ -850,7 +850,11 @@ class TransferSection extends StatelessWidget {
           ),
           SizedBox(height: screenWidth * 0.02),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: isAmountVisible
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.center
+            ,
+
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
