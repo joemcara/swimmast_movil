@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
 
 class Memberadmin extends StatelessWidget {
@@ -24,7 +22,7 @@ class Memberadmin extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     )),
-                const ProfileHeader(username: "Luis")
+                ProfileHeader(username: userName)
               ]),
           const SizedBox(height: 10),
           const SizedBox(

@@ -1,26 +1,41 @@
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/shared/button.dart';
+import 'package:swimmast_movil/screens/edit_profile.dart';
+import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/profile_header.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  //const ProfileScreen(BuildContext context, {super.key});
   const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    const List<String> data = [
-      "Número de teléfono: 1234567890",
-      "Dirección: Av.9 de octubre y Chimborazo "
+    Future _logout() async {
+      try {
+        await Dio().post(urlBack + 'administration/logout_user/',
+            options: Options(headers: {'Authorization': 'Token $token'}));
+      } catch (e) {
+        print(e);
+      }
+      miembro = null;
+    }
+
+    List<String> data = [
+      "Número de teléfono: $phoneNumber",
+      "Fecha de nacimiento: $birthDate",
     ];
 
-    const List<String> packages = [
-      "Paquete X - Lunes 8:30 - 11:00am",
-      "Paquete Y - Lunes 10:30 - 13:00am",
-      "Paquete Z - Lunes 8:30 - 11:00am",
-    ];
+    List<String> packages = userCourse.cast<String>();
 
     return Scaffold(
+      appBar: CustomAppBar(
+        title: "Perfil",
+      ),
       body: Container(
           padding: EdgeInsets.only(top: statusBarHeight * 1.5),
           child: SingleChildScrollView(
@@ -31,18 +46,21 @@ class ProfileScreen extends StatelessWidget {
                     height: 150,
                     width: 150,
                     child: CustomAvatar(
-                      username: "Evelyn Smith",
+                      username: miembro!.user.firstName[0].toUpperCase(),
                       onTap: () {},
                     ),
                   ),
                 ),
-                const Text(
-                  "Evelyn Smith",
+                Text(
+                  miembro!.user.firstName + " " + miembro!.user.lastName,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 CustomTextButton(
                   text: "Editar perfil",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => EditProfile()));
+                  },
                   text_color: swimmastBlue,
                 ),
                 Container(
@@ -53,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(
                         height: 32,
                       ),
-                      _infoBox("Paquetes inscritos", packages),
+                      _infoBox("Cursos Inscritos", packages),
                     ],
                   ),
                 ),
@@ -68,28 +86,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: swimmastBlue,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100))),
-                            padding: const EdgeInsets.all(6),
-                            child: const Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Text(
-                            "Cambiar contraseña",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
+                      ChangePasswordW(),
                       const Icon(
                         Icons.keyboard_arrow_right_outlined,
                       )
@@ -98,7 +95,8 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 CustomButton(
                     text: "Cerrar sesión",
-                    onPressed: () {
+                    onPressed: () async {
+                      await _logout();
                       Navigator.pop(context);
                     })
               ],

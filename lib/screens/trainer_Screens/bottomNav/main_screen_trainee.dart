@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/shared/profile_header_trainee.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/router_bottom_nav.dart';
 
 class MainScreenTrainee extends StatefulWidget {
@@ -29,10 +28,11 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
     );
   }
 
-  void changeSelected() {
+  void changeSelected(int id) {
     setState(() {
       index = 1;
-
+      courseSelected = id;
+      print("yei");
       trainerBtBar = SportBtBar(
         currentIndex: (index) {
           setState(() {
@@ -48,30 +48,6 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: trainerBtBar,
-        appBar: index != 4
-            ? AppBar(
-                actions: [
-                  ProfileHeaderTrainee(
-                    username: "Username",
-                    onAvatarTap: () {
-                      setState(() {
-                        index = 4;
-                        trainerBtBar = SportBtBar(
-                          currentIndex: (index) {
-                            setState(() {
-                              this.index = index;
-                            });
-                          },
-                          selected: index,
-                        );
-                      });
-                    },
-                  )
-                ],
-                toolbarHeight: 120,
-                automaticallyImplyLeading: false,
-              )
-            : null,
         body: BottomRouteTrainee(
           key: childKey,
           index: index,

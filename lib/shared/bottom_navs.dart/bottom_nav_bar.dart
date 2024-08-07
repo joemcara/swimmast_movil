@@ -38,14 +38,6 @@ class SportBtBarState extends State<SportBtBar> {
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.book),
-          label: 'book',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.event),
-          label: 'event',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
           label: 'notifications',
         ),
@@ -92,25 +84,20 @@ class _MemberBtBarState extends State<MemberBtBar> {
 
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home, color: Colors.grey),
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.event),
-          label: 'event',
+          icon: Icon(Icons.notifications, color: Colors.grey), 
+          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'book',
+          icon: Icon(Icons.person, color: Colors.grey), 
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Perfil',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'notifications',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'group',
-        )
       ],
     );
   }
@@ -142,35 +129,70 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
       // stles
       type: BottomNavigationBarType.fixed,
       enableFeedback: false,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
+      selectedItemColor: Color.fromARGB(255, 10, 5, 59),
       unselectedItemColor: Colors.black,
       iconSize: 33,
       // end styles
 
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home, color: Colors.grey),
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.book),
-          label: 'event',
+          icon: Icon(Icons.notifications, color: Colors.grey), 
+          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'book',
+          icon: Icon(Icons.person, color: Colors.grey), 
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Perfil',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.notifications),
-          label: 'notifications',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'group',
-        )
       ],
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatefulWidget {
+  final int selected;
+  final ValueChanged<int> currentIndex;
+
+  CustomBottomNavigationBar({required this.selected, required this.currentIndex});
+
+  @override
+  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: widget.selected,
+      onTap: (index) {
+        setState(() {
+          widget.currentIndex(index);
+        });
+      },
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home, color: Colors.grey),
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Inicio',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications, color: Colors.grey), 
+          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Notificaciones',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person, color: Colors.grey), 
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          label: 'Perfil',
+        ),
+      ],
+      selectedItemColor: Color.fromARGB(255, 10, 5, 59),
     );
   }
 }

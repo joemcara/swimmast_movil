@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-
 
 class SwimmastCard extends StatelessWidget {
   final Color? color;
@@ -13,6 +11,7 @@ class SwimmastCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
         height: height ?? 80,
         // padding: const EdgeInsets.all(10),
         margin: margin ?? const EdgeInsets.symmetric(vertical: 8),
@@ -33,7 +32,7 @@ class SwimmastCard extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            child,
+            Expanded(child: child),
           ],
         ));
   }

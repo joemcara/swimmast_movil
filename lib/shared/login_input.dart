@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-// class LoginInput extends StatefulWidget {
-//   final String placeholder
-//   @override
-//   State<LoginInput> createState()=> _LoginInputState();
-// }
 
-//class _LoginInputState extends State<LoginInput>{
 class LoginInput extends StatelessWidget {
   const LoginInput({super.key, required this.placeholder});
   final String placeholder;

@@ -1,16 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart' as input;
-import 'package:swimmast_movil/shared/profile_header.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  EditProfile({Key? key}) : super(key: key);
 
   @override
   State<EditProfile> createState() => EditProfileState();
@@ -18,6 +15,9 @@ class EditProfile extends StatefulWidget {
 
 class EditProfileState extends State<EditProfile> {
   File? image;
+  late TextEditingController _names = TextEditingController();
+  late TextEditingController _lastnames = TextEditingController();
+  late TextEditingController _address = TextEditingController();
 
   Future pickImage() async {
     try {
@@ -40,37 +40,37 @@ class EditProfileState extends State<EditProfile> {
         body: Container(
             padding: EdgeInsets.only(top: statusBarHeight * 1.5),
             child: SingleChildScrollView(
-                child: Column(children: [
+              child: Column(children: [
               Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back_ios),
+                      icon: Icon(Icons.arrow_back_ios),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
-                    SizedBox(width: (MediaQuery.of(context).size.width) / 3.7),
-                    const Text("Editar perfil", style: styleTitles),
+                    SizedBox(width: (MediaQuery.of(context).size.width)/5),
+                    Text("Editar perfil", style: styleTitles),
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: 20),
                   child: Column(
                     children: [
                       SizedBox(
                         height: 150,
                         width: 150,
                         child: CustomAvatar(
-                          username: "Luis García",
+                          username: miembro!.user.firstName,
                           onTap: () {},
                           image: image,
                         ),
                       ),
-                      const Text(
-                        "Luis García",
+                      Text(
+                        miembro!.user.firstName + " " + miembro!.user.lastName,
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -87,30 +87,27 @@ class EditProfileState extends State<EditProfile> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: const Center(
+                        child: Center(
                             child: SingleChildScrollView(
                           child: Wrap(
                             runSpacing: 30.0,
                             alignment: WrapAlignment.center,
                             children: [
-                              // input.TextInput(
-                              //   controller: ,
-                              //   hintText: "Nombres y apellidos",
-                              //   label: "Nombres y apellidos",
-                              // ),
-                              // SizedBox(height: 10),
-                              // input.TextInput(
-                              //   label: "Email",
-                              //   hintText: "Email",
-                              // ),
-                              // input.TextInput(
-                              //   hintText: "Número de Teléfono",
-                              //   label: "Número de Teléfono",
-                              // ),
-                              // input.TextInput(
-                              //   hintText: "Dirección",
-                              //   label: "Dirección",
-                              // )
+                              input.TextInput(
+                                hintText: "Nombres",
+                                label: "Nombres y apellidos",
+                                controller: _names,
+                              ),
+                              input.TextInput(
+                                hintText: "apellidos",
+                                label: "Apellidos",
+                                controller: _lastnames,
+                              ),
+                              input.TextInput(
+                                hintText: "Dirección",
+                                label: "Dirección",
+                                controller: _address,
+                              )
                             ],
                           ),
                         )))),
@@ -123,6 +120,10 @@ class EditProfileState extends State<EditProfile> {
                       Navigator.pop(context);
                     })
               ])
-            ]))));
+            ]
+            )
+            )
+            )
+            );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class CustomButton extends StatelessWidget {
@@ -9,7 +8,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-        style: FilledButton.styleFrom(backgroundColor: swimmastYellow),
+        style: FilledButton.styleFrom(backgroundColor: buttoncoloryellow),
         onPressed: () {
           onPressed();
         },
@@ -17,7 +16,7 @@ class CustomButton extends StatelessWidget {
           text,
           style: const TextStyle(
               letterSpacing: 3,
-              color: swimmastBlue,
+              color: buttoncolorblue,
               fontSize: 20,
               fontWeight: FontWeight.w500),
         ));
