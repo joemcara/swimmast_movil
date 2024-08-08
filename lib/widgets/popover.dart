@@ -1,8 +1,6 @@
 import 'package:popover/popover.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 
 class PopoverButton extends StatelessWidget {
   final VoidCallback showModal;
@@ -85,8 +83,7 @@ class ListItems extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pop();
-              state.changeSelected(4, 'Agregar Rutina');
+
             },
             child: Container(
               decoration: const BoxDecoration(

@@ -1,35 +1,22 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/member_admin_screen.dart';
+import 'package:swimmast_movil/shared/btnlogout.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
-import 'package:swimmast_movil/shared/button_Rectangle.dart';
+import 'package:swimmast_movil/shared/button_Rectangle.dart' as customRectangle;
+import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 
-class ProfileScreenTrainer extends StatefulWidget {
-  const ProfileScreenTrainer(BuildContext context);
+class ProfileScreenTrainer extends StatelessWidget {
+  const ProfileScreenTrainer({super.key});
 
-  @override
-  State<ProfileScreenTrainer> createState() => _ProfileScreenTrainerState();
-}
-
-class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+      Size size = MediaQuery.of(context).size;
 
-    Future<void> _logout() async {
-      try {
-        await Dio().post(urlBack + 'administration/logout_user/',
-            options: Options(headers: {'Authorization': 'Token $token'}));
-        print("cerrado");
-      } catch (e) {
-        print(e);
-      }
-      miembro = null;
-    }
-
-    const List<String> data = [
-      "Número de teléfono: 1234567890",
-      "Dirección: Av.9 de octubre y Chimborazo "
+    List<String> data = [
+      "Número de teléfono: ${miembro!.user.phoneNumber}",
+      "Rol: ${miembro!.roleName.toLowerCase()} "
     ];
 
     List<String> courses = [
@@ -38,82 +25,99 @@ class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
     ];
 
     return Scaffold(
-      body: Container(
-          padding: EdgeInsets.only(top: statusBarHeight * 1.5),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Center(
-                  child: SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: CustomAvatar(
-                      username: userName,
-                      onTap: () {},
-                    ),
-                  ),
+      appBar: CustomAppBar(
+        title: "Perfil",
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.only(top: statusBarHeight * 1.5),
+        child: Column(
+          children: [
+            Center(
+              child: SizedBox(
+                height: size.height * 0.2,
+                width: size.height * 0.2,
+                child: CustomAvatar(
+                  username: miembro!.user.firstName[0].toUpperCase(),
+                  onTap: () {},
                 ),
-                Text(
-                  miembro!.user.firstName + " " + miembro!.user.lastName,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                customText.CustomTextButton(
-                    text: "Editar Perfil",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditProfile(),
-                          ));
-                    }),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      _infoBox("Información general", courses),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      _infoBox("Información de Contacto", data),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 40),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
-                  width: 380,
-                  child: Column(
-                    children: [
-                      CustomButtonRectangle(
-                        text: "Cambiar Contraseña",
-                        colorBackground: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Memberadmin()));
-                        },
-                        icon: Icons.lock,
-                      ),
-                      CustomButtonRectangle(
-                        text: "Cerrar Sesión",
-                        colorBackground: defaultGradient[0],
-                        onPressed: () async {
-                          await _logout();
-                          Navigator.pop(context);
-                        },
-                        icon: Icons.lock,
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 35,
-                )
-              ],
+              ),
             ),
-          )),
+            Text(
+              "${miembro!.user.firstName} ${miembro!.user.lastName}",
+              style: TextStyle(
+                fontSize: size.width * 0.06,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            customText.CustomTextButton(
+              text: "Editar perfil",
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfile()));
+              },
+              text_color: buttoncolorblue,
+            ),
+            SizedBox(height: size.height * 0.03),
+            Divider(),
+            SizedBox(height: size.height * 0.01),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              child: Column(
+                children: [
+                  _infoBox("Información general", data),
+                  SizedBox(height: size.height * 0.03),
+                  _infoBox("Cursos", courses),
+                ],
+              ),
+            ),
+            SizedBox(height: size.height * 0.05),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+              height: size.height * 0.07,
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ChangePasswordW(),
+                  const Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: size.height * 0.01),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+              height: size.height * 0.07,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: defaultGradient,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Btnlogout(),
+                  const Icon(
+                    Icons.keyboard_arrow_right_outlined,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: size.height * 0.05),
+          ],
+        ),
+      ),
     );
   }
 }

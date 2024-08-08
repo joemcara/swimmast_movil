@@ -3,14 +3,12 @@ import 'package:swimmast_movil/screens/member_Screens/profile_screen.dart';
 import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
+
 
 import 'package:swimmast_movil/shared/constants.dart';
 
-import 'package:swimmast_movil/screens/trainer_Screens/member_admin_screen.dart';
 
 class BottomRouteTrainee extends StatelessWidget {
   final int index;
@@ -21,10 +19,7 @@ class BottomRouteTrainee extends StatelessWidget {
     List<Widget> screens = [
       HomeScreen(),
       NotificationScreen(),
-      ProfileScreenTrainer(context),
-      AttendanceScreen(),
-      WorkoutScreen(),
-      Memberadmin()
+      ProfileScreenTrainer(),
     ];
     return screens[index];
   }

@@ -1,7 +1,11 @@
 import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
+import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;
@@ -14,10 +18,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = -1;
   List<Map<String, dynamic>> courseList = [];
   List<Map<String, dynamic>> coursesTodayList = [];
-  int _selectedIndex = 0;
-  int _selectedtab = 0;
   List<Map<String, dynamic>> membersList = [];
   List<Map<String, dynamic>> allCourses = [];
 
@@ -110,75 +113,40 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    MainScreenTraineeState parentState =
-        context.findAncestorStateOfType<MainScreenTraineeState>()!;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-      alignment: Alignment.topLeft,
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        children: [
-          _buildGridItem(Icons.calendar_month, 'Cursos', 4, parentState),
-          _buildGridItem(
-              Icons.calendar_month, 'Manejar Miembros', 5, parentState)
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGridItem(
-      IconData icon, String title, int index, MainScreenTraineeState state) {
-    bool isSelected = _selectedIndex == index;
-    return GestureDetector(
-      onTap: () {
-        if (title == "Cursos") {
-          courseSelected = 4;
-          state.changeSelected(index, 'Cursos');
-          print(index);
-        } else if (title == "Manejar Miembros") {
-          courseSelected = 5;
-          state.changeSelected(index, "Manejar Miembros");
-          print(index);
-        } else {
-          setState(() {
-            _selectedIndex = index;
-          });
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color:
-              isSelected ? Color.fromARGB(141, 23, 46, 85) : defaultGradient[0],
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
-          ],
-        ),
+Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: CustomAppBar(title: "Hola  ${miembro!.user.firstName}",),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon,
-                size: 50,
-                color: isSelected
-                    ? Color.fromRGBO(255, 255, 255, 1)
-                    : Color.fromRGBO(255, 255, 255, 1)),
-            SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(
-                color: isSelected
-                    ? Color.fromRGBO(250, 250, 252, 1)
-                    : Color.fromRGBO(255, 255, 255, 1),
-                fontSize: 16,
+            SizedBox(height: 20),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: [
+                  GridItem(
+                    icon: Icons.calendar_month,
+                    title: 'Horarios de clases',
+                    index: 0,
+                    nextPage: ShopSportScreen(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                ],
               ),
             ),
           ],
@@ -186,4 +154,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 }

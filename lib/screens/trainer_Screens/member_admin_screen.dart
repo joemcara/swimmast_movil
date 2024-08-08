@@ -17,18 +17,7 @@ class Memberadmin extends StatelessWidget {
     int index = 0;
 
     return Scaffold(
-      appBar: index != 4
-          ? AppBar(
-              actions: [
-                ProfileHeaderTrainee(
-                  username: userName,
-                  message: "Hola, $userName",
-                )
-              ],
-              toolbarHeight: 120,
-              automaticallyImplyLeading: false,
-            )
-          : null,
+
       body: Column(
         children: [
           Row(
@@ -40,7 +29,7 @@ class Memberadmin extends StatelessWidget {
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back_ios),
                       onPressed: () {
-                        parentState.changeSelected(0, 'Home');
+                       
                       },
                     )),
               ]),
