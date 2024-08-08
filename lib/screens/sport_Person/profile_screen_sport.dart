@@ -1,10 +1,7 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
-import 'package:swimmast_movil/shared/change_password.dart';
+import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/btnlogout.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
-import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 
 class ProfileScreenSport extends StatefulWidget {
@@ -20,47 +17,6 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     Size size = MediaQuery.of(context).size;
-    int _selectedtab = 2;
-
-    void _navigateToScreen(int index) {
-      Widget nextPage;
-      switch (index) {
-        case 0:
-          nextPage = HomeScreenSport();
-          break;
-        case 1:
-          nextPage = NotificationScreenSport();
-          break;
-        case 2:
-          //nextPage = ProfileScreenSport(context);
-          nextPage = ProfileScreenSport();
-          break;
-        default:
-          nextPage = HomeScreenSport();
-          break;
-      }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => nextPage),
-      );
-    }
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _selectedtab = index;
-      });
-      _navigateToScreen(index);
-    }
-
-    Future _logout() async {
-      try {
-        await Dio().post(urlBack + 'administration/logout_user/',
-            options: Options(headers: {'Authorization': 'Token $token'}));
-      } catch (e) {
-        print(e);
-      }
-      miembro = null;
-    }
 
     List<String> data = [
       "Número de teléfono: 0960187017",
@@ -73,7 +29,6 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Perfil",
-        onBackPressed: () => Navigator.pop(context),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: statusBarHeight * 1.5),
@@ -130,7 +85,7 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ChangePassword(),
+                  ChangePasswordW(),
                   const Icon(
                     Icons.keyboard_arrow_right_outlined,
                   ),
@@ -164,10 +119,6 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(
-        selected: _selectedtab,
-        currentIndex: _onItemTapped,
       ),
     );
   }

@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/inputs.dart';
 
-import 'package:swimmast_movil/shared/profile_header.dart';
-import 'package:image_picker/image_picker.dart';
 
 class BuyScreen extends StatefulWidget {
   final String nomPaquete;

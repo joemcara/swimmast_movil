@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:popover/popover.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
@@ -87,8 +86,7 @@ class ListItems extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.of(context).pop();
-              print("op");
-              state.changeSelected(2, 'Agregar Rutina');
+              state.changeSelected(4, 'Agregar Rutina');
             },
             child: Container(
               decoration: const BoxDecoration(

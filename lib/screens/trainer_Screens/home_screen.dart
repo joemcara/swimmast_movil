@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       coursesToday = coursesTodayList;
       await MembersByTrainer();
       allCoursesMembers = allCourses;
-      setState(() {});
+      //setState(() {});
     } catch (e) {
       print(e);
       throw e;
@@ -123,9 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         children: [
-          _buildGridItem(Icons.calendar_month, 'Cursos', 1, parentState),
+          _buildGridItem(Icons.calendar_month, 'Cursos', 4, parentState),
           _buildGridItem(
-              Icons.calendar_month, 'Manejar Miembros', 4, parentState)
+              Icons.calendar_month, 'Manejar Miembros', 5, parentState)
         ],
       ),
     );
@@ -137,11 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: () {
         if (title == "Cursos") {
-          courseSelected = 1;
+          courseSelected = 4;
           state.changeSelected(index, 'Cursos');
           print(index);
         } else if (title == "Manejar Miembros") {
-          courseSelected = 4;
+          courseSelected = 5;
           state.changeSelected(index, "Manejar Miembros");
           print(index);
         } else {

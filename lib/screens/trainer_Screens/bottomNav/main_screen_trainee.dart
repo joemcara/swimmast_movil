@@ -40,11 +40,13 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
   void changeSelected(int id, String nameOption) {
     setState(() {
       if (nameOption == 'Cursos') {
-        index = 1;
+        index = 3;
       } else if (nameOption == 'Manejar Miembros') {
-        index = 4;
+        index = 5;
       } else if (nameOption == 'Home') {
         index = 0;
+      } else if (nameOption == 'Agregar Rutina') {
+        index = 4;
       } else {
         index = 2;
       }

@@ -1,8 +1,8 @@
-import 'package:swimmast_movil/shared/change_password_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/screens/change_password_screen.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({
+class ChangePasswordW extends StatelessWidget {
+  const ChangePasswordW({
     super.key,
   });
 

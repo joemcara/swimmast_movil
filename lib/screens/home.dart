@@ -3,7 +3,7 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/competencies_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/notification_screen_sport.dart';
+import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
     if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>NotificationScreenSport()),
+        MaterialPageRoute(builder: (context) =>NotificationScreen()),
       );
     }
     if (index == 2) {

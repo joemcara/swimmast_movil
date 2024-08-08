@@ -3,26 +3,25 @@ import 'package:swimmast_movil/shared/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final VoidCallback? onBackPressed;
   final PreferredSizeWidget? bottom;
-
+  final bool? back;
+  
   CustomAppBar({
     required this.title,
-    required this.onBackPressed,
-    this.bottom,
+    this.bottom, 
+    this.back,
+    
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: onBackPressed != null
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back, color: defaultIconColor),
-              onPressed: onBackPressed,
-            )
-          : null,
+      automaticallyImplyLeading: back ?? false,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
+      ),
       title: Text(
-        title,
+        '\t\t '+title,
         style: const TextStyle(
           color: defaultIconTextColor,
           fontSize: 18,

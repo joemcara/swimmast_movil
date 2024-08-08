@@ -1,31 +1,62 @@
-import 'package:flutter/material.dart';
-import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
 import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
-import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
 
-class ShopSportScreen extends StatelessWidget {
+import 'package:swimmast_movil/models/courseAvailable.dart';
+
+class ShopSportScreen extends StatefulWidget {
+  
+  @override
+  State<ShopSportScreen> createState() => _ShopSportScreenState();
+}
+
+class _ShopSportScreenState extends State<ShopSportScreen> {
+
+    List<Map<String, String>> items = [];
+
+    Future<void> _AvilableShopCourse() async{
+      try{
+        final response = await Dio().get(
+          urlBack + 'course/catalog/swimmer/' + idUser.toString(),  
+        );
+        
+        for (var item in response.data){
+          CourseAvailable course = CourseAvailable.fromJson(item);
+          Map<String, String> courseMap = {
+            'paquete': course.name,
+            'descripcion': course.description,
+            'price': course.price,
+            'startDate': course.startDate.toString().split(' ')[0],
+            'dueDate': course.dueDate.toString().split(' ')[0],
+          };
+          items.add(courseMap);
+        }
+        setState(() {
+          
+        });
+      } catch (e){
+        print(e);
+        throw e;
+      }
+    }
+
+    @override
+    void initState() {
+      super.initState();
+      _AvilableShopCourse();
+      
+    }
+  
   @override
   Widget build(BuildContext context) {
-    String loren =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
-    List<Map<String, String>> items = [
-      {'paquete': 'Paquete 1', 'descripcion': loren, 'price': '10'},
-      {'paquete': 'Paquete 2', 'descripcion': loren, 'price': '23'},
-      {'paquete': 'Paquete 3', 'descripcion': loren, 'price': '60'},
-      {'paquete': 'Paquete 4', 'descripcion': loren, 'price': '100'},
-    ];
 
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         appBar: CustomAppBar(
           title: "Cursos Disponibles",
-          onBackPressed: () => Navigator.pop(context),
+          back: true,
           bottom: TabBar(
             tabs: [
               Tab(text: "Paquetes Disponibles"),
@@ -40,7 +71,8 @@ class ShopSportScreen extends StatelessWidget {
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
-        body: TabBarView(
+        body: 
+        TabBarView(
           children: [
             ListView.builder(
               padding: const EdgeInsets.all(10),
@@ -49,6 +81,8 @@ class ShopSportScreen extends StatelessWidget {
                 nomPaquete: items[index]['paquete']!,
                 descPaquete: items[index]['descripcion']!,
                 precio: items[index]['price']!,
+                startDate: items[index]['startDate']!,
+                dueDate: items[index]['dueDate']!,
                 button: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -82,13 +116,17 @@ class DetallePaquete extends StatelessWidget {
   final String descPaquete;
   final ElevatedButton button;
   final String precio;
+  final String startDate;
+  final String dueDate;
 
   const DetallePaquete({
     Key? key,
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
+    required this.precio, 
+    required this.startDate, 
+    required this.dueDate,
   }) : super(key: key);
 
   @override
@@ -121,6 +159,23 @@ class DetallePaquete extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 10),
+            Text(              
+            'Fecha inicio: $startDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(height: 10),            
+            Text(              
+            'Fecha Fin: $dueDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(height: 10),
             Center(child: button),
           ],
         ),
@@ -134,13 +189,17 @@ class PaquetesInscripcion extends StatelessWidget {
   final String descPaquete;
   final ElevatedButton button;
   final String precio;
+  final String startDate;
+  final String dueDate;
 
   const PaquetesInscripcion({
     Key? key,
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
+    required this.precio, 
+    required this.startDate, 
+    required this.dueDate,
   }) : super(key: key);
 
   @override
@@ -149,6 +208,8 @@ class PaquetesInscripcion extends StatelessWidget {
       nomPaquete: nomPaquete,
       descPaquete: descPaquete,
       button: button,
+      startDate: startDate,
+      dueDate: dueDate,
       precio: precio,
     );
   }
@@ -164,81 +225,58 @@ class BuyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    final List<Map<String, String>> _accountDetails = [
-      {'name': 'Espinoza Wilson', 'id': 'CI: 0956325689'},
-    ];
-
-    final List<Map<String, String>> _bankDetails = [
-      {
-        'bankName': 'Banco Guayaquil',
-        'account': 'Ahorro #0015095639',
-        'email': 'trasta7@gmail.com'
-      },
-      {
-        'bankName': 'Banco Pichincha',
-        'account': 'Ahorro #0015236789',
-        'email': 'trasta7@gmail.com'
-      },
-    ];
-
     final List<Map<String, String>> _personDetails = [
-      {'name': 'Evelyn Smith', 'id': '0956325689'},
+      {'name': '${miembro!.user.firstName}${miembro!.user.lastName}'},
     ];
 
     return Scaffold(
-        appBar: CustomAppBar(
-          title: 'Comprar $nomPaquete',
-          onBackPressed: () => Navigator.pop(context),
+        appBar:AppBar(
+        leading: AlertWidget(),
+        title: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Comprar $nomPaquete',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: defaultGradient,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.02),
+                padding: EdgeInsets.all(screenWidth * 0.04),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    WidgetInfoBank(
-                        accountDetails: _accountDetails,
-                        bankDetails: _bankDetails),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
-                        personDetails: _personDetails, nomPaquete: nomPaquete),
+                        personDetails: _personDetails,
+                         nomPaquete: nomPaquete,
+                         precio: precio,
+                         ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(precio: double.parse(precio)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: buttoncoloryellow,
-                              foregroundColor: buttoncolorblue,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: screenWidth * 0.04,
-                                  horizontal: screenWidth * 0.02),
-                            ),
-                            onPressed: () {},
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Enviar Pago",
-                                  style:
-                                      TextStyle(fontSize: screenWidth * 0.06),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 16.0),
-                      ],
-                    ),
                   ],
                 ),
               ),
@@ -262,12 +300,60 @@ class WidgetButtons extends StatefulWidget {
 
 class _WidgetButtonsState extends State<WidgetButtons> {
   bool _isAmountVisible = false;
+  bool _isReserveButtonVisible = false;
   TextEditingController _amountController = TextEditingController();
+  bool _isTransferVisible = false;
+  bool _isCashVisible = false;
+  bool _isAnyButtonVisibleTran = true;
+  bool _isAnyButtonVisibleEfec = true;
+
+  final List<Map<String, String>> _accountDetails = [
+    {
+      'name': 'Espinoza Wilson',
+      'id': 'CI: 0956325689',
+      'email': 'trasta7@gmail.com',
+    },
+  ];
+
+  final List<Map<String, String>> _bankDetails = [
+    {
+      'bankName': 'Banco Guayaquil',
+      'account': 'Ahorro #0015095639',
+    },
+    {
+      'bankName': 'Banco Pichincha',
+      'account': 'Ahorro #0015236789',
+    },
+  ];
 
   @override
   void initState() {
     super.initState();
     _amountController.text = '00.00'; // No incluye el signo '$' aquí
+  }
+
+  void _toggleTransfer() {
+    setState(() {
+      if (_isAnyButtonVisibleTran) {
+        _isTransferVisible = !_isTransferVisible;
+        _isAnyButtonVisibleEfec = false;
+        if (!_isTransferVisible) {
+          _isAnyButtonVisibleEfec = true;
+        }
+      } 
+    });
+  }
+
+  void _toggleEfectivo() {
+    setState(() {
+      if (_isAnyButtonVisibleEfec) {
+        _isCashVisible = !_isCashVisible;
+        _isAnyButtonVisibleTran = false;
+        if (!_isCashVisible) {
+          _isAnyButtonVisibleTran = true;
+        }
+      } 
+    });
   }
 
   @override
@@ -280,163 +366,117 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          children: [
+            Icon(Icons.credit_score, color: buttoncolorblue),
+            SizedBox(width: 8.0),
+            Text(
+              'Opciones de pago',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: buttoncolorblue,
+                fontSize: screenWidth * 0.04,
+              ),
+            ),
+          ],
+        ),
+        Divider(),
+        Visibility(
+          visible: _isAnyButtonVisibleTran,
+          child: Column(
             children: [
-              Icon(Icons.credit_score, color: buttoncolorblue),
-              SizedBox(width: 8.0),
-              Text(
-                'Opciones de pago',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: buttoncolorblue,
-                  fontSize: screenWidth * 0.04,
+              PaymentOptionCard(
+                icon: Icons.account_balance,
+                title: 'Transferencia Bancaria',
+                description: 'Realiza una transferencia bancaria.',
+                onTap: _toggleTransfer,
+                isSelected: _isTransferVisible,
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isTransferVisible,
+          child: Column(
+            children: [
+              SizedBox(height: screenWidth * 0.02),
+              WidgetInfoBank(
+                accountDetails: _accountDetails,
+                bankDetails: _bankDetails,
+              ),
+              TransferSection(
+                precio: '100.00',
+                amountController: TextEditingController(),
+                isAmountVisible: _isAmountVisible,
+                onToggleAmountVisibility: () {
+                  setState(() {
+                    _isAmountVisible = !_isAmountVisible;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isAnyButtonVisibleEfec,
+          child: Column(
+            children: [
+              PaymentOptionCard(
+                icon: Icons.money,
+                title: 'Pago en Efectivo',
+                description: 'Paga en efectivo en nuestras oficinas.',
+                onTap: _toggleEfectivo,
+                isSelected: _isCashVisible,
+              ),
+            ],
+          ),
+        ),
+        Visibility(
+          visible: _isCashVisible,
+          child: Column(
+            children: [
+              SizedBox(height: 16),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttoncoloryellow,
+                    foregroundColor: buttoncolorblue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenWidth * 0.04,
+                      horizontal: screenWidth * 0.02,
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    "Reservar Cupo por 24hrs",
+                    style: TextStyle(fontSize: screenWidth * 0.05),
+                  ),
                 ),
               ),
             ],
           ),
-          Divider(),
-          SizedBox(height: 8.0),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: buttoncolorblue,
-                          foregroundColor: buttoncoloryellow,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 20.0),
-                        ),
-                        onPressed: () {},
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "\$ ${widget.precio.toStringAsFixed(2)}",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Pagar valor total",
-                              style: TextStyle(fontSize: screenWidth * 0.03),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.02),
-                    Expanded(
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: buttoncolorblue,
-                          padding: EdgeInsets.symmetric(
-                              vertical: screenWidth * 0.02,
-                              horizontal: screenWidth * 0.02),
-                          backgroundColor: Colors.transparent,
-                          side: BorderSide.none,
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.upload_file, color: buttoncolorblue),
-                            SizedBox(width: screenWidth * 0.02),
-                            Text(
-                              "Subir\ncomprobante",
-                              style: TextStyle(
-                                fontSize: screenWidth * 0.03,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: screenWidth * 0.02),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: buttoncolorblue,
-                        foregroundColor: buttoncoloryellow,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: screenWidth * 0.04,
-                            horizontal: screenWidth * 0.05),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isAmountVisible = !_isAmountVisible;
-                        });
-                      },
-                      child: Text(
-                        "Agregar monto",
-                        style: TextStyle(fontSize: screenWidth * 0.05),
-                      ),
-                    ),
-                    SizedBox(width: 16.0),
-                    Visibility(
-                      visible: _isAmountVisible,
-                      child: Container(
-                        width: screenWidth * 0.3,
-                        child: TextField(
-                          controller: _amountController,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^\d*\.?\d{0,2}')),
-                          ],
-                          decoration: InputDecoration(
-                            labelText: 'Monto',
-                            border: OutlineInputBorder(),
-                            prefixText: '\$',
-                          ),
-                          style: TextStyle(fontSize: screenWidth * 0.04),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }
 
 class WidgetInfoBuy extends StatelessWidget {
-  const WidgetInfoBuy({
+  WidgetInfoBuy({
     super.key,
     required List<Map<String, String>> personDetails,
     required this.nomPaquete,
+    required this.precio,
   }) : _personDetails = personDetails;
 
   final List<Map<String, String>> _personDetails;
   final String nomPaquete;
+  var precio;
 
   @override
   Widget build(BuildContext context) {
@@ -475,7 +515,6 @@ class WidgetInfoBuy extends StatelessWidget {
                 children: [
                   Text('Nombre: ${_personDetails[0]['name']}',
                       style: textStyle),
-                  Text('Cédula: ${_personDetails[0]['id']}', style: textStyle),
                 ],
               ),
             ],
@@ -495,7 +534,7 @@ class WidgetInfoBuy extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Total a pagar:', style: textStyle),
-              Text('\$10.00', style: textStyle),
+              Text('\$ $precio', style: textStyle),
             ],
           ),
         ],
@@ -523,7 +562,7 @@ class WidgetInfoBank extends StatelessWidget {
       padding: EdgeInsets.all(screenWidth * 0.02),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: defaultGradient,
+          colors: [Colors.black12, Colors.black12],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -534,12 +573,12 @@ class WidgetInfoBank extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_circle, color: Colors.white),
+              Icon(Icons.account_circle, color: buttoncolorblue),
               SizedBox(width: screenWidth * 0.02),
               Text('Detalle de la cuenta a pagar',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: buttoncolorblue,
                       fontSize: screenWidth * 0.04)),
             ],
           ),
@@ -550,30 +589,30 @@ class WidgetInfoBank extends StatelessWidget {
               children: [
                 Icon(
                   Icons.person,
-                  color: Colors.white,
-                  size: screenWidth * 0.07,
+                  color: buttoncolorblue,
+                  size: screenWidth * 0.09,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: screenWidth * 0.02),
-                  child: _accountDetail(account['name']!, account['id']!),
+                  child: _accountDetail(
+                      account['name']!, account['id']!, account['email']!),
                 ),
               ],
             ),
-          for (var bank in _bankDetails)
-            Row(
-              children: [
-                Icon(
-                  Icons.account_balance,
-                  color: Colors.white,
-                  size: screenWidth * 0.07,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.02),
-                  child: _bankDetail(
-                      bank['bankName']!, bank['account']!, bank['email']!),
-                ),
-              ],
-            ),
+          SizedBox(height: screenWidth * 0.02),
+          Divider(),
+          Row(
+            children: [
+              IconBank(screenWidth: screenWidth),
+              SizedBox(width: screenWidth * 0.02),
+              _buildBankColumn('Banco Guayaquil', _bankDetails, screenWidth),
+              SizedBox(width: screenWidth * 0.01),
+              IconBank(screenWidth: screenWidth),
+              SizedBox(width: screenWidth * 0.02),
+              _buildBankColumn('Banco Pichincha', _bankDetails, screenWidth),
+            ],
+          ),
+          SizedBox(height: screenWidth * 0.02),
           Divider(),
         ],
       ),
@@ -581,25 +620,48 @@ class WidgetInfoBank extends StatelessWidget {
   }
 }
 
-Widget _accountDetail(String name, String id) {
+class IconBank extends StatelessWidget {
+  const IconBank({
+    super.key,
+    required this.screenWidth,
+  });
+
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.account_balance,
+      color: buttoncolorblue,
+      size: screenWidth * 0.07,
+    );
+  }
+}
+
+Widget _accountDetail(String name, String id, String email) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         name,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
       ),
       Text(
         id,
         style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
+      ),
+      Text(
+        email,
+        style: TextStyle(
+            fontWeight: FontWeight.bold, color: buttoncolorblue, fontSize: 14),
       ),
     ],
   );
 }
 
-Widget _bankDetail(String bankName, String account, String email) {
+Widget _bankDetail(String bankName, String account) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 4.0),
     child: Column(
@@ -608,30 +670,323 @@ Widget _bankDetail(String bankName, String account, String email) {
         Text(
           bankName,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+              fontWeight: FontWeight.bold,
+              color: buttoncolorblue,
+              fontSize: 14),
         ),
         Text(
           account,
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
-        ),
-        Text(
-          email,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
+              fontWeight: FontWeight.bold,
+              color: buttoncolorblue,
+              fontSize: 14),
         ),
       ],
     ),
   );
 }
 
-class PurchasedScreen extends StatelessWidget {
-  const PurchasedScreen({Key? key}) : super(key: key);
+Widget _buildBankColumn(String bankName, List<Map<String, String>> _bankDetails,
+    double screenWidth) {
+  return Expanded(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var bank
+            in _bankDetails.where((bank) => bank['bankName'] == bankName))
+          Padding(
+            padding: EdgeInsets.only(top: screenWidth * 0.02),
+            child: _bankDetail(
+              bank['bankName']!,
+              bank['account']!,
+            ),
+          ),
+      ],
+    ),
+  );
+}
+
+class PaymentOptionCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+  final VoidCallback onTap;
+  final bool isSelected;
+
+  PaymentOptionCard({
+    required this.icon,
+    required this.title,
+    required this.description,
+    required this.onTap,
+    required this.isSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('No hay paquetes comprados.'),
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: isSelected ? buttoncolorblue : Colors.white,
+      child: ListTile(
+        contentPadding: EdgeInsets.all(16.0),
+        leading: Icon(
+          icon,
+          size: 40,
+          color: isSelected ? Colors.white : buttoncolorblue,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isSelected ? Colors.white : buttoncolorblue,
+          ),
+        ),
+        subtitle: Text(
+          description,
+          style: TextStyle(
+            color: isSelected ? Colors.white : buttoncolorblue,
+          ),
+        ),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+
+class TransferSection extends StatelessWidget {
+  final String precio;
+  final TextEditingController amountController;
+  final bool isAmountVisible;
+  final VoidCallback onToggleAmountVisibility;
+
+  TransferSection({
+    required this.precio,
+    required this.amountController,
+    required this.isAmountVisible,
+    required this.onToggleAmountVisibility,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttoncolorblue,
+                    foregroundColor: buttoncoloryellow,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        vertical: screenWidth * 0.03,
+                        horizontal: screenWidth * 0.01),
+                  ),
+                  onPressed: () {
+                    // Acción al presionar "Pagar valor total"
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "\$ $precio",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Pagar valor total",
+                        style: TextStyle(fontSize: screenWidth * 0.03),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
+              Expanded(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    foregroundColor: buttoncolorblue,
+                    padding: EdgeInsets.symmetric(
+                        vertical: screenWidth * 0.02,
+                        horizontal: screenWidth * 0.02),
+                    backgroundColor: Colors.transparent,
+                    side: BorderSide.none,
+                  ),
+                  onPressed: () {
+                    // Acción al presionar "Subir comprobante"
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.upload_file, color: buttoncolorblue),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text(
+                        "Subir\ncomprobante",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.03,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: screenWidth * 0.02),
+          Row(
+            mainAxisAlignment: isAmountVisible
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.center
+            ,
+
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttoncolorblue,
+                  foregroundColor: buttoncoloryellow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      vertical: screenWidth * 0.05,
+                      horizontal: screenWidth * 0.05),
+                ),
+                onPressed: onToggleAmountVisibility,
+                child: Text(
+                  "Agregar monto",
+                  style: TextStyle(fontSize: screenWidth * 0.04),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.05),
+              Visibility(
+                visible: isAmountVisible,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: screenWidth * 0.02,
+                      horizontal: screenWidth * 0.002),
+                  child: Container(
+                    width: screenWidth * 0.3,
+                    child: TextField(
+                      controller: amountController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d*\.?\d{0,2}')),
+                      ],
+                      decoration: InputDecoration(
+                        labelText: 'Monto',
+                        border: OutlineInputBorder(),
+                        prefixText: '\$',
+                      ),
+                      style: TextStyle(fontSize: screenWidth * 0.03),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: screenWidth * 0.02),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: buttoncoloryellow,
+                    foregroundColor: buttoncolorblue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        vertical: screenWidth * 0.04,
+                        horizontal: screenWidth * 0.02),
+                  ),
+                  onPressed: () {},
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Enviar Pago",
+                        style: TextStyle(fontSize: screenWidth * 0.05),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 16.0),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AlertWidget extends StatelessWidget {
+  const AlertWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const BackButtonIcon(),
+      iconSize: 25,
+      color: Colors.white,
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              surfaceTintColor: Colors.white,
+              title: const Text('Salir de compra'),
+              content: const Text(
+                'Si usted sale de la compra, no se guardaran los datos ingresados.\n¿Desea salir?',
+                style: TextStyle(fontSize: 16),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text(
+                    'SI',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text(
+                    'NO',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // close the dialog
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

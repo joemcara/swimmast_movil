@@ -51,7 +51,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      miembro!.username,
+                                      miembro!.user.username,
                                     ),
                                   ),
                                 ),
