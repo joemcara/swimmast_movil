@@ -13,7 +13,7 @@ class HomeScreenMember extends StatefulWidget {
 }
 
 class _HomeScreenMemberState extends State<HomeScreenMember> {
-  List<Map<String, String>> courseList = [];
+  List<Map<String, dynamic>> courseList = [];
 
   @override
   void initState() {
@@ -28,8 +28,13 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
           options: Options(headers: {'Authorization': 'Token $token'}));
       for (var item in response.data) {
         Course course = Course.fromJson(item);
-        Map<String, String> courseMap = {
+        List<String> dias = course.description.split(" y ");
+        Map<String, dynamic> courseMap = {
           'day': course.description,
+          'days': dias,
+          'name': course.name,
+          'startDate': course.startDate,
+          'dueDate': course.dueDate,
           'hour': course.startTime + ' - ' + course.endTime,
           'trainer':
               course.instructor.firstName + ' ' + course.instructor.lastName,
@@ -37,7 +42,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
         courseList.add(courseMap);
         userCourse.clear();
         userCourse.add("${course.name}  ${course.description}");
-        
+        coursesList = courseList;
       }
       setState(() {});
     } catch (e) {

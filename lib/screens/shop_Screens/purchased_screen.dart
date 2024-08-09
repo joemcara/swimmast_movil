@@ -4,10 +4,10 @@ class PurchasedScreen extends StatefulWidget {
   const PurchasedScreen({super.key});
 
   @override
-  State<PurchasedScreen> createState() => PpurchaseScreendState();
+  State<PurchasedScreen> createState() => PurchaseScreendState();
 }
 
-class PpurchaseScreendState extends State<PurchasedScreen> {
+class PurchaseScreendState extends State<PurchasedScreen> {
   @override
   Widget build(BuildContext context) {
     return const Center(

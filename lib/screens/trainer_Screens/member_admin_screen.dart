@@ -1,3 +1,7 @@
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
+import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/shared/profile_header_trainee.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
@@ -7,7 +11,13 @@ class Memberadmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MainScreenTraineeState parentState =
+        context.findAncestorStateOfType<MainScreenTraineeState>()!;
+    SportBtBar? trainerBtBar;
+    int index = 0;
+
     return Scaffold(
+
       body: Column(
         children: [
           Row(
@@ -15,14 +25,13 @@ class Memberadmin extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 0, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back_ios),
                       onPressed: () {
-                        Navigator.pop(context);
+                       
                       },
                     )),
-                ProfileHeader(username: userName)
               ]),
           const SizedBox(height: 10),
           const SizedBox(
@@ -37,8 +46,28 @@ class Memberadmin extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.grey)))),
           ),
           const SizedBox(height: 20),
-          const Flexible(
-            child: MemberAdminCards(),
+          Expanded(
+            child: onlyMembers.isEmpty
+                ? Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        'No existen estudiantes asignados',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: onlyMembers.length,
+                    padding: const EdgeInsets.all(12),
+                    itemBuilder: (_, index) => MemberAdminCards(
+                        onlyMembers[index]['firstName'] +
+                            " " +
+                            onlyMembers[index]['lastName']),
+                  ),
           )
         ],
       ),
@@ -46,65 +75,40 @@ class Memberadmin extends StatelessWidget {
   }
 }
 
-class MemberAdminCards extends StatefulWidget {
-  const MemberAdminCards({super.key});
-
-  @override
-  MemberAdminCardsState createState() => MemberAdminCardsState();
-}
-
-class MemberAdminCardsState extends State<MemberAdminCards> {
-  List<Widget> generateContainers(int count) {
-    List<Widget> containers = [];
-    for (int i = 0; i < count; i++) {
-      containers.add(
-        Container(
-          padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-          margin: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-          width: 360,
-          child: const Column(
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(),
-                  SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Evelyn Smith",
-                        style: styleSubtitles,
-                      ),
-                      Text("12 años")
-                    ],
-                  ),
-                  SizedBox(width: 135),
-                  PopoverButton(),
-                ],
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  SizedBox(width: 10),
-                  Membertraineradmin(),
-                ],
-              ),
-            ],
-          ),
+Widget MemberAdminCards(String name) {
+  return Container(
+    padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+    margin: const EdgeInsets.all(8.0),
+    decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+    width: 360,
+    child: Column(
+      children: [
+        Row(
+          children: [
+            CircleAvatar(),
+            SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: styleSubtitles,
+                ),
+                Text("12 años")
+              ],
+            ),
+            SizedBox(width: 135),
+            //PopoverButton(),
+          ],
         ),
-      );
-    }
-    return containers;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: generateContainers(5),
-      ),
-    );
-  }
+        SizedBox(height: 10),
+        Row(
+          children: [
+            SizedBox(width: 10),
+            Membertraineradmin(),
+          ],
+        ),
+      ],
+    ),
+  );
 }

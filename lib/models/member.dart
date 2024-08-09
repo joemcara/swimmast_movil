@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final member = memberFromJson(jsonString);
-
 import 'dart:convert';
 
 Member memberFromJson(String str) => Member.fromJson(json.decode(str));
@@ -10,44 +6,36 @@ String memberToJson(Member data) => json.encode(data.toJson());
 
 class Member {
   User user;
-    String username;
-    String phoneNumber;
-  String message;
-  String token;
   int roleId;
   String roleName;
+  String message;
+  String token;
   String device;
 
   Member({
     required this.user,
-        required this.username,
-        required this.phoneNumber,
-    required this.message,
-    required this.token,
     required this.roleId,
     required this.roleName,
+    required this.message,
+    required this.token,
     required this.device,
   });
 
   factory Member.fromJson(Map<String, dynamic> json) => Member(
         user: User.fromJson(json["user"]),
-        username: json["username"],
-        phoneNumber: json["phone_number"],
-        message: json["message"],
-        token: json["token"],
         roleId: json["role_id"],
         roleName: json["role_name"],
+        message: json["message"],
+        token: json["token"],
         device: json["device"],
       );
 
   Map<String, dynamic> toJson() => {
         "user": user.toJson(),
-        "username": username,
-        "phone_number": phoneNumber,
-        "message": message,
-        "token": token,
         "role_id": roleId,
         "role_name": roleName,
+        "message": message,
+        "token": token,
         "device": device,
       };
 }
@@ -58,6 +46,9 @@ class User {
   String firstName;
   String lastName;
   DateTime birthdate;
+  String profileImage;
+  String phoneNumber;
+  String username;
 
   User({
     required this.id,
@@ -65,14 +56,20 @@ class User {
     required this.firstName,
     required this.lastName,
     required this.birthdate,
+    required this.profileImage,
+    required this.phoneNumber,
+    required this.username,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
-        representative: json["representative"] ?? "",
+        representative: json["representative"],
         firstName: json["first_name"],
         lastName: json["last_name"],
-        birthdate: DateTime.parse(json["birthdate"] ?? "2000-01-01"),
+        birthdate: DateTime.parse(json["birthdate"] ?? '2024-08-08'),
+        profileImage: json["profile_image"],
+        phoneNumber: json["phone_number"] ?? '00000000',
+        username: json["username"] ?? 'username',
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,5 +79,8 @@ class User {
         "last_name": lastName,
         "birthdate":
             "${birthdate.year.toString().padLeft(4, '0')}-${birthdate.month.toString().padLeft(2, '0')}-${birthdate.day.toString().padLeft(2, '0')}",
+        "profile_image": profileImage,
+        "phone_number": phoneNumber,
+        "username": username,
       };
 }

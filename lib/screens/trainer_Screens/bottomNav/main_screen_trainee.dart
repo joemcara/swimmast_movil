@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/shared/profile_header_trainee.dart';
@@ -12,11 +11,9 @@ class MainScreenTrainee extends StatefulWidget {
 }
 
 class MainScreenTraineeState extends State<MainScreenTrainee> {
-  final GlobalKey<SportBtBarState> childKey = GlobalKey<SportBtBarState>();
-
   int index = 0;
-  bool flag = true;
   SportBtBar? trainerBtBar;
+
   @override
   void initState() {
     super.initState();
@@ -30,52 +27,11 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
     );
   }
 
-  void changeSelected(int id) {
-    setState(() {
-      index = 1;
-      courseSelected = id;
-      print("yei");
-      trainerBtBar = SportBtBar(
-        currentIndex: (index) {
-          setState(() {
-            this.index = index;
-          });
-        },
-        selected: index,
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: trainerBtBar,
-        appBar: index != 4
-            ? AppBar(
-                actions: [
-                  ProfileHeaderTrainee(
-                    username: miembro!.user.firstName,
-                    onAvatarTap: () {
-                      setState(() {
-                        index = 4;
-                        trainerBtBar = SportBtBar(
-                          currentIndex: (index) {
-                            setState(() {
-                              this.index = index;
-                            });
-                          },
-                          selected: index,
-                        );
-                      });
-                    },
-                  )
-                ],
-                toolbarHeight: 120,
-                automaticallyImplyLeading: false,
-              )
-            : null,
         body: BottomRouteTrainee(
-          key: childKey,
           index: index,
         ));
   }

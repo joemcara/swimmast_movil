@@ -1,20 +1,19 @@
-
-import 'package:swimmast_movil/shared/change_password_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
+import 'package:swimmast_movil/screens/change_password_screen.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({
+class ChangePasswordW extends StatelessWidget {
+  const ChangePasswordW({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ChangePasswordScreen( ),
+            builder: (context) => const ChangePasswordScreen(),
           ),
         );
       },
@@ -22,9 +21,8 @@ class ChangePassword extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-                color: swimmastBlue,
-                borderRadius:
-                    BorderRadius.all(Radius.circular(100))),
+                color: buttoncolorblue,
+                borderRadius: BorderRadius.all(Radius.circular(100))),
             padding: const EdgeInsets.all(6),
             child: const Icon(
               Icons.lock,

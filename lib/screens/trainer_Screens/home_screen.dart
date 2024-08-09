@@ -1,9 +1,11 @@
-import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
+import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
-import 'package:provider/provider.dart';
-import 'package:swimmast_movil/models/courseSelected.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
+import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;
@@ -16,7 +18,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = -1;
   List<Map<String, dynamic>> courseList = [];
+  List<Map<String, dynamic>> coursesTodayList = [];
+  List<Map<String, dynamic>> membersList = [];
+  List<Map<String, dynamic>> allCourses = [];
 
   @override
   void initState() {
@@ -40,106 +46,113 @@ class _HomeScreenState extends State<HomeScreen> {
           'course_status': course.courseStatus,
           'day': course.description,
           'hour': course.startTime,
-          'due_hour': course.endTime
+          'due_hour': course.endTime,
+          'days': course.description.split("y")
         };
+        for (var i = 0; i < courseMap['days'].length; i++) {
+          courseMap['days'][i] = courseMap['days'][i].replaceAll(' ', '');
+        }
         courseList.add(courseMap);
+
+        var courseiItem = courseMap['days'];
+        if (courseiItem.contains('Viernes')) {
+          coursesTodayList.add(courseMap);
+        }
       }
+
       coursesList = courseList;
-      setState(() {});
+      coursesToday = coursesTodayList;
+      await MembersByTrainer();
+      allCoursesMembers = allCourses;
+      //setState(() {});
     } catch (e) {
       print(e);
       throw e;
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    MainScreenTraineeState parentState =
-        context.findAncestorStateOfType<MainScreenTraineeState>()!;
+  Future<void> MembersByTrainer() async {
+    for (var i = 0; i < coursesList.length; i++) {
+      Map<String, dynamic> courseMap = {
+        'id': coursesList[i]['id'],
+        'members': []
+      };
+      allCourses.add(courseMap);
+    }
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-      alignment: Alignment.topLeft,
-      child: Column(
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Horarios asignados",
-                style: styleTitles,
-              )
-            ],
-          ),
-          const SizedBox(height: 15),
-          Flexible(
-            child: Container(
-              child: ListView.builder(
-                  itemCount: courseList.length,
-                  padding: const EdgeInsets.all(12),
-                  itemBuilder: (_, index) => classCard(
-                      courseList[index]['day'],
-                      courseList[index]['hour'],
-                      parentState,
-                      courseList[index]['id'])),
-            ),
-          )
-        ],
-      ),
-    );
+    onlyMembers.clear();
+    for (var i = 0; i < allCourses.length; i++) {
+      await _MembersByCourse(allCourses[i]['id']);
+      allCourses[i]['members'].addAll(membersList);
+      onlyMembers.addAll(membersList);
+      membersList.clear();
+    }
   }
-}
 
-Widget classCard(
-    String? day, String? hour, MainScreenTraineeState state, int id) {
-  return (Container(
-    margin: const EdgeInsets.all(10),
-    decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 226, 219, 219)),
-        color: Colors.white),
-    width: 330,
-    height: 200,
-    child: Container(
-        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+  Future<void> _MembersByCourse(course) async {
+    try {
+      final response = await Dio().get(
+          urlBack + 'swimmer/course/' + course.toString(),
+          options: Options(headers: {'Authorization': 'Token ${token}'}));
+
+      membersList.clear();
+      for (var item in response.data) {
+        User member = User.fromJson(item);
+
+        Map<String, dynamic> membersMap = {
+          'id': member.id,
+          'firstName': member.firstName,
+          'lastName': member.lastName,
+          'birthdate': member.birthdate
+        };
+        membersList.add(membersMap);
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      appBar: CustomAppBar(title: "Hola  ${miembro!.user.firstName}",),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              day ?? "no disponible",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 10),
-            GestureDetector(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 211, 202, 202)
-                          .withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                width: 60,
-                child: Text(
-                  hour ?? "no disponible",
-                ),
+            SizedBox(height: 20),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: [
+                  GridItem(
+                    icon: Icons.calendar_month,
+                    title: 'Horarios de clases',
+                    index: 0,
+                    nextPage: ShopSportScreen(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  ),
+                ],
               ),
-              onTap: () {
-                courseSelected = id;
-                state.changeSelected(id);
-                attendanceStateModal = true;
-
-                ;
-              },
-            )
+            ),
           ],
-        )),
-  ));
+        ),
+      ),
+    );
+  }
+
 }
