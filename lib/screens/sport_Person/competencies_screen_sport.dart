@@ -76,6 +76,7 @@ class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
                   final competition = competitions[index];
                   return SwimmastCard(
                     height: 100,
+                    //margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
