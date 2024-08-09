@@ -15,7 +15,8 @@ class _ClassScheduleSportState extends State<ClassScheduleSport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Horarios de clases", 
+        title: "Horarios de clases",
+        back: true, 
       ),
       body: Column(
         children: [

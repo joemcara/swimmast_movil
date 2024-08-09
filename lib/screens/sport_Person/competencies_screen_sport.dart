@@ -55,6 +55,7 @@ class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Competencias Pasadas",
+        back: true,
       ),
       body: Column(
         children: [

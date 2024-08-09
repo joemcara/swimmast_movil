@@ -39,6 +39,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Cambiar Contraseña",
+        back: true,
       ),
       body: Container(
         decoration: BoxDecoration(
