@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:swimmast_movil/widgets/customCalendar.dart';
+import 'package:swimmast_movil/widgets/swimmast_card.dart';
+import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
+import 'package:intl/intl.dart';
 
 class PackageScreen extends StatefulWidget {
   const PackageScreen({super.key});
@@ -9,7 +14,72 @@ class PackageScreen extends StatefulWidget {
 }
 
 class _PackageScreenState extends State<PackageScreen> {
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  List<Range> _selectedRanges = [];
+  List<Widget> _displayedPackages = [];
+  DateTime? selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting('es_ES', null).then((_) {
+      setState(() {});
+    });
+    obtainDates();
+  }
+
+  void obtainDates() {
+    int i = 0;
+    for (var item in coursesList) {
+      startDate = item['startDate'];
+      endDate = item['dueDate'];
+      _selectedRanges.add(Range(startDate!, endDate!, colorsList[i]));
+      i++;
+    }
+  }
+
+  List<Map<String, Color>> colors = [];
+  DateTime? startDate;
+  DateTime? endDate;
+
+  List<Widget> packagesDistribution(DateTime date) {
+    List<Widget> courses = [];
+    int i = 0;
+    for (var item in coursesList) {
+      if (isDateInRange(date, item['startDate'], item['dueDate']) &&
+          (!_isWeekend(date))) {
+        PackageInfo package = PackageInfo(
+          color: colorsList[i],
+          name: item['name'],
+          day: item['day'],
+          hour: item['hour'],
+        );
+
+        Map<String, Color> colorsDay = {item['name']: colorsList[i]};
+        colors.add(colorsDay);
+        courses.add(package);
+        i++;
+      }
+    }
+    return courses;
+  }
+
+  bool isDateInRange(DateTime date, DateTime startDate, DateTime endDate) {
+    return date.isAfter(startDate.subtract(Duration(days: 1))) &&
+        date.isBefore(endDate.add(Duration(days: 1)));
+  }
+
+  bool _isWeekend(DateTime day) {
+    return day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
+  }
+
+  void _onDateSelected(DateTime date) {
+    setState(() {
+      selectedDate = date;
+      _displayedPackages = packagesDistribution(date);
+    });
+    print(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,63 +94,88 @@ class _PackageScreenState extends State<PackageScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Card.outlined(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Column(
-                      children: [
-                        TableCalendar(
-                          onDaySelected: (DateTime start, DateTime end) {
-                            print(start);
-                            print(end);
-                          },
-                          onRangeSelected: (DateTime? start, DateTime? middle,
-                              DateTime end) {},
-                          focusedDay: DateTime.now(),
-                          firstDay: DateTime(2000),
-                          lastDay: DateTime(2025),
-                          onFormatChanged: (CalendarFormat format) {
-                            setState(() {
-                              _calendarFormat = format;
-                            });
-                          },
-                          calendarFormat: _calendarFormat,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          children: [
-                            _packageInfo(null, null),
-                            _packageInfo(Colors.purpleAccent, null),
-                            _packageInfo(Colors.amber, null),
-                          ],
-                        )
-                      ],
-                    )))
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: CustomCalendar(
+                        initialRanges: _selectedRanges,
+                        onDateSelected: _onDateSelected,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Wrap(
+                      children: _displayedPackages,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _packageInfo(Color? color, String? name) {
+class PackageInfo extends StatelessWidget {
+  final Color? color;
+  final String? name;
+  final String? day;
+  final String? hour;
+
+  // Constructor de la clase
+  const PackageInfo({
+    Key? key,
+    this.color,
+    this.name,
+    this.day,
+    this.hour,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Container(
-            height: 25,
-            width: 25,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: color ?? swimmastBlue),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text("Paquete X . Lunes ${8}:30 - 11:00 am")
-        ],
+      child: SwimmastCard(
+        color: color,
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(children: []),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name ?? "Nombre del curso",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SwimmastIconText(
+                  text: day ?? "Días",
+                  icon: Icon(Icons.calendar_month_outlined),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SwimmastIconText(
+                  text: hour ?? "Hora",
+                  icon: Icon(Icons.watch_later_outlined),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -18,7 +18,8 @@ class _ClassSessionsSportState extends State<ClassSessionsSport> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Sessiones de clases", 
+        title: "Sessiones de clases",
+        back: true, 
       ),
       body: Column(
         children: [

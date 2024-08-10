@@ -62,34 +62,13 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     });
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedtab = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreenSport()),
-        );
-        break;
-      case 1:
-        break;
-      case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ProfileScreenSport()),
-        );
-        break;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Historial de tiempos",
+        back: true,
       ),
       body: Column(
         children: [

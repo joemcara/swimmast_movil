@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 
 // shared constants back
 export 'package:dio/dio.dart';
@@ -11,6 +12,9 @@ const String urlBack = 'http://10.0.2.2:8000/api/v2/';
 
 Member? miembro;
 List<Map<String, dynamic>> coursesList = [];
+List<Map<String, dynamic>> coursesToday = [];
+List<Map<String, dynamic>> allCoursesMembers = [];
+List<dynamic> onlyMembers = [];
 int courseSelected = 0;
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
@@ -41,6 +45,8 @@ const TextStyle styleTitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 int global = 3;
 var attendanceStateModal = false;
+String today = '';
+String dayNow = '';
 
 //Member constans
 var phoneNumber;
@@ -48,4 +54,13 @@ var birthDate;
 var token;
 var idUser;
 var userName;
+var role;
 var userCourse = [];
+var userCourses;
+
+List<Color> colorsList = [
+  Colors.purpleAccent,
+  swimmastBlue,
+  Colors.amber,
+  Colors.orange
+];

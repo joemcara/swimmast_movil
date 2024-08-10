@@ -10,11 +10,9 @@ class MainScreenTrainee extends StatefulWidget {
 }
 
 class MainScreenTraineeState extends State<MainScreenTrainee> {
-  final GlobalKey<SportBtBarState> childKey = GlobalKey<SportBtBarState>();
-
   int index = 0;
-  bool flag = true;
   SportBtBar? trainerBtBar;
+
   @override
   void initState() {
     super.initState();
@@ -28,28 +26,11 @@ class MainScreenTraineeState extends State<MainScreenTrainee> {
     );
   }
 
-  void changeSelected(int id) {
-    setState(() {
-      index = 1;
-      courseSelected = id;
-      print("yei");
-      trainerBtBar = SportBtBar(
-        currentIndex: (index) {
-          setState(() {
-            this.index = index;
-          });
-        },
-        selected: index,
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: trainerBtBar,
         body: BottomRouteTrainee(
-          key: childKey,
           index: index,
         ));
   }

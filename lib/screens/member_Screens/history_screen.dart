@@ -3,6 +3,7 @@ import 'package:swimmast_movil/screens/member_Screens/packages_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
 import 'package:swimmast_movil/shared/custom_date_dropdown.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/swimmast_card.dart';
 import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
 
@@ -22,14 +23,22 @@ class _HistoryScrenState extends State<HistoryScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            bottom: const PreferredSize(
-              preferredSize: Size(double.infinity, 10),
-              child: SwimmastTabs(
-                tabNames: tabs,
-              ),
-            ),
+          appBar: CustomAppBar(
+            title: "Historial",
+            back: true,
+            bottom: TabBar(
+            tabs: [
+              Tab(text: "Paquetes Disponibles"),
+              Tab(text: "Comprados"),
+            ],
+            labelColor: Color.fromARGB(
+                255, 240, 204, 0), // Color del texto de la pestaña seleccionada
+            unselectedLabelColor: const Color.fromARGB(255, 255, 255,
+                255), // Color del texto de las pestañas no seleccionadas
+            indicatorColor: Color.fromARGB(255, 240, 204,
+                0), // Color de la línea de la pestaña seleccionada
+            indicatorWeight: 3.0, // Grosor de la línea del indicador
+          ),
           ),
           body: TabBarView(children: [
             Column(

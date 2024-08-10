@@ -4,48 +4,53 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
 
 import 'package:swimmast_movil/models/courseAvailable.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ShopSportScreen extends StatefulWidget {
+  
   @override
   State<ShopSportScreen> createState() => _ShopSportScreenState();
 }
 
 class _ShopSportScreenState extends State<ShopSportScreen> {
-  List<Map<String, String>> items = [];
 
-  Future<void> _AvilableShopCourse() async {
-    try {
-      final response = await Dio().get(
-        urlBack + 'course/catalog/swimmer/' + idUser.toString(),
-      );
+    List<Map<String, String>> items = [];
 
-      for (var item in response.data) {
-        CourseAvailable course = CourseAvailable.fromJson(item);
-        Map<String, String> courseMap = {
-          'paquete': course.name,
-          'descripcion': course.description,
-          'price': course.price,
-          'startDate': course.startDate.toString().split(' ')[0],
-          'dueDate': course.dueDate.toString().split(' ')[0],
-        };
-        items.add(courseMap);
+    Future<void> _AvilableShopCourse() async{
+      try{
+        final response = await Dio().get(
+          urlBack + 'course/catalog/swimmer/' + idUser.toString(),  
+        );
+        
+        for (var item in response.data){
+          CourseAvailable course = CourseAvailable.fromJson(item);
+          Map<String, String> courseMap = {
+            'paquete': course.name,
+            'descripcion': course.description,
+            'price': course.price,
+            'startDate': course.startDate.toString().split(' ')[0],
+            'dueDate': course.dueDate.toString().split(' ')[0],
+          };
+          items.add(courseMap);
+        }
+        setState(() {
+          
+        });
+      } catch (e){
+        print(e);
+        throw e;
       }
-      setState(() {});
-    } catch (e) {
-      print(e);
-      throw e;
     }
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _AvilableShopCourse();
-  }
-
+    @override
+    void initState() {
+      super.initState();
+      _AvilableShopCourse();
+      
+    }
+  
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -66,7 +71,8 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
-        body: TabBarView(
+        body: 
+        TabBarView(
           children: [
             ListView.builder(
               padding: const EdgeInsets.all(10),
@@ -118,8 +124,8 @@ class DetallePaquete extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
-    required this.startDate,
+    required this.precio, 
+    required this.startDate, 
     required this.dueDate,
   }) : super(key: key);
 
@@ -154,23 +160,21 @@ class DetallePaquete extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              'Fecha inicio: $startDate',
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Fecha Fin: $dueDate',
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+            Text(              
+            'Fecha inicio: $startDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
+            const SizedBox(height: 10),            
+            Text(              
+            'Fecha Fin: $dueDate',
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),),
             const SizedBox(height: 10),
             Center(child: button),
           ],
@@ -193,8 +197,8 @@ class PaquetesInscripcion extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio,
-    required this.startDate,
+    required this.precio, 
+    required this.startDate, 
     required this.dueDate,
   }) : super(key: key);
 
@@ -226,37 +230,37 @@ class BuyScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-        appBar: AppBar(
-          leading: AlertWidget(),
-          title: Row(
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Comprar $nomPaquete',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+        appBar:AppBar(
+        leading: AlertWidget(),
+        title: Row(
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Comprar $nomPaquete',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: defaultGradient,
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: defaultGradient,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
         ),
+      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -267,10 +271,10 @@ class BuyScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
-                      personDetails: _personDetails,
-                      nomPaquete: nomPaquete,
-                      precio: precio,
-                    ),
+                        personDetails: _personDetails,
+                         nomPaquete: nomPaquete,
+                         precio: precio,
+                         ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(precio: double.parse(precio)),
                   ],
@@ -336,7 +340,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isTransferVisible) {
           _isAnyButtonVisibleEfec = true;
         }
-      }
+      } 
     });
   }
 
@@ -348,7 +352,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isCashVisible) {
           _isAnyButtonVisibleTran = true;
         }
-      }
+      } 
     });
   }
 
@@ -751,7 +755,7 @@ class PaymentOptionCard extends StatelessWidget {
   }
 }
 
-class TransferSection extends StatefulWidget {
+class TransferSection extends StatelessWidget {
   final String precio;
   final TextEditingController amountController;
   final bool isAmountVisible;
@@ -763,75 +767,6 @@ class TransferSection extends StatefulWidget {
     required this.isAmountVisible,
     required this.onToggleAmountVisibility,
   });
-
-  _TransferSectionState createState() => _TransferSectionState();
-}
-
-class _TransferSectionState extends State<TransferSection> {
-  bool isPaymentEnabled = false;
-  bool isEnabledPhoto = false;
-  XFile? selectedImage;
-  Color uploadTextColor = buttoncolorblue;
-
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> _onUploadPhoto() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Seleccionar imagen'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text('Tomar foto'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final XFile? image =
-                      await _picker.pickImage(source: ImageSource.camera);
-                  if (image != null) {
-                    setState(() {
-                      selectedImage = image;
-                      isEnabledPhoto = true;
-                      uploadTextColor = Colors.green;
-                      _updatePaymentStatus();
-                    });
-                  }
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Seleccionar desde galería'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  final XFile? image =
-                      await _picker.pickImage(source: ImageSource.gallery);
-                  if (image != null) {
-                    setState(() {
-                      selectedImage = image;
-                      isEnabledPhoto = true;
-                      uploadTextColor = Colors.green;
-                      _updatePaymentStatus();
-                    });
-                  }
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _updatePaymentStatus() {
-    setState(() {
-      if (widget.amountController.text.isNotEmpty || isEnabledPhoto == true) {
-        isPaymentEnabled = true;
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -858,16 +793,13 @@ class _TransferSectionState extends State<TransferSection> {
                   ),
                   onPressed: () {
                     // Acción al presionar "Pagar valor total"
-                    setState(() {
-                      isEnabledPhoto = true;
-                    });
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "\$ ${widget.precio}",
+                        "\$ $precio",
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -885,24 +817,21 @@ class _TransferSectionState extends State<TransferSection> {
               Expanded(
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: uploadTextColor,
+                    foregroundColor: buttoncolorblue,
                     padding: EdgeInsets.symmetric(
                         vertical: screenWidth * 0.02,
                         horizontal: screenWidth * 0.02),
                     backgroundColor: Colors.transparent,
                     side: BorderSide.none,
                   ),
-                  onPressed: isEnabledPhoto
-                      ? () {
-                          // Acción al presionar "Subir comprobante"
-                          _onUploadPhoto();
-                        }
-                      : null,
+                  onPressed: () {
+                    // Acción al presionar "Subir comprobante"
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.upload_file, color: uploadTextColor),
+                      Icon(Icons.upload_file, color: buttoncolorblue),
                       SizedBox(width: screenWidth * 0.02),
                       Text(
                         "Subir\ncomprobante",
@@ -921,9 +850,11 @@ class _TransferSectionState extends State<TransferSection> {
           ),
           SizedBox(height: screenWidth * 0.02),
           Row(
-            mainAxisAlignment: widget.isAmountVisible
+            mainAxisAlignment: isAmountVisible
                 ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.center,
+                : MainAxisAlignment.center
+            ,
+
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -936,7 +867,7 @@ class _TransferSectionState extends State<TransferSection> {
                       vertical: screenWidth * 0.05,
                       horizontal: screenWidth * 0.05),
                 ),
-                onPressed: widget.onToggleAmountVisibility,
+                onPressed: onToggleAmountVisibility,
                 child: Text(
                   "Agregar monto",
                   style: TextStyle(fontSize: screenWidth * 0.04),
@@ -944,7 +875,7 @@ class _TransferSectionState extends State<TransferSection> {
               ),
               SizedBox(width: screenWidth * 0.05),
               Visibility(
-                visible: widget.isAmountVisible,
+                visible: isAmountVisible,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.02,
@@ -952,7 +883,7 @@ class _TransferSectionState extends State<TransferSection> {
                   child: Container(
                     width: screenWidth * 0.3,
                     child: TextField(
-                      controller: widget.amountController,
+                      controller: amountController,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
@@ -965,7 +896,6 @@ class _TransferSectionState extends State<TransferSection> {
                         prefixText: '\$',
                       ),
                       style: TextStyle(fontSize: screenWidth * 0.03),
-                      onChanged: (_) => _updatePaymentStatus(),
                     ),
                   ),
                 ),
@@ -988,7 +918,7 @@ class _TransferSectionState extends State<TransferSection> {
                         vertical: screenWidth * 0.04,
                         horizontal: screenWidth * 0.02),
                   ),
-                  onPressed: isPaymentEnabled ? () {} : null,
+                  onPressed: () {},
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -15,10 +15,10 @@ class BottomRouteTrainee extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = const [
+    List<Widget> screens = [
       HomeScreen(),
       NotificationScreen(),
-      ProfileScreenTrainer()
+      ProfileScreenTrainer(),
     ];
     return screens[index];
   }

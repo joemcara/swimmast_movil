@@ -27,8 +27,6 @@ class CompetenciesScreenSport extends StatefulWidget {
 }
 
 class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
- 
-
   final List<Competition> competitions = [
     Competition(
         name: "Competition 1",
@@ -55,6 +53,7 @@ class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Competencias Pasadas",
+        back: true,
       ),
       body: Column(
         children: [

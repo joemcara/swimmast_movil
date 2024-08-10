@@ -5,6 +5,7 @@ import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/competencies_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
 
 class HomeScreenSport extends StatefulWidget {
@@ -20,38 +21,7 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '\t\t Hola '+ miembro!.user.firstName,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Color.fromARGB(255, 200, 200, 201),
-        elevation: 0,
-        toolbarHeight: kToolbarHeight + statusBarHeight,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: defaultGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
-      ),
+      appBar:CustomAppBar(title:"Hola  ${miembro!.user.firstName}",),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -172,10 +142,6 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
           ],
         ),
       ),
-      // bottomNavigationBar: CustomBottomNavigationBar(
-      //   selected: _selectedtab,
-      //   currentIndex: _onItemTapped,
-      // ),
     );
   }
 }

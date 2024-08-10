@@ -1,3 +1,4 @@
+import 'package:swimmast_movil/screens/sign_in_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class Btnlogout extends StatelessWidget {
@@ -22,7 +23,8 @@ class Btnlogout extends StatelessWidget {
       onTap: () async{
         await _logout();
         Navigator.pop(
-          context
+          context,
+          MaterialPageRoute(builder: (context) => SignInScreen()),
         );
       },
       child: Row(

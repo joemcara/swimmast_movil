@@ -62,7 +62,6 @@ class _SignInScreenState extends State<SignInScreen> {
       } else if (miembro!.roleName == "DEPORTISTA") {
         userName = response.data['user']['first_name'];
       }
-
     } catch (e) {
       if (e is DioException) {
         print('Status Code: ${e.response?.statusCode}');
@@ -193,19 +192,21 @@ class _SignInScreenState extends State<SignInScreen> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const MainScreenMember()));
-                                    } else if (miembro!.roleName == "INSTRUCTOR") {
+                                    } else if (miembro!.roleName ==
+                                        "INSTRUCTOR") {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const MainScreenTrainee()));
-                                    } else if (miembro!.roleName == "DEPORTISTA") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            MainScreenSportPerson()));
-                              }
+                                    } else if (miembro!.roleName ==
+                                        "DEPORTISTA") {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MainScreenSportPerson()));
+                                    }
                                   }
                                 },
                                 style: ButtonStyle(

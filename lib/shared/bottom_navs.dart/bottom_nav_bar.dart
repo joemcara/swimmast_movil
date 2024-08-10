@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swimmast_movil/shared/constants.dart';
 
 class SportBtBar extends StatefulWidget {
   final Function currentIndex;
@@ -12,10 +13,22 @@ class SportBtBar extends StatefulWidget {
 class SportBtBarState extends State<SportBtBar> {
   int selectedIndex = 0;
 
+  int widgetCurrent() {
+    if (widget.selected == 3) {
+      return 0;
+    } else if (widget.selected == 5) {
+      return 0;
+    } else if (widget.selected == 4) {
+      return 0;
+    } else {
+      return widget.selected;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: widget.selected,
+      currentIndex: widgetCurrent(),
       onTap: (index) {
         setState(() {
           widget.selected = index;
@@ -27,7 +40,7 @@ class SportBtBarState extends State<SportBtBar> {
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedItemColor: const Color.fromRGBO(11, 34, 181, 1),
+      selectedItemColor: defaultGradient[0],
       unselectedItemColor: Colors.black,
       enableFeedback: false,
       iconSize: 33,
@@ -85,17 +98,18 @@ class _MemberBtBarState extends State<MemberBtBar> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home, color: Colors.grey),
-          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications, color: Colors.grey), 
-          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.notifications, color: Colors.grey),
+          activeIcon:
+              Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: Colors.grey), 
-          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.person, color: Colors.grey),
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Perfil',
         ),
       ],
@@ -117,7 +131,6 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      
       currentIndex: widget.selected,
       onTap: (index) {
         setState(() {
@@ -137,17 +150,18 @@ class _SportPerBtBarState extends State<SportPerBtBar> {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home, color: Colors.grey),
-          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications, color: Colors.grey), 
-          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.notifications, color: Colors.grey),
+          activeIcon:
+              Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: Colors.grey), 
-          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.person, color: Colors.grey),
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Perfil',
         ),
       ],
@@ -159,10 +173,12 @@ class CustomBottomNavigationBar extends StatefulWidget {
   final int selected;
   final ValueChanged<int> currentIndex;
 
-  CustomBottomNavigationBar({required this.selected, required this.currentIndex});
+  CustomBottomNavigationBar(
+      {required this.selected, required this.currentIndex});
 
   @override
-  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
@@ -178,17 +194,18 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home, color: Colors.grey),
-          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)), 
+          activeIcon: Icon(Icons.home, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Inicio',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.notifications, color: Colors.grey), 
-          activeIcon: Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.notifications, color: Colors.grey),
+          activeIcon:
+              Icon(Icons.notifications, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Notificaciones',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: Colors.grey), 
-          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)), 
+          icon: Icon(Icons.person, color: Colors.grey),
+          activeIcon: Icon(Icons.person, color: Color.fromARGB(255, 10, 5, 59)),
           label: 'Perfil',
         ),
       ],
