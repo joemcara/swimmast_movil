@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:swimmast_movil/screens/member_Screens/packages_screen.dart';
 import 'package:swimmast_movil/shared/button.dart';
@@ -17,6 +19,7 @@ import 'package:swimmast_movil/widgets/history_info_cards.dart';
 import 'package:swimmast_movil/widgets/widget_congratulations.dart';
 import 'package:swimmast_movil/widgets/history_cards.dart';
 import 'package:swimmast_movil/models/styles.dart';
+import 'package:swimmast_movil/models/history_times.dart';
 
 class HistoryScreenSport extends StatefulWidget {
   const HistoryScreenSport({super.key});
@@ -30,8 +33,9 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
 
   List<Styles>? styles;
   List<String> name_styles = ['TODO'];
+  List<HistoryTimes>? times;
   String filterStyle = 'TODO';
-  String filterTime = 'TODO';
+  String filterMeter = 'TODO';
 
   List<Map<String, String>> history_info = [
     {'id': '1', 'title': '100 PECHO', 'time': '1:00'},
@@ -42,13 +46,13 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     {'id': '4', 'title': '200 ESPALDA', 'time': '6:00'},
   ];
 
-  List<Map<String, String>> filtered_history_info = [];
+  List<HistoryTimes>? filtered_history_info = [];
 
   @override
   void initState() {
     super.initState();
-    filtered_history_info = history_info;
     getStyles();
+    getHistoryTimes();
   }
 
    Future<void> getStyles() async {
@@ -62,6 +66,16 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     }
   }
 
+  Future<void> getHistoryTimes() async {
+    var response = await Dio().get(urlBack + 'session_report/swimmer_id/2');
+    if (response.statusCode == 200) {
+      List<dynamic> data = response.data;
+      times = data.map((json) => HistoryTimes.fromJson(json)).toList();
+      filtered_history_info = times;
+      setState(() {});
+    }
+  }
+
   void nameStyles(){
     if(styles != null){
     name_styles.addAll(styles!.map((style) => style.name).toList()); 
@@ -69,27 +83,27 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     } 
   }
 
-  void updateFilterStyle(String newStyle, String newTime) {
+  void updateFilterStyle(String newStyle, String newMeter) {
     setState(() {
       filterStyle = newStyle;
-      filterTime = newTime;
-      if (filterTime == 'TODO') {
+      filterMeter = newMeter;
+      if (filterMeter == 'TODO') {
         if (filterStyle == 'TODO') {
-          filtered_history_info = history_info;
+          filtered_history_info = times;
         } else {
-          filtered_history_info = history_info
-              .where((item) => item['title']!.contains(filterStyle))
+          filtered_history_info = times!
+              .where((item) => item.style.name.toString().contains(filterStyle))
               .toList();
         }
       } else {
         if (filterStyle == 'TODO') {
-          filtered_history_info = history_info
-              .where((item) => item['title']!.contains(filterTime))
+          filtered_history_info = times!
+              .where((item) => item.meters.toString().contains(filterMeter))
               .toList();
         } else {
-          filtered_history_info = history_info
-              .where((item) => item['title']!.contains(filterStyle))
-              .where((item) => item['title']!.contains(filterTime))
+          filtered_history_info = times!
+              .where((item) => item.style.name.toString().contains(filterStyle))
+              .where((item) => item.meters.toString().contains(filterMeter))
               .toList();
         }
       }
@@ -136,7 +150,7 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
                     title: "Seleccionar Estilo",
                     styles: name_styles,
                     onSelected: (newFilter) =>
-                        updateFilterStyle(newFilter, filterTime)
+                        updateFilterStyle(newFilter, filterMeter)
                 )
             ),
           ),
@@ -147,15 +161,18 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
                   title: "Seleccionar Metraje",
                   styles: ['TODO', '50', '100', '200', '400', '800', '1500'],
                   onSelected: (newFilter) =>
-                      updateFilterStyle(filterStyle, newFilter))),
+                      updateFilterStyle(filterStyle, newFilter)
+              )
+            ),
           ),
           SizedBox(height: 15),
+          if(filtered_history_info != null && filtered_history_info!.length >0)
           Expanded(
               child: ListView.builder(
-                  itemCount: filtered_history_info.length,
+                  itemCount: filtered_history_info!.length,
                   itemBuilder: (context, index) => HistoryCards(
-                        title_style: filtered_history_info[index]['title']!,
-                        time: filtered_history_info[index]['time']!,
+                        title_style: filtered_history_info![index].meters.replaceAll(".00","").toString() + " " + filtered_history_info![index].style.name.toString(),
+                        time: filtered_history_info![index].time.toString(),
                       ))),
           SizedBox(height: 15),
         ],
