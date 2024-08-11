@@ -32,14 +32,7 @@ class _ClassSessionsSportState extends State<ClassSessionsSport> {
         children: [
           SizedBox(height: 20),
           WidgetPerformed(),
-          SizedBox(height: 20),
-          /*Container(
-            padding: EdgeInsets.fromLTRB(120.0, 0.0, 120.0, 0),
-            child: ItemSelection(
-              title: "Rutinas",
-              styles: ["Rutina Realizada", "Rutina No Realizada", "Rutinas"],)
-            ),*/
-          SizedBox(height: 10),
+          SizedBox(height: 30),
           RoutineInfoCards()
         ],
       ),

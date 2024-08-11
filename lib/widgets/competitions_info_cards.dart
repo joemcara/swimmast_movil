@@ -13,9 +13,7 @@ class CompetitionsInfoCards extends StatefulWidget {
 class _CompetitionsInfoCardsState extends State<CompetitionsInfoCards> {
 
   List<CompetitionsInfo>? competitions;
-
-
-
+  
   @override
   void initState() {
     super.initState();
