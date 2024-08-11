@@ -37,15 +37,6 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
   String filterStyle = 'TODO';
   String filterMeter = 'TODO';
 
-  List<Map<String, String>> history_info = [
-    {'id': '1', 'title': '100 PECHO', 'time': '1:00'},
-    {'id': '2', 'title': '200 MARIPOSA', 'time': '2:00'},
-    {'id': '3', 'title': '50 LIBRE', 'time': '3:00'},
-    {'id': '4', 'title': '200 COMBINADO', 'time': '4:00'},
-    {'id': '4', 'title': '400 LIBRE', 'time': '5:00'},
-    {'id': '4', 'title': '200 ESPALDA', 'time': '6:00'},
-  ];
-
   List<HistoryTimes>? filtered_history_info = [];
 
   @override

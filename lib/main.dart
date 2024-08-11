@@ -9,6 +9,7 @@ import 'package:swimmast_movil/screens/member_Screens/home_screen_member.dart';
 import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
+import 'package:swimmast_movil/widgets/competitions_info_cards.dart';
 
 void main() {
   runApp(
