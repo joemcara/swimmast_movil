@@ -21,12 +21,19 @@ class _RoutineInfoCardsState extends State<RoutineInfoCards> {
   }
 
   Future<void> getRoutines() async {
-    var response = await Dio().get(urlBack + 'routine/swimmer/3');
-    
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
-      routines = data.map((json) => HistoryRoutines.fromJson(json)).toList();
-      setState(() {}); 
+    try{
+      var response = await Dio().get(urlBack + 'routine/swimmer/3');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        routines = data.map((json) => HistoryRoutines.fromJson(json)).toList();
+        setState(() {}); 
+      }
+    }
+    catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
     }
   }
 

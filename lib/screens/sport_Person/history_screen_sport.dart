@@ -47,23 +47,38 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
   }
 
    Future<void> getStyles() async {
-    var response = await Dio().get(urlBack + 'style');
-    
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
-      styles = data.map((json) => Styles.fromJson(json)).toList();
-      setState(() {}); 
-      nameStyles();
+    try{
+      var response = await Dio().get(urlBack + 'style');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        styles = data.map((json) => Styles.fromJson(json)).toList();
+        setState(() {}); 
+        nameStyles();
+      }
+    }
+    catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
     }
   }
 
   Future<void> getHistoryTimes() async {
-    var response = await Dio().get(urlBack + 'session_report/swimmer_id/2');
-    if (response.statusCode == 200) {
-      List<dynamic> data = response.data;
-      times = data.map((json) => HistoryTimes.fromJson(json)).toList();
-      filtered_history_info = times;
-      setState(() {});
+    try{
+      var response = await Dio().get(urlBack + 'session_report/swimmer_id/2');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        times = data.map((json) => HistoryTimes.fromJson(json)).toList();
+        filtered_history_info = times;
+        setState(() {});
+      }
+    }
+    catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
     }
   }
 

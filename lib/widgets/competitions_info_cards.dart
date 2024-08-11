@@ -21,12 +21,19 @@ class _CompetitionsInfoCardsState extends State<CompetitionsInfoCards> {
   }
 
   Future<void> getCompetitions() async {
-    var response = await Dio().get(urlBack + 'competition_report/swimmer/3');
-    
-    if (response.statusCode == 201) {
-      List<dynamic> data = response.data;
-      competitions = data.map((json) => CompetitionsInfo.fromJson(json)).toList();
-      setState(() {}); 
+    try{
+      var response = await Dio().get(urlBack + 'competition_report/swimmer/3'); 
+      if (response.statusCode == 201) {
+        List<dynamic> data = response.data;
+        competitions = data.map((json) => CompetitionsInfo.fromJson(json)).toList();
+        setState(() {}); 
+      }
+    }
+    catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
     }
   }
 
@@ -45,11 +52,13 @@ class _CompetitionsInfoCardsState extends State<CompetitionsInfoCards> {
             )
         )
     );
-    return Row(
+    return Center(
+      child: Text("Sin Competencias")
+    ); /*Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Sin Competencias")
           ]
-    );
+    );*/
   }
 }
