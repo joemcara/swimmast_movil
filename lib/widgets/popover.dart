@@ -1,34 +1,24 @@
 import 'package:popover/popover.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/work_out_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
 class PopoverButton extends StatelessWidget {
   final VoidCallback showModal;
   final int id;
-  final MainScreenTraineeState state;
-  const PopoverButton(
-      {Key? key,
-      required this.showModal,
-      required this.id,
-      required this.state})
+  const PopoverButton({Key? key, required this.showModal, required this.id})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Icon(
-        Icons.more_vert,
-        size: 20,
-        color: Colors.blue,
-      ),
+      child: Icon(Icons.more_vert, size: 20, color: defaultGradient[0]),
       onTap: () {
         showPopover(
           context: context,
-          bodyBuilder: (context) => ListItems(
-            id: id,
-            showAttendance: showModal,
-            state: state, // Pass the callback
-          ),
+          bodyBuilder: (context) => ListItems(id: id, showAttendance: showModal
+              // Pass the callback
+              ),
           direction: PopoverDirection.bottom,
           width: 150,
           arrowHeight: 0,
@@ -43,12 +33,7 @@ class PopoverButton extends StatelessWidget {
 class ListItems extends StatelessWidget {
   final VoidCallback showAttendance;
   final int id;
-  final MainScreenTraineeState state;
-  const ListItems(
-      {Key? key,
-      required this.showAttendance,
-      required this.id,
-      required this.state})
+  const ListItems({Key? key, required this.showAttendance, required this.id})
       : super(key: key);
 
   @override
@@ -64,7 +49,6 @@ class ListItems extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              print("tap");
               Navigator.of(context).pop();
               courseSelected = id;
               attendanceStateModal = true;
@@ -83,7 +67,13 @@ class ListItems extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WorkoutScreen(),
+                ),
+              );
             },
             child: Container(
               decoration: const BoxDecoration(

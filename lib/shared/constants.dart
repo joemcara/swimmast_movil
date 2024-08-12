@@ -41,11 +41,14 @@ List<Color> selectedGradient = [
 
 const TextStyle styleSubtitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
+const TextStyle styleSubtitlesSmall =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
 const TextStyle styleTitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 int global = 3;
 var attendanceStateModal = false;
 String today = '';
+String dateFormatted = '';
 String dayNow = '';
 
 //Member constans

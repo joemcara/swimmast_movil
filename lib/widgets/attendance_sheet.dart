@@ -63,18 +63,26 @@ class _AttendanceSheetState extends State<AttendanceSheet> {
             ),
             child: Column(
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
                       "Asistencia",
                       style: TextStyle(
-                        color: swimmastBlue,
+                        color: defaultGradient[0],
                         fontSize: 23,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    )
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width - 50,
+                  child: Divider(
+                      height: 10, color: Color.fromARGB(255, 201, 197, 197)),
                 ),
                 const SizedBox(
                   height: 10,
