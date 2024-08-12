@@ -1,17 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:popover/popover.dart';
 import 'package:swimmast_movil/models/coursesToday.dart';
-import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
-import 'package:swimmast_movil/screens/sport_Person/profile_screen.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart' as intl_local_date_data;
-import 'package:swimmast_movil/shared/profile_header_trainee.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
 
@@ -87,8 +77,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
           urlBack +
               'course/instructor/' +
               idUser.toString() +
-              '/type_grouped/?date=' +
-              dateFormatted,
+              '/type_grouped/?date=' + dateFormatted,
           options: Options(headers: {'Authorization': 'Token $token'}));
 
       CourseAvailableList courses = CourseAvailableList.fromJson(response.data);
@@ -118,7 +107,8 @@ class AttendanceScreenState extends State<AttendanceScreen> {
 
       allCoursesToday['grupal'] = coursesTeam;
       allCoursesToday['individual'] = coursesIndividual;
-      print("okei");
+      
+      print(allCoursesToday);
       setState(() {});
     } catch (e) {
       print(e);
@@ -171,7 +161,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: courses.isEmpty
+              child: allCoursesToday.isEmpty
                   ? Center(
                       child: Container(
                         padding: const EdgeInsets.all(12),
@@ -185,7 +175,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                       ),
                     )
                   : ListView.builder(
-                      itemCount: 2,
+                      itemCount: 1,
                       padding: const EdgeInsets.all(12),
                       itemBuilder: (_, index) => classGroups(
                           () async {
@@ -210,6 +200,34 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                           )),
                     ),
             ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                      itemCount: 1,
+                      padding: const EdgeInsets.all(12),
+                      itemBuilder: (_, index) => classGroups(
+                          () async {
+                            courseSelected = courses[index]['id'];
+                            await _MembersByCourse();
+                          },
+                          context,
+                          " INDIVUDUAL",
+                          () async {
+                            await _MembersByCourse();
+                          },
+                          ListView.builder(
+                            itemCount: allCoursesToday['grupal']?.length,
+                            itemBuilder: (_, indice) => hourClass(
+                              context,
+                              allCoursesToday['grupal']?[0]['start_time'],
+                              1,
+                              () async {
+                                await _MembersByCourse();
+                              },
+                            ),
+                          )),
+                    ), 
+            )
           ],
         ),
       ),
