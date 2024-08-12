@@ -1,6 +1,4 @@
 import 'package:swimmast_movil/widgets/customAppBar.dart';
-import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
-import 'package:swimmast_movil/screens/sport_Person/home_screen_sport.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/item_selection.dart';
 import 'package:swimmast_movil/widgets/history_cards.dart';

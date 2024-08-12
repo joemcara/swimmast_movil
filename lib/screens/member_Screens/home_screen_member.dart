@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/models/course.dart';
+import 'package:swimmast_movil/screens/member_Screens/packages_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import '../../shared/constants.dart';
 import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
@@ -120,7 +121,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
                         icon: Icons.calendar_month,
                         title: 'Horarios de clases',
                         index: 0,
-                        nextPage: HistoryScreen(),
+                        nextPage: PackageScreen(),
                         selectedIndex: _selectedIndex,
                         onSelect: (int index) {
                           setState(() {

@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/customCalendar.dart';
 import 'package:swimmast_movil/widgets/swimmast_card.dart';
 import 'package:swimmast_movil/widgets/swimmast_icon_text.dart';
-import 'package:intl/intl.dart';
 
 class PackageScreen extends StatefulWidget {
   const PackageScreen({super.key});

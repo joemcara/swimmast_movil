@@ -1,7 +1,5 @@
 import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';

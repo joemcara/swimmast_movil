@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 
 // shared constants back
 export 'package:dio/dio.dart';

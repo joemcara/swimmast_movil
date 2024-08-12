@@ -1,10 +1,7 @@
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
-import 'package:swimmast_movil/shared/profile_header_trainee.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:swimmast_movil/widgets/popover.dart';
 
 class Memberadmin extends StatelessWidget {
   const Memberadmin({super.key});

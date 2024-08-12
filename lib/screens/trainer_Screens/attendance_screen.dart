@@ -1,13 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:popover/popover.dart';
-import 'package:swimmast_movil/screens/sport_Person/profile_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart' as intl_local_date_data;
 import 'package:swimmast_movil/shared/profile_header_trainee.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
 
