@@ -18,7 +18,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
     Future<void> _AvilableShopCourse() async{
       try{
         final response = await Dio().get(
-          urlBack + 'course/catalog/swimmer/' + idUser.toString(),  
+          urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',  
         );
         
         for (var item in response.data){
