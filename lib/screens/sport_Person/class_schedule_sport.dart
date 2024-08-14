@@ -26,6 +26,7 @@ class _ClassScheduleSportState extends State<ClassScheduleSport> {
   void initState() {
     super.initState();
     _AvilableCourse();
+    _onDateSelected(DateTime.now());
   }
 
   Future<void> _AvilableCourse() async {
