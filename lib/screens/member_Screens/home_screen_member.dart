@@ -1,5 +1,7 @@
 import 'package:swimmast_movil/models/course.dart';
-import 'package:swimmast_movil/screens/member_Screens/packages_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/class_schedule_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/class_sessions_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import '../../shared/constants.dart';
 import 'package:swimmast_movil/screens/member_Screens/history_screen.dart';
@@ -121,7 +123,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
                         icon: Icons.calendar_month,
                         title: 'Horarios de clases',
                         index: 0,
-                        nextPage: PackageScreen(),
+                        nextPage: ClassScheduleSport(),
                         selectedIndex: _selectedIndex,
                         onSelect: (int index) {
                           setState(() {
@@ -138,7 +140,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
                         icon: Icons.school,
                         title: 'Sesiones de clases',
                         index: 1,
-                        nextPage: HistoryScreen(),
+                        nextPage: ClassSessionsSport(),
                         selectedIndex: _selectedIndex,
                         onSelect: (int index) {
                           setState(() {
@@ -155,7 +157,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
                         icon: Icons.timer,
                         title: 'Historial de tiempos',
                         index: 2,
-                        nextPage: HistoryScreen(),
+                        nextPage: HistoryScreenSport(),
                         selectedIndex: _selectedIndex,
                         onSelect: (int index) {
                           setState(() {

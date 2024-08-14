@@ -16,15 +16,6 @@ class _ProfileScreenTrainerState extends State<ProfileScreenTrainer> {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
-    Future<void> _logout() async {
-      try {
-        await Dio().post(urlBack + 'administration/logout_user/',
-            options: Options(headers: {'Authorization': 'token $token'}));
-      } catch (e) {
-        print(e);
-      }
-      miembro = null;
-    }
 
     const List<String> data = [
       "Número de teléfono: 1234567890",

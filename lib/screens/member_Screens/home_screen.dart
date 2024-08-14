@@ -43,6 +43,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
         userCourse.clear();
         userCourse.add("${course.name}  ${course.description}");
         coursesList = courseList;
+        print("lista de cursoooooo $userCourse");
       }
       setState(() {});
     } catch (e) {
