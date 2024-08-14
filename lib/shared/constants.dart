@@ -59,7 +59,7 @@ var userCourse = [];
 var userCourses;
 
 List<Color> colorsList = [
-  Colors.purpleAccent,
+  Colors.red,
   swimmastBlue,
   Colors.amber,
   Colors.orange
