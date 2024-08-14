@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
+import 'package:swimmast_movil/shared/btnlogout.dart';
 import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
@@ -14,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+    Size size = MediaQuery.of(context).size;
 
     Future _logout() async {
       try {
@@ -71,17 +73,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 32,
                       ),
-                      if(!packages.isNotEmpty)
-                         _infoBox("Cursos Inscritos", ['Aún no te has inscrito a ningún curso :c']),
+                      if (!packages.isNotEmpty)
+                        _infoBox("Cursos Inscritos",
+                            ['Aún no te has inscrito a ningún curso :c']),
                       _infoBox("Cursos Inscritos", packages),
                     ],
                   ),
                 ),
+                SizedBox(height: size.height * 0.05),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 48,
+                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                  height: size.height * 0.07,
                   decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(5)),
@@ -95,12 +98,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                CustomButton(
-                    text: "Cerrar sesión",
-                    onPressed: () async {
-                      await _logout();
-                      Navigator.pop(context);
-                    })
+                SizedBox(height: size.height * 0.01),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                  height: size.height * 0.07,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: defaultGradient,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Btnlogout(),
+                      const Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           )),
