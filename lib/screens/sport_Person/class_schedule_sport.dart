@@ -8,8 +8,7 @@ class ClassScheduleSport extends StatefulWidget {
   const ClassScheduleSport({super.key});
 
   @override
-  State<ClassScheduleSport> createState() =>
-      _ClassScheduleSportState();
+  State<ClassScheduleSport> createState() => _ClassScheduleSportState();
 }
 
 class _ClassScheduleSportState extends State<ClassScheduleSport> {
@@ -117,7 +116,7 @@ class _ClassScheduleSportState extends State<ClassScheduleSport> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Horarios de clases",
-        back: true, 
+        back: true,
       ),
       body: Scaffold(
         body: Padding(

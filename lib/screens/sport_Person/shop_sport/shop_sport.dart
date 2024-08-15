@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
@@ -6,14 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:swimmast_movil/models/courseAvailable.dart';
 
 class ShopSportScreen extends StatefulWidget {
-  
   @override
   State<ShopSportScreen> createState() => _ShopSportScreenState();
 }
 
 class _ShopSportScreenState extends State<ShopSportScreen> {
-
-    List<Map<String, String>> items = [];
+  List<Map<String, String>> items = [];
 
     Future<void> _AvilableShopCourse() async{
       try{
@@ -41,16 +40,14 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
       }
     }
 
-    @override
-    void initState() {
-      super.initState();
-      _AvilableShopCourse();
-      
-    }
-  
+  @override
+  void initState() {
+    super.initState();
+    _AvilableShopCourse();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -71,8 +68,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
-        body: 
-        TabBarView(
+        body: TabBarView(
           children: [
             ListView.builder(
               padding: const EdgeInsets.all(10),
@@ -124,8 +120,8 @@ class DetallePaquete extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio, 
-    required this.startDate, 
+    required this.precio,
+    required this.startDate,
     required this.dueDate,
   }) : super(key: key);
 
@@ -160,21 +156,23 @@ class DetallePaquete extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(              
-            'Fecha inicio: $startDate',
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),),
-            const SizedBox(height: 10),            
-            Text(              
-            'Fecha Fin: $dueDate',
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),),
+            Text(
+              'Fecha inicio: $startDate',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Fecha Fin: $dueDate',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
             const SizedBox(height: 10),
             Center(child: button),
           ],
@@ -197,8 +195,8 @@ class PaquetesInscripcion extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio, 
-    required this.startDate, 
+    required this.precio,
+    required this.startDate,
     required this.dueDate,
   }) : super(key: key);
 
@@ -230,37 +228,37 @@ class BuyScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-        appBar:AppBar(
-        leading: AlertWidget(),
-        title: Row(
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Comprar $nomPaquete',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          leading: AlertWidget(),
+          title: Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Comprar $nomPaquete',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: defaultGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: defaultGradient,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
         ),
-      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -271,10 +269,10 @@ class BuyScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
-                        personDetails: _personDetails,
-                         nomPaquete: nomPaquete,
-                         precio: precio,
-                         ),
+                      personDetails: _personDetails,
+                      nomPaquete: nomPaquete,
+                      precio: precio,
+                    ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(precio: double.parse(precio)),
                   ],
@@ -340,7 +338,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isTransferVisible) {
           _isAnyButtonVisibleEfec = true;
         }
-      } 
+      }
     });
   }
 
@@ -352,7 +350,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isCashVisible) {
           _isAnyButtonVisibleTran = true;
         }
-      } 
+      }
     });
   }
 
@@ -525,7 +523,13 @@ class WidgetInfoBuy extends StatelessWidget {
             children: [
               Icon(Icons.shopping_cart, color: buttoncolorblue),
               SizedBox(width: 8.0),
-              Text('Paquete: $nomPaquete', style: textStyle),
+              Flexible(
+                child: Text(
+                  'Paquete: $nomPaquete',
+                  style: textStyle,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
             ],
           ),
           SizedBox(height: screenWidth * 0.04),
@@ -755,7 +759,7 @@ class PaymentOptionCard extends StatelessWidget {
   }
 }
 
-class TransferSection extends StatelessWidget {
+class TransferSection extends StatefulWidget {
   final String precio;
   final TextEditingController amountController;
   final bool isAmountVisible;
@@ -767,6 +771,75 @@ class TransferSection extends StatelessWidget {
     required this.isAmountVisible,
     required this.onToggleAmountVisibility,
   });
+
+  _TransferSectionState createState() => _TransferSectionState();
+}
+
+class _TransferSectionState extends State<TransferSection> {
+  bool isPaymentEnabled = false;
+  bool isEnabledPhoto = false;
+  XFile? selectedImage;
+  Color uploadTextColor = buttoncolorblue;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _onUploadPhoto() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Seleccionar imagen'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Tomar foto'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.camera);
+                  if (image != null) {
+                    setState(() {
+                      selectedImage = image;
+                      isEnabledPhoto = true;
+                      uploadTextColor = Colors.green;
+                      _updatePaymentStatus();
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Seleccionar desde galería'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.gallery);
+                  if (image != null) {
+                    setState(() {
+                      selectedImage = image;
+                      isEnabledPhoto = true;
+                      uploadTextColor = Colors.green;
+                      _updatePaymentStatus();
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _updatePaymentStatus() {
+    setState(() {
+      if (widget.amountController.text.isNotEmpty || isEnabledPhoto == true) {
+        isPaymentEnabled = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -793,13 +866,16 @@ class TransferSection extends StatelessWidget {
                   ),
                   onPressed: () {
                     // Acción al presionar "Pagar valor total"
+                    setState(() {
+                      isEnabledPhoto = true;
+                    });
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "\$ $precio",
+                        "\$ ${widget.precio}",
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.bold,
@@ -817,21 +893,24 @@ class TransferSection extends StatelessWidget {
               Expanded(
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: buttoncolorblue,
+                    foregroundColor: uploadTextColor,
                     padding: EdgeInsets.symmetric(
                         vertical: screenWidth * 0.02,
                         horizontal: screenWidth * 0.02),
                     backgroundColor: Colors.transparent,
                     side: BorderSide.none,
                   ),
-                  onPressed: () {
-                    // Acción al presionar "Subir comprobante"
-                  },
+                  onPressed: isEnabledPhoto
+                      ? () {
+                          // Acción al presionar "Subir comprobante"
+                          _onUploadPhoto();
+                        }
+                      : null,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.upload_file, color: buttoncolorblue),
+                      Icon(Icons.upload_file, color: uploadTextColor),
                       SizedBox(width: screenWidth * 0.02),
                       Text(
                         "Subir\ncomprobante",
@@ -850,11 +929,9 @@ class TransferSection extends StatelessWidget {
           ),
           SizedBox(height: screenWidth * 0.02),
           Row(
-            mainAxisAlignment: isAmountVisible
+            mainAxisAlignment: widget.isAmountVisible
                 ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.center
-            ,
-
+                : MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -867,7 +944,7 @@ class TransferSection extends StatelessWidget {
                       vertical: screenWidth * 0.05,
                       horizontal: screenWidth * 0.05),
                 ),
-                onPressed: onToggleAmountVisibility,
+                onPressed: widget.onToggleAmountVisibility,
                 child: Text(
                   "Agregar monto",
                   style: TextStyle(fontSize: screenWidth * 0.04),
@@ -875,7 +952,7 @@ class TransferSection extends StatelessWidget {
               ),
               SizedBox(width: screenWidth * 0.05),
               Visibility(
-                visible: isAmountVisible,
+                visible: widget.isAmountVisible,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.02,
@@ -883,7 +960,7 @@ class TransferSection extends StatelessWidget {
                   child: Container(
                     width: screenWidth * 0.3,
                     child: TextField(
-                      controller: amountController,
+                      controller: widget.amountController,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: [
@@ -896,6 +973,7 @@ class TransferSection extends StatelessWidget {
                         prefixText: '\$',
                       ),
                       style: TextStyle(fontSize: screenWidth * 0.03),
+                      onChanged: (_) => _updatePaymentStatus(),
                     ),
                   ),
                 ),
@@ -918,7 +996,7 @@ class TransferSection extends StatelessWidget {
                         vertical: screenWidth * 0.04,
                         horizontal: screenWidth * 0.02),
                   ),
-                  onPressed: () {},
+                  onPressed: isPaymentEnabled ? () {} : null,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,

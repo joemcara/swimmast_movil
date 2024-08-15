@@ -27,8 +27,6 @@ class CompetenciesScreenSport extends StatefulWidget {
 }
 
 class _CompetenciesScreenSportState extends State<CompetenciesScreenSport> {
- 
-
   final List<Competition> competitions = [
     Competition(
         name: "Competition 1",
