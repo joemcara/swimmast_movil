@@ -1,8 +1,11 @@
+import 'package:swimmast_movil/models/coursesToday.dart';
+import 'package:swimmast_movil/models/membersCourse.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/shared/profile_header_trainee.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
 
 class AttendanceScreen extends StatefulWidget {

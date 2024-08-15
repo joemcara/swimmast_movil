@@ -1,6 +1,6 @@
 
 import 'package:image_picker/image_picker.dart';
-import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
 
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';

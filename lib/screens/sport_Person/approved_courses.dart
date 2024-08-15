@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:swimmast_movil/widgets/courses_p.dart';
 import 'package:swimmast_movil/models/courseAvailable.dart';
 import 'package:swimmast_movil/shared/constants.dart';
@@ -43,7 +43,7 @@ class _ApprovedCoursesState extends State<ApprovedCourses> {
     return Scaffold(
       appBar: CustomAppBar(
         title: "Cursos Aprobados", 
-        onBackPressed: () => Navigator.pop(context),
+        back: true,
       ),
       body: Column(
         children: [

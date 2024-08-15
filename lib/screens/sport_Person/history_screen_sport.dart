@@ -44,14 +44,14 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     catch (e) {
       if (e is DioException) {
         print('Status Code: ${e.response?.statusCode}');
-        print('Data: ${e.response?.data}');
+        print(e);
       }
     }
   }
 
   Future<void> getHistoryTimes() async {
     try{
-      var response = await Dio().get(urlBack + 'session_report/swimmer_id/2');
+      var response = await Dio().get(urlBack + 'session_report/swimmer_id/${idUser}');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         times = data.map((json) => HistoryTimes.fromJson(json)).toList();
@@ -62,7 +62,7 @@ class _HistoryScreenSportState extends State<HistoryScreenSport> {
     catch (e) {
       if (e is DioException) {
         print('Status Code: ${e.response?.statusCode}');
-        print('Data: ${e.response?.data}');
+        print(e);
       }
     }
   }

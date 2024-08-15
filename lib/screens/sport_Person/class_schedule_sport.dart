@@ -61,13 +61,11 @@ class _ClassScheduleSportState extends State<ClassScheduleSport> {
   }
 
   void obtainDates() {
-    int i = 0;
     print("${coursesList.length}");
     for (var item in coursesList) {
       startDate = item['startDate'];
       endDate = item['dueDate'];
       _selectedRanges.add(Range(startDate!, endDate!,Colors.grey));
-      i++;
     }
   }
 
