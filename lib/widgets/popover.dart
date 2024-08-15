@@ -6,7 +6,7 @@ import 'package:swimmast_movil/shared/constants.dart';
 class PopoverButton extends StatelessWidget {
   final VoidCallback showModal;
   final int id;
-  const PopoverButton({Key? key, required this.showModal, required this.id})
+  const PopoverButton({Key? key, required this.id, required this.showModal})
       : super(key: key);
 
   @override
@@ -52,7 +52,7 @@ class ListItems extends StatelessWidget {
               Navigator.of(context).pop();
               courseSelected = id;
               attendanceStateModal = true;
-              showAttendance(); // Correctly call the callback
+              showAttendance();
             },
             child: Container(
               decoration: const BoxDecoration(

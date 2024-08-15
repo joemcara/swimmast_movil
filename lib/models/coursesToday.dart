@@ -8,7 +8,7 @@ String courseAvailableListToJson(CourseAvailableList data) =>
 
 class CourseAvailableList {
   List<CourseAvailable> grupal;
-  List<dynamic> individual;
+  List<CourseAvailable> individual;
 
   CourseAvailableList({
     required this.grupal,
@@ -19,12 +19,13 @@ class CourseAvailableList {
       CourseAvailableList(
         grupal: List<CourseAvailable>.from(
             json["grupal"].map((x) => CourseAvailable.fromJson(x))),
-        individual: List<dynamic>.from(json["individual"].map((x) => x)),
+        individual: List<CourseAvailable>.from(
+            json["individual"].map((x) => CourseAvailable.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "grupal": List<dynamic>.from(grupal.map((x) => x.toJson())),
-        "individual": List<dynamic>.from(individual.map((x) => x)),
+        "individual": List<dynamic>.from(individual.map((x) => x.toJson())),
       };
 }
 

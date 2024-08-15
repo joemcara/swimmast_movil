@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/models/coursesToday.dart';
+import 'package:swimmast_movil/models/membersCourse.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';
@@ -37,8 +38,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
 
       membersList.clear();
       for (var item in response.data) {
-        User member = User.fromJson(item);
-
+        UserCourse member = UserCourse.fromJson(item);
         Map<String, dynamic> membersMap = {
           'id': member.id,
           'firstName': member.firstName,
@@ -48,16 +48,13 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         membersList.add(membersMap);
       }
 
-      final selectedCourse = coursesToday.firstWhere(
-          (course) => course['id'] == courseSelected,
-          orElse: () => {});
-      if (selectedCourse.isNotEmpty) {
-        setState(() {
-          this.day = selectedCourse['day'];
-          this.hour = selectedCourse['hour'];
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _showModal(context);
-          });
+      membersByCourse = membersList;
+
+      this.day = courseSelectedDay;
+      this.hour = courseSelectedHour;
+      if (attendanceStateModal) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showModal(context);
         });
       } else {
         setState(() {
@@ -65,6 +62,8 @@ class AttendanceScreenState extends State<AttendanceScreen> {
           hour = "Unknown";
         });
       }
+
+      print(membersList);
     } catch (e) {
       print(e);
       throw e;
@@ -77,38 +76,45 @@ class AttendanceScreenState extends State<AttendanceScreen> {
           urlBack +
               'course/instructor/' +
               idUser.toString() +
-              '/type_grouped/?date=' + dateFormatted,
+              '/type_grouped/?date=' +
+              dateFormatted,
           options: Options(headers: {'Authorization': 'Token $token'}));
 
       CourseAvailableList courses = CourseAvailableList.fromJson(response.data);
       List<Map<String, dynamic>> coursesTeam = [];
       List<Map<String, dynamic>> coursesIndividual = [];
-      for (var course in courses.grupal) {
-        Map<String, dynamic> courseItem = {
-          'id': course.id,
-          'start_date': course.startDate,
-          'start_time': course.startTime,
-          'due_date': course.dueDate,
-          'due_time': course.endTime,
-        };
-        coursesTeam.add(courseItem);
+
+      if (!courses.grupal.isEmpty) {
+        for (var course in courses.grupal) {
+          Map<String, dynamic> courseItem = {
+            'id': course.id,
+            'start_date': course.startDate,
+            'start_time': course.startTime.substring(0, 2),
+            'due_date': course.dueDate,
+            'due_time': course.endTime,
+            'day': course.description
+          };
+          coursesTeam.add(courseItem);
+        }
       }
 
-      for (var course in courses.individual) {
-        Map<String, dynamic> courseItem = {
-          'id': course.id,
-          'start_date': course.startDate,
-          'start_time': course.startTime,
-          'due_date': course.dueDate,
-          'due_time': course.endTime,
-        };
-        coursesIndividual.add(courseItem);
+      if (!courses.individual.isEmpty) {
+        for (var course in courses.individual) {
+          Map<String, dynamic> courseItem = {
+            'id': course.id,
+            'start_date': course.startDate,
+            'start_time': course.startTime.substring(0, 5),
+            'due_date': course.dueDate,
+            'due_time': course.endTime,
+            'day': course.description
+          };
+          coursesIndividual.add(courseItem);
+        }
       }
 
       allCoursesToday['grupal'] = coursesTeam;
       allCoursesToday['individual'] = coursesIndividual;
-      
-      print(allCoursesToday);
+
       setState(() {});
     } catch (e) {
       print(e);
@@ -131,7 +137,6 @@ class AttendanceScreenState extends State<AttendanceScreen> {
             ),
           );
         });
-    print("show");
   }
 
   @override
@@ -177,16 +182,11 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                   : ListView.builder(
                       itemCount: 1,
                       padding: const EdgeInsets.all(12),
-                      itemBuilder: (_, index) => classGroups(
-                          () async {
-                            courseSelected = courses[index]['id'];
-                            await _MembersByCourse();
-                          },
+                      itemBuilder: (_, index) => classGroups(() async {
+                        await _MembersByCourse();
+                      },
                           context,
                           "GRUPAL",
-                          () async {
-                            await _MembersByCourse();
-                          },
                           ListView.builder(
                             itemCount: allCoursesToday['grupal']?.length,
                             itemBuilder: (_, indice) => hourClass(
@@ -194,6 +194,11 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                               allCoursesToday['grupal']?[0]['start_time'],
                               1,
                               () async {
+                                allCoursesToday['grupal']?[indice]['id'];
+                                courseSelectedDay =
+                                    allCoursesToday['grupal']?[indice]['day'];
+                                courseSelectedHour = allCoursesToday['grupal']
+                                    ?[indice]['start_time'];
                                 await _MembersByCourse();
                               },
                             ),
@@ -202,31 +207,48 @@ class AttendanceScreenState extends State<AttendanceScreen> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: ListView.builder(
+              child: allCoursesToday.isEmpty
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'No tiene cursos asignados para el día de hoy',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
                       itemCount: 1,
                       padding: const EdgeInsets.all(12),
-                      itemBuilder: (_, index) => classGroups(
-                          () async {
-                            courseSelected = courses[index]['id'];
-                            await _MembersByCourse();
-                          },
+                      itemBuilder: (_, index) => classGroups(() async {
+                        await _MembersByCourse();
+                      },
                           context,
-                          " INDIVUDUAL",
-                          () async {
-                            await _MembersByCourse();
-                          },
+                          " INDIVIDUAL",
                           ListView.builder(
-                            itemCount: allCoursesToday['grupal']?.length,
+                            itemCount: allCoursesToday['individual']?.length,
                             itemBuilder: (_, indice) => hourClass(
                               context,
-                              allCoursesToday['grupal']?[0]['start_time'],
+                              allCoursesToday['individual']?[indice]
+                                  ['start_time'],
                               1,
                               () async {
+                                courseSelected = allCoursesToday['individual']
+                                    ?[indice]['id'];
+                                courseSelectedDay =
+                                    allCoursesToday['individual']?[indice]
+                                        ['day'];
+                                courseSelectedHour =
+                                    allCoursesToday['individual']?[indice]
+                                        ['start_time'];
                                 await _MembersByCourse();
                               },
                             ),
                           )),
-                    ), 
+                    ),
             )
           ],
         ),
@@ -235,7 +257,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
   }
 
   Widget classGroups(void Function() onTap, BuildContext context,
-      String courseType, void Function() onPopover, ListView classes) {
+      String courseType, ListView classes) {
     return Card(
       child: Container(
         width: 500,

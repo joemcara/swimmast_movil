@@ -15,7 +15,12 @@ List<Map<String, dynamic>> coursesList = [];
 List<Map<String, dynamic>> coursesToday = [];
 List<Map<String, dynamic>> allCoursesMembers = [];
 List<dynamic> onlyMembers = [];
-int courseSelected = 0;
+List<dynamic> membersByCourse = [];
+List<Map<String, dynamic>> attendance = [];
+Map<int, bool> attendanceMap = {};
+int courseSelected = 1;
+String courseSelectedDay = '';
+String courseSelectedHour = '';
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
 const Color swimmastYellow = Color.fromRGBO(244, 232, 105, 1);

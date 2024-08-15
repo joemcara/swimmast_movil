@@ -67,7 +67,7 @@ class User {
         firstName: json["first_name"],
         lastName: json["last_name"],
         birthdate: DateTime.parse(json["birthdate"] ?? '2024-08-08'),
-        profileImage: json["profile_image"],
+        profileImage: json["profile_image"] ?? '',
         phoneNumber: json["phone_number"] ?? '00000000',
         username: json["username"] ?? 'username',
       );
