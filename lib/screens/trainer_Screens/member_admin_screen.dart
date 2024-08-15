@@ -1,5 +1,6 @@
 import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/memberTrainerAdmin.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 
@@ -8,104 +9,112 @@ class Memberadmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MainScreenTraineeState parentState =
-        context.findAncestorStateOfType<MainScreenTraineeState>()!;
     SportBtBar? trainerBtBar;
     int index = 0;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isSmallScreen = screenWidth < 600;
 
     return Scaffold(
-
-      body: Column(
-        children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back_ios),
-                      onPressed: () {
-                       
-                      },
-                    )),
-              ]),
-          const SizedBox(height: 10),
-          const SizedBox(
-            width: 360,
-            child: TextField(
+      appBar: CustomAppBar(
+        title: "Manejar Miembros",
+        back: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(
+              width: isSmallScreen ? screenWidth * 0.9 : 360,
+              child: TextField(
                 decoration: InputDecoration(
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey)))),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: onlyMembers.isEmpty
-                ? Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(
-                        'No existen estudiantes asignados',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: onlyMembers.isEmpty
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'No existen estudiantes asignados',
+                          style: TextStyle(
+                            fontSize: isSmallScreen ? 14 : 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: onlyMembers.length,
-                    padding: const EdgeInsets.all(12),
-                    itemBuilder: (_, index) => MemberAdminCards(
-                        onlyMembers[index]['firstName'] +
+                    )
+                  : ListView.builder(
+                      itemCount: onlyMembers.length,
+                      padding: const EdgeInsets.all(12),
+                      itemBuilder: (_, index) => MemberAdminCards(
+                        name: onlyMembers[index]['firstName'] +
                             " " +
-                            onlyMembers[index]['lastName']),
-                  ),
-          )
-        ],
+                            onlyMembers[index]['lastName'],
+                        isSmallScreen: isSmallScreen,
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-Widget MemberAdminCards(String name) {
-  return Container(
-    padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-    margin: const EdgeInsets.all(8.0),
-    decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-    width: 360,
-    child: Column(
-      children: [
-        Row(
-          children: [
-            CircleAvatar(),
-            SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: styleSubtitles,
-                ),
-                Text("12 años")
-              ],
-            ),
-            SizedBox(width: 135),
-            //PopoverButton(),
-          ],
-        ),
-        SizedBox(height: 10),
-        Row(
-          children: [
-            SizedBox(width: 10),
-            Membertraineradmin(),
-          ],
-        ),
-      ],
-    ),
-  );
+class MemberAdminCards extends StatelessWidget {
+  final String name;
+  final bool isSmallScreen;
+
+  const MemberAdminCards({
+    required this.name,
+    required this.isSmallScreen,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+      width: isSmallScreen ? MediaQuery.of(context).size.width * 0.9 : 360,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              CircleAvatar(),
+              SizedBox(width: isSmallScreen ? 10 : 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: styleSubtitles,
+                  ),
+                  Text(isSmallScreen ? "Edad: 12" : "12 años"),
+                ],
+              ),
+              Spacer(),
+            ],
+          ),
+          SizedBox(height: isSmallScreen ? 5 : 10),
+          Row(
+            children: [
+              SizedBox(width: 10),
+              Membertraineradmin(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

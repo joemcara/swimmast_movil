@@ -1,9 +1,12 @@
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:swimmast_movil/models/member.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
+import 'package:swimmast_movil/screens/trainer_Screens/attendance_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? idUser;
@@ -22,10 +25,31 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> membersList = [];
   List<Map<String, dynamic>> allCourses = [];
 
+  String _dateFormated = "";
+  String day = "";
+
   @override
   void initState() {
     super.initState();
+    dateToday();
     _AsignedCourse();
+  }
+
+  Future<void> dateToday() async {
+    await initializeDateFormatting('es_ES', null);
+    final format = DateFormat('EEEE, d \'de\' MMMM \'del\' yyyy', 'es_ES');
+    var date = format.format(DateTime.now());
+    DateTime formattedDate =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    String formattedDateString = DateFormat('yyyy-MM-dd').format(formattedDate);
+    dateFormatted = formattedDateString;
+    final dateUppercase = date[0].toUpperCase() + date.substring(1);
+    day = dateUppercase.split(",")[0];
+    setState(() {
+      _dateFormated = dateUppercase;
+      today = _dateFormated;
+      dayNow = day;
+    });
   }
 
   Future<void> _AsignedCourse() async {
@@ -111,10 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: CustomAppBar(title: "Hola  ${miembro!.user.firstName}",),
+      appBar: CustomAppBar(
+        title: "Hola  ${miembro!.user.firstName}",
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -131,7 +157,7 @@ Widget build(BuildContext context) {
                     icon: Icons.calendar_month,
                     title: 'Horarios de clases',
                     index: 0,
-                    nextPage: ShopSportScreen(),
+                    nextPage: AttendanceScreen(),
                     selectedIndex: _selectedIndex,
                     onSelect: (int index) {
                       setState(() {
@@ -144,6 +170,23 @@ Widget build(BuildContext context) {
                     defaultIconColor: defaultIconColor,
                     defaultIconTextColor: defaultIconTextColor,
                   ),
+                  GridItem(
+                    icon: Icons.people,
+                    title: 'Manejar miembros',
+                    index: 0,
+                    nextPage: Memberadmin(),
+                    selectedIndex: _selectedIndex,
+                    onSelect: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    selectedGradient: selectedGradient,
+                    defaultGradient: defaultGradient,
+                    selectIconTextColor: selectIconTextColor,
+                    defaultIconColor: defaultIconColor,
+                    defaultIconTextColor: defaultIconTextColor,
+                  )
                 ],
               ),
             ),
@@ -152,5 +195,4 @@ Widget build(BuildContext context) {
       ),
     );
   }
-
 }
