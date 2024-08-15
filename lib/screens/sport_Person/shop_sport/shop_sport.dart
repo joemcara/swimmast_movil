@@ -14,31 +14,29 @@ class ShopSportScreen extends StatefulWidget {
 class _ShopSportScreenState extends State<ShopSportScreen> {
   List<Map<String, String>> items = [];
 
-    Future<void> _AvilableShopCourse() async{
-      try{
-        final response = await Dio().get(
-          urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',  
-        );
-        
-        for (var item in response.data){
-          CourseAvailable course = CourseAvailable.fromJson(item);
-          Map<String, String> courseMap = {
-            'paquete': course.name,
-            'descripcion': course.description,
-            'price': course.price,
-            'startDate': course.startDate.toString().split(' ')[0],
-            'dueDate': course.dueDate.toString().split(' ')[0],
-          };
-          items.add(courseMap);
-        }
-        setState(() {
-          
-        });
-      } catch (e){
-        print(e);
-        throw e;
+  Future<void> _AvilableShopCourse() async {
+    try {
+      final response = await Dio().get(
+        urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',
+      );
+
+      for (var item in response.data) {
+        CourseAvailable course = CourseAvailable.fromJson(item);
+        Map<String, String> courseMap = {
+          'paquete': course.name,
+          'descripcion': course.description,
+          'price': course.price,
+          'startDate': course.startDate.toString().split(' ')[0],
+          'dueDate': course.dueDate.toString().split(' ')[0],
+        };
+        items.add(courseMap);
       }
+      setState(() {});
+    } catch (e) {
+      print(e);
+      throw e;
     }
+  }
 
   @override
   void initState() {
@@ -404,9 +402,8 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                 bankDetails: _bankDetails,
               ),
               TransferSection(
-                precio: '100.00',
+                precio: widget.precio,
                 amountController: TextEditingController(),
-                isAmountVisible: _isAmountVisible,
                 onToggleAmountVisibility: () {
                   setState(() {
                     _isAmountVisible = !_isAmountVisible;
@@ -760,15 +757,13 @@ class PaymentOptionCard extends StatelessWidget {
 }
 
 class TransferSection extends StatefulWidget {
-  final String precio;
+  final double precio;
   final TextEditingController amountController;
-  final bool isAmountVisible;
   final VoidCallback onToggleAmountVisibility;
 
   TransferSection({
     required this.precio,
     required this.amountController,
-    required this.isAmountVisible,
     required this.onToggleAmountVisibility,
   });
 
@@ -778,6 +773,12 @@ class TransferSection extends StatefulWidget {
 class _TransferSectionState extends State<TransferSection> {
   bool isPaymentEnabled = false;
   bool isEnabledPhoto = false;
+  bool isFullPayment = true;
+  bool isAmountVisible = true;
+
+  bool selectfullpayment = true;
+  bool selectamountpayment = false;
+
   XFile? selectedImage;
   Color uploadTextColor = buttoncolorblue;
 
@@ -841,6 +842,30 @@ class _TransferSectionState extends State<TransferSection> {
     });
   }
 
+  void _updateFullPayment() {
+    setState(() {
+      if (selectfullpayment) {
+        isEnabledPhoto = true;
+        isAmountVisible = false;
+      } else {
+        isEnabledPhoto = false;
+        isAmountVisible = true;
+      }
+    });
+  }
+
+  void _updateAmountPayment() {
+    setState(() {
+      if (selectamountpayment) {
+        isEnabledPhoto = true;
+        isFullPayment = false;
+      } else {
+        isEnabledPhoto = false;
+        isFullPayment = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -852,113 +877,146 @@ class _TransferSectionState extends State<TransferSection> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttoncolorblue,
-                    foregroundColor: buttoncoloryellow,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+              Visibility(
+                visible: isFullPayment,
+                child: Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttoncolorblue,
+                      foregroundColor: buttoncoloryellow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.03,
+                          horizontal: screenWidth * 0.01),
                     ),
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenWidth * 0.03,
-                        horizontal: screenWidth * 0.01),
-                  ),
-                  onPressed: () {
-                    // Acción al presionar "Pagar valor total"
-                    setState(() {
-                      isEnabledPhoto = true;
-                    });
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "\$ ${widget.precio}",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                    onPressed: () {
+                      // Acción al presionar "Pagar valor total"
+                      setState(() {
+                        selectfullpayment = !selectfullpayment;
+                        _updateFullPayment();
+                      });
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "\$ ${widget.precio.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Pagar valor total",
-                        style: TextStyle(fontSize: screenWidth * 0.03),
-                      ),
-                    ],
+                        Text(
+                          "Pagar valor total",
+                          style: TextStyle(fontSize: screenWidth * 0.03),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(width: screenWidth * 0.02),
-              Expanded(
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: uploadTextColor,
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenWidth * 0.02,
-                        horizontal: screenWidth * 0.02),
-                    backgroundColor: Colors.transparent,
-                    side: BorderSide.none,
-                  ),
-                  onPressed: isEnabledPhoto
-                      ? () {
-                          // Acción al presionar "Subir comprobante"
-                          _onUploadPhoto();
-                        }
-                      : null,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.upload_file, color: uploadTextColor),
-                      SizedBox(width: screenWidth * 0.02),
-                      Text(
-                        "Subir\ncomprobante",
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.03,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                        textAlign: TextAlign.center,
+              Visibility(
+                visible: isAmountVisible,
+                child: Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttoncolorblue,
+                      foregroundColor: buttoncoloryellow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
-                    ],
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.05,
+                          horizontal: screenWidth * 0.05),
+                    ),
+                    //onPressed: widget.onToggleAmountVisibility,
+                    onPressed: () {
+                      setState(() {
+                        selectamountpayment = !selectamountpayment;
+                        _updateAmountPayment();
+                      });
+                    },
+                    child: Text(
+                      "Abonar",
+                      style: TextStyle(fontSize: screenWidth * 0.04),
+                    ),
                   ),
                 ),
               ),
+              Visibility(
+                visible: isEnabledPhoto,
+                child: Expanded(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: uploadTextColor,
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.02,
+                          horizontal: screenWidth * 0.02),
+                      backgroundColor: Colors.transparent,
+                      side: BorderSide.none,
+                    ),
+                    onPressed: isEnabledPhoto
+                        ? () {
+                            // Acción al presionar "Subir comprobante"
+                            _onUploadPhoto();
+                          }
+                        : null,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.upload_file, color: uploadTextColor),
+                        SizedBox(width: screenWidth * 0.02),
+                        Text(
+                          "Subir\ncomprobante",
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.03,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
             ],
           ),
           SizedBox(height: screenWidth * 0.02),
           Row(
-            mainAxisAlignment: widget.isAmountVisible
+            mainAxisAlignment: selectamountpayment
                 ? MainAxisAlignment.spaceBetween
                 : MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttoncolorblue,
-                  foregroundColor: buttoncoloryellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
+              Visibility(
+                visible: selectamountpayment,
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.05,
                       horizontal: screenWidth * 0.05),
-                ),
-                onPressed: widget.onToggleAmountVisibility,
-                child: Text(
-                  "Agregar monto",
-                  style: TextStyle(fontSize: screenWidth * 0.04),
+                  child: Text(
+                    "Monto a abonar:",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: buttoncolorblue),
+                  ),
                 ),
               ),
-              SizedBox(width: screenWidth * 0.05),
               Visibility(
-                visible: widget.isAmountVisible,
+                visible: selectamountpayment,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.02,
-                      horizontal: screenWidth * 0.002),
+                      horizontal: screenWidth * 0.01),
                   child: Container(
-                    width: screenWidth * 0.3,
+                    //width: screenWidth * 0.3,
                     child: TextField(
                       controller: widget.amountController,
                       keyboardType:
