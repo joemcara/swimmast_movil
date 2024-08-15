@@ -7,6 +7,7 @@ import 'package:swimmast_movil/screens/sport_Person/competencies_screen_sport.da
 import 'package:swimmast_movil/screens/sport_Person/history_screen_sport.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
+import 'package:swimmast_movil/screens/sport_Person/approved_courses.dart';
 
 class HomeScreenSport extends StatefulWidget {
   @override
@@ -121,9 +122,9 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
                   ),
                   GridItem(
                     icon: Icons.history,
-                    title: 'Cursos Pasados',
+                    title: 'Cursos Aprobados',
                     index: 5,
-                    nextPage: CompetenciesScreenSport(),
+                    nextPage: ApprovedCourses(),
                     selectedIndex: _selectedIndex,
                     onSelect: (int index) {
                       setState(() {

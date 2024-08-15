@@ -1,10 +1,12 @@
+
 import 'package:image_picker/image_picker.dart';
-import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
+import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
+
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
-
 import 'package:swimmast_movil/models/courseAvailable.dart';
+
 
 class ShopSportScreen extends StatefulWidget {
   @override
@@ -57,7 +59,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
           bottom: TabBar(
             tabs: [
               Tab(text: "Paquetes Disponibles"),
-              Tab(text: "Comprados"),
+              Tab(text: "Pendientes"),
             ],
             labelColor: Color.fromARGB(
                 255, 240, 204, 0), // Color del texto de la pestaña seleccionada
