@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/screens/shop_Screens/buy_screen.dart';
-import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
 import 'package:swimmast_movil/shared/swimmast_tabs.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
+import 'package:swimmast_movil/widgets/courses_p.dart';
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:flutter/services.dart';
+import 'package:swimmast_movil/models/courseAvailable.dart';
 
 class ShopSportScreen extends StatelessWidget {
   @override
@@ -29,7 +31,7 @@ class ShopSportScreen extends StatelessWidget {
           bottom: TabBar(
             tabs: [
               Tab(text: "Paquetes Disponibles"),
-              Tab(text: "Comprados"),
+              Tab(text: "Pendientes"),
             ],
             labelColor: Color.fromARGB(
                 255, 240, 204, 0), // Color del texto de la pestaña seleccionada
@@ -844,13 +846,3 @@ class TransferSection extends StatelessWidget {
   }
 }
 
-class PurchasedScreen extends StatelessWidget {
-  const PurchasedScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('No hay paquetes comprados.'),
-    );
-  }
-}

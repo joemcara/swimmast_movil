@@ -9,6 +9,7 @@ import 'package:swimmast_movil/screens/notification_screen.dart';
 import 'package:swimmast_movil/shared/bottom_navs.dart/bottom_nav_bar.dart';
 import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/widgets/griditem.dart';
+import 'package:swimmast_movil/screens/sport_Person/approved_courses.dart';
 
 class HomeScreenSport extends StatefulWidget {
   @override
@@ -184,9 +185,9 @@ class _HomeScreenSportState extends State<HomeScreenSport> {
                   ),
                   GridItem(
                     icon: Icons.history,
-                    title: 'Cursos Pasados',
+                    title: 'Cursos Aprobados',
                     index: 5,
-                    nextPage: CompetenciesScreenSport(),
+                    nextPage: ApprovedCourses(),
                     selectedIndex: _selectedIndex,
                     onSelect: (int index) {
                       setState(() {

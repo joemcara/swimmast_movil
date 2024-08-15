@@ -54,11 +54,6 @@ class _CompetitionsInfoCardsState extends State<CompetitionsInfoCards> {
     );
     return Center(
       child: Text("Sin Competencias")
-    ); /*Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Sin Competencias")
-          ]
-    );*/
+    );
   }
 }
