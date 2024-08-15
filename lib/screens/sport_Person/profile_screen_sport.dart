@@ -71,7 +71,8 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
                   SizedBox(height: size.height * 0.03),
                   if(!packages.isNotEmpty)
                     _infoBox("Cursos Inscritos", ['Aún no te has inscrito a ningún curso :c']),
-                  _infoBox("Cursos Inscritos", packages),
+                  if(packages.isNotEmpty)
+                    _infoBox("Cursos Inscritos", packages),
                     
                 ],
               ),

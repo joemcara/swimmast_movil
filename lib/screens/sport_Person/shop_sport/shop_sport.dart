@@ -14,29 +14,31 @@ class ShopSportScreen extends StatefulWidget {
 class _ShopSportScreenState extends State<ShopSportScreen> {
   List<Map<String, String>> items = [];
 
-  Future<void> _AvilableShopCourse() async {
-    try {
-      final response = await Dio().get(
-        urlBack + 'course/catalog/swimmer/' + idUser.toString(),
-      );
-
-      for (var item in response.data) {
-        CourseAvailable course = CourseAvailable.fromJson(item);
-        Map<String, String> courseMap = {
-          'paquete': course.name,
-          'descripcion': course.description,
-          'price': course.price,
-          'startDate': course.startDate.toString().split(' ')[0],
-          'dueDate': course.dueDate.toString().split(' ')[0],
-        };
-        items.add(courseMap);
+    Future<void> _AvilableShopCourse() async{
+      try{
+        final response = await Dio().get(
+          urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',  
+        );
+        
+        for (var item in response.data){
+          CourseAvailable course = CourseAvailable.fromJson(item);
+          Map<String, String> courseMap = {
+            'paquete': course.name,
+            'descripcion': course.description,
+            'price': course.price,
+            'startDate': course.startDate.toString().split(' ')[0],
+            'dueDate': course.dueDate.toString().split(' ')[0],
+          };
+          items.add(courseMap);
+        }
+        setState(() {
+          
+        });
+      } catch (e){
+        print(e);
+        throw e;
       }
-      setState(() {});
-    } catch (e) {
-      print(e);
-      throw e;
     }
-  }
 
   @override
   void initState() {
