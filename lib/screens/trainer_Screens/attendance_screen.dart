@@ -130,7 +130,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         isScrollControlled: true,
         builder: (context) {
           return FractionallySizedBox(
-            heightFactor: 0.5,
+            heightFactor: 0.9,
             child: AttendanceSheet(
               day: this.day,
               hour: this.hour,

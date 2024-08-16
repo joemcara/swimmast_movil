@@ -5,7 +5,9 @@ import 'package:swimmast_movil/widgets/customAppBar.dart';
 class WorkoutScreen extends StatelessWidget {
   const WorkoutScreen({super.key});
 
-  static const Map<String, String> classes = {'09:00': "Calentamiento"};
+  static const Map<String, dynamic> classes = {
+    'Mariposa': [25, 5]
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class WorkoutScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(25, 10, 10, 20),
+          padding: const EdgeInsets.fromLTRB(25, 50, 10, 20),
           child: Column(children: [
             Row(
               children: [
@@ -31,12 +33,11 @@ class WorkoutScreen extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    flex: 1,
                     child: Text(
                       "Hora",
                       style: styleSubtitles,
@@ -248,14 +249,22 @@ class WorkoutScreen extends StatelessWidget {
       containers.add(Row(children: [
         Expanded(
           flex: 1,
-          child: Text(
-            entry.key,
-            style: styleSubtitles,
+          child: Column(
+            children: [
+              Text(
+                "07:00",
+                style: styleSubtitles,
+              ),
+              Text(
+                "09:00",
+                style: TextStyle(color: Colors.grey, fontSize: 16),
+              )
+            ],
           ),
         ),
-        const SizedBox(width: 20),
+        const SizedBox(width: 30),
         Expanded(
-          flex: 3,
+          flex: 5,
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: borderColor),
@@ -263,10 +272,46 @@ class WorkoutScreen extends StatelessWidget {
             width: double.infinity,
             height: MediaQuery.of(context).size.height / 5,
             child: Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(1),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [Text(entry.value), const Text("15 min")],
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 10),
+                            Text(
+                              "Estilo",
+                              style: styleSubtitles,
+                            ),
+                            SizedBox(width: 30),
+                            Text(
+                              "Metros",
+                              style: styleSubtitles,
+                            ),
+                            SizedBox(width: 25),
+                            Text(
+                              "Tiempo",
+                              style: styleSubtitles,
+                            ),
+                            SizedBox(width: 25),
+                          ]),
+                      SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(entry.key),
+                            SizedBox(width: 10),
+                            Text(entry.value[0].toString() + " metros"),
+                            SizedBox(width: 10),
+                            Text(entry.value[1].toString() + " minutos"),
+                            SizedBox(width: 10),
+                          ]),
+                    ],
+                  )
+                ],
               ),
             ),
           ),

@@ -783,6 +783,7 @@ class _TransferSectionState extends State<TransferSection> {
 
   XFile? selectedImage;
   Color uploadTextColor = buttoncolorblue;
+  final FocusNode _focusNode = FocusNode();
 
   final ImagePicker _picker = ImagePicker();
 
@@ -866,6 +867,12 @@ class _TransferSectionState extends State<TransferSection> {
         isFullPayment = true;
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -1018,16 +1025,14 @@ class _TransferSectionState extends State<TransferSection> {
                       vertical: screenWidth * 0.02,
                       horizontal: screenWidth * 0.01),
                   child: Container(
-                    //width: screenWidth * 0.3,
+                    width: screenWidth * 0.3,
                     child: TextField(
                       controller: widget.amountController,
+                      focusNode: _focusNode,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,2}')),
-                      ],
                       decoration: InputDecoration(
+                        hintText: '\$00.00',
                         labelText: 'Monto',
                         border: OutlineInputBorder(),
                         prefixText: '\$',
