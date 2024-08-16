@@ -183,7 +183,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                       itemCount: 1,
                       padding: const EdgeInsets.all(12),
                       itemBuilder: (_, index) => classGroups(() async {
-                        await _MembersByCourse();
+                        //await _MembersByCourse();
                       },
                           context,
                           "GRUPAL",
@@ -192,7 +192,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                             itemBuilder: (_, indice) => hourClass(
                               context,
                               allCoursesToday['grupal']?[0]['start_time'],
-                              1,
+                              allCoursesToday['grupal']?[indice]['id'],
                               () async {
                                 allCoursesToday['grupal']?[indice]['id'];
                                 courseSelectedDay =
@@ -234,7 +234,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                               context,
                               allCoursesToday['individual']?[indice]
                                   ['start_time'],
-                              1,
+                              allCoursesToday['individual']?[indice]['id'],
                               () async {
                                 courseSelected = allCoursesToday['individual']
                                     ?[indice]['id'];
