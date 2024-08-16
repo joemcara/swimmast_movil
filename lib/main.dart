@@ -6,7 +6,9 @@ import './models/courseSelected.dart';
 
 import 'package:swimmast_movil/screens/sign_in_screen.dart';
 
-void main() async{
+final navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

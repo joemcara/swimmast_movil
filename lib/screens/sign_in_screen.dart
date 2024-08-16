@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/models/utils.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
@@ -40,11 +41,13 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> _login() async {
     try {
+      final fcmToken = await Utils.getFCMToken();
       final response = await Dio().post(
         urlBack + 'administration/login_user/',
         data: {
           'username': _userName.text,
           'password': _password.text,
+          'device_token': fcmToken,
         },
       );
       print(response.data);
