@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:popover/popover.dart';
-import 'package:swimmast_movil/screens/sport_Person/profile_screen.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
+import 'package:swimmast_movil/models/coursesToday.dart';
+import 'package:swimmast_movil/models/membersCourse.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/attendance_sheet.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart' as intl_local_date_data;
-import 'package:swimmast_movil/shared/profile_header_trainee.dart';
+import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/widgets/popover.dart';
 
 class AttendanceScreen extends StatefulWidget {
@@ -20,23 +15,13 @@ class AttendanceScreen extends StatefulWidget {
 
 class AttendanceScreenState extends State<AttendanceScreen> {
   List<Map<String, dynamic>> membersList = [];
+  Map<String, List<Map<String, dynamic>>> allCoursesToday = {};
   String day = "Today";
   String hour = "00:00";
   @override
   void initState() {
     super.initState();
-
-    /*if (attendanceStateModal == true) {
-      _MembersByCourse();
-    }*/
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final profileHeaderState =
-          context.findAncestorStateOfType<ProfileHeaderTraineeState>();
-      if (profileHeaderState != null) {
-        profileHeaderState.updateMessage('Cursos');
-      }
-    });
+    _CoursesForToday();
   }
 
   void stateLinkHome() {
@@ -53,8 +38,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
 
       membersList.clear();
       for (var item in response.data) {
-        User member = User.fromJson(item);
-
+        UserCourse member = UserCourse.fromJson(item);
         Map<String, dynamic> membersMap = {
           'id': member.id,
           'firstName': member.firstName,
@@ -64,16 +48,13 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         membersList.add(membersMap);
       }
 
-      final selectedCourse = coursesToday.firstWhere(
-          (course) => course['id'] == courseSelected,
-          orElse: () => {});
-      if (selectedCourse.isNotEmpty) {
-        setState(() {
-          this.day = selectedCourse['day'];
-          this.hour = selectedCourse['hour'];
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _showModal(context);
-          });
+      membersByCourse = membersList;
+
+      this.day = courseSelectedDay;
+      this.hour = courseSelectedHour;
+      if (attendanceStateModal) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showModal(context);
         });
       } else {
         setState(() {
@@ -81,6 +62,60 @@ class AttendanceScreenState extends State<AttendanceScreen> {
           hour = "Unknown";
         });
       }
+
+      print(membersList);
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  Future<void> _CoursesForToday() async {
+    try {
+      final response = await Dio().get(
+          urlBack +
+              'course/instructor/' +
+              idUser.toString() +
+              '/type_grouped/?date=' +
+              dateFormatted,
+          options: Options(headers: {'Authorization': 'Token $token'}));
+
+      CourseAvailableList courses = CourseAvailableList.fromJson(response.data);
+      List<Map<String, dynamic>> coursesTeam = [];
+      List<Map<String, dynamic>> coursesIndividual = [];
+
+      if (!courses.grupal.isEmpty) {
+        for (var course in courses.grupal) {
+          Map<String, dynamic> courseItem = {
+            'id': course.id,
+            'start_date': course.startDate,
+            'start_time': course.startTime.substring(0, 2),
+            'due_date': course.dueDate,
+            'due_time': course.endTime,
+            'day': course.description
+          };
+          coursesTeam.add(courseItem);
+        }
+      }
+
+      if (!courses.individual.isEmpty) {
+        for (var course in courses.individual) {
+          Map<String, dynamic> courseItem = {
+            'id': course.id,
+            'start_date': course.startDate,
+            'start_time': course.startTime.substring(0, 5),
+            'due_date': course.dueDate,
+            'due_time': course.endTime,
+            'day': course.description
+          };
+          coursesIndividual.add(courseItem);
+        }
+      }
+
+      allCoursesToday['grupal'] = coursesTeam;
+      allCoursesToday['individual'] = coursesIndividual;
+
+      setState(() {});
     } catch (e) {
       print(e);
       throw e;
@@ -93,7 +128,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
         isScrollControlled: true,
         builder: (context) {
           return FractionallySizedBox(
-            heightFactor: 0.5,
+            heightFactor: 0.9,
             child: AttendanceSheet(
               day: this.day,
               hour: this.hour,
@@ -102,202 +137,208 @@ class AttendanceScreenState extends State<AttendanceScreen> {
             ),
           );
         });
-    print("show");
-  }
-
-  Widget classCard(void Function() onTap, BuildContext context, String? day,
-      String? hour, MainScreenTraineeState state, int id) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          border: Border.all(color: const Color.fromARGB(255, 226, 219, 219)),
-          color: Colors.white),
-      width: 330,
-      height: 200,
-      child: Container(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                day ?? "no disponible",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
-                margin: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 211, 202, 202)
-                          .withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                width: 75,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: Text(
-                            hour ?? "no disponible",
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: GestureDetector(
-                            onTap: onTap,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> courses = coursesToday;
-    MainScreenTraineeState parentState =
-        context.findAncestorStateOfType<MainScreenTraineeState>()!;
-    print(courses);
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Row(
-              children: [
-                Icon(Icons.calendar_month),
-                Text(
-                  today,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                ),
-              ],
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: "Horario de clases",
+        back: true,
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Row(
+                children: [
+                  Icon(Icons.calendar_month),
+                  Text(
+                    today,
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: courses.isEmpty
-                ? Center(
-                    child: Container(
-                      padding: const EdgeInsets.all(12),
-                      child: Text(
-                        'No tiene cursos asignados para el día de hoy',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+            const SizedBox(height: 10),
+            Expanded(
+              child: allCoursesToday.isEmpty
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'No tiene cursos asignados para el día de hoy',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                : ListView.builder(
-                    itemCount: courses.length,
-                    padding: const EdgeInsets.all(12),
-                    itemBuilder: (_, index) => classGroups(
-                      () async {
-                        courseSelected = courses[index]['id'];
+                    )
+                  : ListView.builder(
+                      itemCount: 1,
+                      padding: const EdgeInsets.all(12),
+                      itemBuilder: (_, index) => classGroups(() async {
                         await _MembersByCourse();
                       },
-                      context,
-                      courses[index]['course_type'],
-                      courses[index]['day'],
-                      courses[index]['hour'],
-                      courses[index]['id'],
-                      () async {
+                          context,
+                          "GRUPAL",
+                          ListView.builder(
+                            itemCount: allCoursesToday['grupal']?.length,
+                            itemBuilder: (_, indice) => hourClass(
+                              context,
+                              allCoursesToday['grupal']?[0]['start_time'],
+                              1,
+                              () async {
+                                allCoursesToday['grupal']?[indice]['id'];
+                                courseSelectedDay =
+                                    allCoursesToday['grupal']?[indice]['day'];
+                                courseSelectedHour = allCoursesToday['grupal']
+                                    ?[indice]['start_time'];
+                                await _MembersByCourse();
+                              },
+                            ),
+                          )),
+                    ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: allCoursesToday.isEmpty
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'No tiene cursos asignados para el día de hoy',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: 1,
+                      padding: const EdgeInsets.all(12),
+                      itemBuilder: (_, index) => classGroups(() async {
                         await _MembersByCourse();
                       },
-                      parentState,
+                          context,
+                          " INDIVIDUAL",
+                          ListView.builder(
+                            itemCount: allCoursesToday['individual']?.length,
+                            itemBuilder: (_, indice) => hourClass(
+                              context,
+                              allCoursesToday['individual']?[indice]
+                                  ['start_time'],
+                              1,
+                              () async {
+                                courseSelected = allCoursesToday['individual']
+                                    ?[indice]['id'];
+                                courseSelectedDay =
+                                    allCoursesToday['individual']?[indice]
+                                        ['day'];
+                                courseSelectedHour =
+                                    allCoursesToday['individual']?[indice]
+                                        ['start_time'];
+                                await _MembersByCourse();
+                              },
+                            ),
+                          )),
                     ),
-                  ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget classGroups(
-      void Function() onTap,
-      BuildContext context,
-      String courseType,
-      String day,
-      String hour,
-      int id,
-      void Function() onPopover,
-      MainScreenTraineeState state) {
-    return GestureDetector(
-        child: Container(
-      margin: const EdgeInsets.all(20),
-      width: 350,
-      height: 150,
-      decoration: BoxDecoration(
-          border: Border.all(color: borderColor), color: Colors.white),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
-            child: Text(
-              courseType,
-              style: styleTitles,
-            ),
+  Widget classGroups(void Function() onTap, BuildContext context,
+      String courseType, ListView classes) {
+    return Card(
+      child: Container(
+        width: 500,
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          color: Color.fromARGB(255, 255, 249, 249),
+        ),
+        child: GestureDetector(
+            child: Column(children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            height: 50,
+            width: 500,
+            decoration: BoxDecoration(
+                color: defaultGradient[0],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                )),
+            child: Text(courseType,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                )),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(30, 8, 30, 8),
+          Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: SizedBox(
+                height: 200, // Ajusta este valor según sea necesario
+                child: classes,
+              )),
+        ])),
+      ),
+    );
+  }
+}
+
+Widget hourClass(
+    BuildContext context, String hour, int id, void Function() onPopover) {
+  return Container(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
+            margin: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      const Color.fromARGB(255, 211, 202, 202).withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 4,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            width: 80,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 5, 10),
-                    margin: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color.fromARGB(255, 211, 202, 202)
-                              .withOpacity(0.5),
-                          spreadRadius: 1,
-                          blurRadius: 4,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    width: 80,
-                    child: Row(
-                      children: [
-                        Text(
-                          hour ?? "no disponible",
-                        ),
-                        PopoverButton(
-                          showModal: onPopover,
-                          id: id,
-                          state: state,
-                        )
-                      ],
-                    ),
-                  ),
+                Text(
+                  hour ?? "no disponible",
+                ),
+                PopoverButton(
+                  showModal: onPopover,
+                  id: id,
                 )
               ],
             ),
           ),
-        ],
-      ),
-    ));
-  }
+        )
+      ],
+    ),
+  );
 }
