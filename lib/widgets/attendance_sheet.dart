@@ -105,97 +105,145 @@ class _AttendanceSheetState extends State<AttendanceSheet> {
       height: 800,
       child: Column(
         children: [
-          const SizedBox(
-            height: 20,
+          Stack(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color:
+                      buttoncolorblue, // Establece el color del contenedor a azul
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                height: 60,
+                width: double.infinity,
+                alignment:
+                    Alignment.center, // Centra el contenido en el Container
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Asistencia ",
+                      style: TextStyle(
+                        color: Colors
+                            .white, // Cambia el color del texto si es necesario
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 15),
+                    const Icon(
+                      Icons.schedule,
+                      color: Colors.white,
+                    ),
+                    SizedBox(width: 15),
+                    Text(
+                      widget.hour,
+                      style: const TextStyle(
+                        color: Colors
+                            .white, // Cambia el color del texto si es necesario
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Asistencia",
-                      style: TextStyle(
-                        color: defaultGradient[0],
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
                 const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: MediaQuery.sizeOf(context).width - 50,
-                  child: Divider(
-                      height: 10, color: Color.fromARGB(255, 201, 197, 197)),
-                ),
-                const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Row(
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: 60),
+                        Row(children: [
+                          const Icon(Icons.people),
+                          SizedBox(width: 8),
+                          Text(
+                            "Miembros:  ${widget.membersCount}",
+                            style: const TextStyle(fontSize: 17),
+                          ),
+                        ]),
+                        //const SizedBox(width: 60),
+                      ],
+                    ),
+                    SizedBox(width: 10),
                     Row(
                       children: [
                         const Icon(Icons.calendar_month),
+                        SizedBox(width: 10),
                         Text(
                           widget.day,
                           style: const TextStyle(fontSize: 17),
                         ),
                       ],
                     ),
-                    Row(
+                    /*Row(
                       children: [
                         const Icon(Icons.schedule),
+                        SizedBox(width: 10),
                         Text(
                           widget.hour,
                           style: const TextStyle(fontSize: 17),
                         ),
                       ],
-                    ),
+                    ),*/
                   ],
                 ),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                /*Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(width: 60),
                     Row(children: [
                       const Icon(Icons.people),
+                      SizedBox(width: 12),
                       Text(
-                        "Miembros: ${widget.membersCount}",
+                        "Miembros:   ${widget.membersCount}",
                         style: const TextStyle(fontSize: 17),
                       ),
                     ]),
-                    const SizedBox(width: 60),
+                    //const SizedBox(width: 60),
                   ],
-                ),
+                ),*/
                 const SizedBox(height: 20),
                 const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(width: 150),
                     Text(
-                      "Asistió:    ",
+                      "Asistió:",
                       style: TextStyle(fontSize: 17),
                     ),
+                    SizedBox(width: 15),
                     Text(
                       "Si ",
                       style: TextStyle(fontSize: 17),
                     ),
-                    SizedBox(width: 30),
+                    SizedBox(width: 35),
                     Text(
                       "No ",
                       style: TextStyle(fontSize: 17),
                     ),
+                    SizedBox(width: 40),
                   ],
                 ),
               ],
