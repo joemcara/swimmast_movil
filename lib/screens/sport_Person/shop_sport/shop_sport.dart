@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:swimmast_movil/models/utils.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
@@ -23,6 +25,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
       for (var item in response.data) {
         CourseAvailable course = CourseAvailable.fromJson(item);
         Map<String, String> courseMap = {
+          'id': course.id.toString(),
           'paquete': course.name,
           'descripcion': course.description,
           'price': course.price,
@@ -71,7 +74,8 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
             ListView.builder(
               padding: const EdgeInsets.all(10),
               itemCount: items.length,
-              itemBuilder: (_, index) => PaquetesInscripcion(
+              itemBuilder: (_, index) => PaquetesInscripcion( 
+                idCourse: items[index]['id']!,
                 nomPaquete: items[index]['paquete']!,
                 descPaquete: items[index]['descripcion']!,
                 precio: items[index]['price']!,
@@ -83,6 +87,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => BuyScreen(
+                          idCourse: items[index]['id']!,
                           nomPaquete: items[index]['paquete']!,
                           precio: items[index]['price']!,
                         ),
@@ -181,6 +186,7 @@ class DetallePaquete extends StatelessWidget {
 }
 
 class PaquetesInscripcion extends StatelessWidget {
+  final String idCourse;
   final String nomPaquete;
   final String descPaquete;
   final ElevatedButton button;
@@ -196,6 +202,7 @@ class PaquetesInscripcion extends StatelessWidget {
     required this.precio,
     required this.startDate,
     required this.dueDate,
+    required this.idCourse,
   }) : super(key: key);
 
   @override
@@ -212,10 +219,14 @@ class PaquetesInscripcion extends StatelessWidget {
 }
 
 class BuyScreen extends StatelessWidget {
+  final String idCourse;
   final String nomPaquete;
   final String precio;
 
-  const BuyScreen({Key? key, required this.nomPaquete, required this.precio})
+  const BuyScreen({Key? key, 
+  required this.nomPaquete, 
+  required this.precio, 
+  required this.idCourse})
       : super(key: key);
 
   @override
@@ -273,7 +284,10 @@ class BuyScreen extends StatelessWidget {
                     ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(
-                        precio: double.parse(precio), nomPaquete: nomPaquete),
+                        precio: double.parse(precio), 
+                        nomPaquete: nomPaquete,
+                        idCourse: idCourse,
+                        ),
                   ],
                 ),
               ),
@@ -284,12 +298,14 @@ class BuyScreen extends StatelessWidget {
 }
 
 class WidgetButtons extends StatefulWidget {
+  final String idCourse;
   final double precio;
   final String nomPaquete;
   const WidgetButtons({
     Key? key,
     required this.precio,
-    required this.nomPaquete,
+    required this.nomPaquete, 
+    required this.idCourse,
   }) : super(key: key);
 
   @override
@@ -404,6 +420,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                 bankDetails: _bankDetails,
               ),
               TransferSection(
+                idCourse: widget.idCourse,
                 precio: widget.precio,
                 course: widget.nomPaquete,
                 amountController: TextEditingController(),
@@ -760,6 +777,7 @@ class PaymentOptionCard extends StatelessWidget {
 }
 
 class TransferSection extends StatefulWidget {
+  final String idCourse;
   final double precio;
   final String course;
   final TextEditingController amountController;
@@ -769,7 +787,7 @@ class TransferSection extends StatefulWidget {
     required this.precio,
     required this.course,
     required this.amountController,
-    required this.onToggleAmountVisibility,
+    required this.onToggleAmountVisibility, required this.idCourse,
   });
 
   _TransferSectionState createState() => _TransferSectionState();
@@ -781,7 +799,7 @@ class _TransferSectionState extends State<TransferSection> {
   bool isFullPayment = true;
   bool isAmountVisible = true;
 
-  bool selectfullpayment = true;
+  bool selectfullpayment = false;
   bool selectamountpayment = false;
 
   XFile? selectedImage;
@@ -849,8 +867,9 @@ class _TransferSectionState extends State<TransferSection> {
     });
   }
 
-  void _updateFullPayment() {
+void _updateFullPayment() {
     setState(() {
+      selectfullpayment = !selectfullpayment;
       if (selectfullpayment) {
         isEnabledPhoto = true;
         isAmountVisible = false;
@@ -861,16 +880,60 @@ class _TransferSectionState extends State<TransferSection> {
     });
   }
 
+
   void _updateAmountPayment() {
     setState(() {
+      selectamountpayment = !selectamountpayment;
       if (selectamountpayment) {
         isEnabledPhoto = true;
         isFullPayment = false;
       } else {
         isEnabledPhoto = false;
         isFullPayment = true;
-      }
-    });
+   }});}
+
+  void showModal(String errorMessage, BuildContext contextParent) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Informacion!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(contextParent);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+Future<int> _generateEnrollment(double paymentValue, String reciptUrl, int courseId) async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'enrollment/generate_enrollment/',
+        data: {
+            "course":courseId,
+            "applicant":idUser,
+            "payment_value": paymentValue,
+            "receipt_url": reciptUrl,
+        },
+      );
+      if (response.statusCode == 200) {
+        showModal("Pago realizado con éxito", context);
+        }else{
+          showModal("Error al realizar el pago", context);
+        }
+      return 200;
+    } catch (e) {
+      print(e);
+      throw e;
+    }
   }
 
   @override
@@ -906,12 +969,9 @@ class _TransferSectionState extends State<TransferSection> {
                     ),
                     onPressed: () {
                       // Acción al presionar "Pagar valor total"
-                      setState(() {
-                        print("click");
-                        selectfullpayment = !selectfullpayment;
-                        // isAmountVisible = !isAmountVisible;
-                        // isEnabledPhoto = !isEnabledPhoto;
                         _updateFullPayment();
+                      setState(() {
+                        widget.amountController.text = widget.precio.toString();
                       });
                     },
                     child: Column(
@@ -951,10 +1011,7 @@ class _TransferSectionState extends State<TransferSection> {
                     ),
                     //onPressed: widget.onToggleAmountVisibility,
                     onPressed: () {
-                      setState(() {
-                        selectamountpayment = !selectamountpayment;
-                        _updateAmountPayment();
-                      });
+                      _updateAmountPayment();
                     },
                     child: Text(
                       "Abonar",
@@ -1069,11 +1126,17 @@ class _TransferSectionState extends State<TransferSection> {
                         horizontal: screenWidth * 0.02),
                   ),
                   onPressed: isPaymentEnabled
-                      ? () {
-                          Utils.uploadImage(
+                      ? () async {
+                          String urltemp = await Utils.uploadImage(
                               "${miembro!.user.username}/comprobantes/",
-                              widget.course,
+                              "${widget.course}-1",
                               selectedImage!);
+                              double amount = double.parse(widget.amountController.text);
+                            _generateEnrollment(
+                              amount,
+                              urltemp,
+                              int.parse(widget.idCourse
+                              ));
                         }
                       : null,
                   child: Column(

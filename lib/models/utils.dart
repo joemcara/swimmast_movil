@@ -11,6 +11,7 @@ class Utils {
       final ref = FirebaseStorage.instance.ref(refPath).child(cleanChildPath);
       await ref.putFile(File(image.path));
       final url = await ref.getDownloadURL();
+      print(url);
       return url;
     } catch (e) {
       throw "Something went wrong.";

@@ -21,7 +21,7 @@ class _RoutineInfoCardsState extends State<RoutineInfoCards> {
 
   Future<void> getRoutines() async {
     try{
-      var response = await Dio().get(urlBack + 'routine/swimmer/3');
+      var response = await Dio().get(urlBack + 'routine/swimmer/${idUser}');
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         routines = data.map((json) => HistoryRoutines.fromJson(json)).toList();

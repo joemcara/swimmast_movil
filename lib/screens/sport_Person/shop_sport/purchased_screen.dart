@@ -23,7 +23,7 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
 
   Future<void> getCourses() async {
     try{
-      var response = await Dio().get(urlBack + 'course/swimmer/4/pending/'); 
+      var response = await Dio().get(urlBack + 'course/swimmer/${idUser}/pending/'); 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         courses = data.map((json) => CourseAvailable.fromJson(json)).toList();

@@ -1,8 +1,3 @@
-// To parse this JSON data, do
-//
-//     final historyTimes = historyTimesFromJson(jsonString);
-import 'dart:ffi';
-
 import 'package:swimmast_movil/models/styles.dart';
 
 class HistoryTimes {
