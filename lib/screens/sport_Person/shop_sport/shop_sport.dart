@@ -1,4 +1,5 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:swimmast_movil/models/utils.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
@@ -271,7 +272,8 @@ class BuyScreen extends StatelessWidget {
                       precio: precio,
                     ),
                     SizedBox(height: screenWidth * 0.02),
-                    WidgetButtons(precio: double.parse(precio)),
+                    WidgetButtons(
+                        precio: double.parse(precio), nomPaquete: nomPaquete),
                   ],
                 ),
               ),
@@ -283,10 +285,11 @@ class BuyScreen extends StatelessWidget {
 
 class WidgetButtons extends StatefulWidget {
   final double precio;
-
+  final String nomPaquete;
   const WidgetButtons({
     Key? key,
     required this.precio,
+    required this.nomPaquete,
   }) : super(key: key);
 
   @override
@@ -402,6 +405,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
               ),
               TransferSection(
                 precio: widget.precio,
+                course: widget.nomPaquete,
                 amountController: TextEditingController(),
                 onToggleAmountVisibility: () {
                   setState(() {
@@ -757,11 +761,13 @@ class PaymentOptionCard extends StatelessWidget {
 
 class TransferSection extends StatefulWidget {
   final double precio;
+  final String course;
   final TextEditingController amountController;
   final VoidCallback onToggleAmountVisibility;
 
   TransferSection({
     required this.precio,
+    required this.course,
     required this.amountController,
     required this.onToggleAmountVisibility,
   });
@@ -800,6 +806,7 @@ class _TransferSectionState extends State<TransferSection> {
                   Navigator.pop(context);
                   final XFile? image =
                       await _picker.pickImage(source: ImageSource.camera);
+
                   if (image != null) {
                     setState(() {
                       selectedImage = image;
@@ -900,7 +907,10 @@ class _TransferSectionState extends State<TransferSection> {
                     onPressed: () {
                       // Acción al presionar "Pagar valor total"
                       setState(() {
+                        print("click");
                         selectfullpayment = !selectfullpayment;
+                        // isAmountVisible = !isAmountVisible;
+                        // isEnabledPhoto = !isEnabledPhoto;
                         _updateFullPayment();
                       });
                     },
@@ -1058,7 +1068,14 @@ class _TransferSectionState extends State<TransferSection> {
                         vertical: screenWidth * 0.04,
                         horizontal: screenWidth * 0.02),
                   ),
-                  onPressed: isPaymentEnabled ? () {} : null,
+                  onPressed: isPaymentEnabled
+                      ? () {
+                          Utils.uploadImage(
+                              "${miembro!.user.username}/comprobantes/",
+                              widget.course,
+                              selectedImage!);
+                        }
+                      : null,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
