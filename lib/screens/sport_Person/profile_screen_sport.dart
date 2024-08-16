@@ -121,6 +121,7 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
                 ],
               ),
             ),
+            SizedBox(height: size.height * 0.05),
           ],
         ),
       ),

@@ -56,13 +56,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         print(response.data);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('usuario invalido')),
-        );
         print(e);
         if (e is DioException) {
-          print('Status Code: ${e.response?.statusCode}');
-          print('Data: ${e.response?.data}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.response?.data)),
+        );
         }
       }
     }
@@ -179,6 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: "Crear",
                     onPressed: () {
                       _createAccount();
+
                     })
               ],
             ),

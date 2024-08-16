@@ -69,7 +69,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: size.height * 0.03),
                   if(!packages.isNotEmpty)
                     _infoBox("Cursos Inscritos", ['Aún no te has inscrito a ningún curso :c']),
-                  _infoBox("Cursos Inscritos", packages),
+                  if(packages.isNotEmpty)
+                    _infoBox("Cursos Inscritos", packages),
                     
                 ],
               ),
@@ -118,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
+            SizedBox(height: size.height * 0.05),
           ],
         ),
       ),
