@@ -17,7 +17,7 @@ List<dynamic> onlyMembers = [];
 List<dynamic> membersByCourse = [];
 List<Map<String, dynamic>> attendance = [];
 Map<int, bool> attendanceMap = {};
-int courseSelected = 1;
+int courseSelected = -1;
 String courseSelectedDay = '';
 String courseSelectedHour = '';
 

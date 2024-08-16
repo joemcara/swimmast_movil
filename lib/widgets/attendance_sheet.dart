@@ -251,34 +251,51 @@ class _AttendanceSheetState extends State<AttendanceSheet> {
           ),
           Expanded(
             child: Container(
-              child: ListView.builder(
-                itemCount: widget.members.length,
-                padding: const EdgeInsets.all(12),
-                itemBuilder: (_, index) {
-                  String name = widget.members[index]['firstName'] +
-                      " " +
-                      widget.members[index]['lastName'];
+              padding: const EdgeInsets.all(12),
+              child: widget.members.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: widget.members.length,
+                      itemBuilder: (_, index) {
+                        // Ensure that _isCheckedYes and _isCheckedNo lists are populated correctly
+                        if (_isCheckedYes.length != widget.members.length) {
+                          _isCheckedYes =
+                              List<bool>.filled(widget.members.length, false);
+                        }
+                        if (_isCheckedNo.length != widget.members.length) {
+                          _isCheckedNo =
+                              List<bool>.filled(widget.members.length, false);
+                        }
 
-                  return ContainerList(
-                    name,
-                    index,
-                    (yesChecked) {
-                      setState(() {
-                        _isCheckedYes[index] = yesChecked;
-                        if (yesChecked) _isCheckedNo[index] = false;
-                      });
-                    },
-                    (noChecked) {
-                      setState(() {
-                        _isCheckedNo[index] = noChecked;
-                        if (noChecked) _isCheckedYes[index] = false;
-                      });
-                    },
-                    _isCheckedYes[index],
-                    _isCheckedNo[index],
-                  );
-                },
-              ),
+                        String name = widget.members[index]['firstName'] +
+                            " " +
+                            widget.members[index]['lastName'];
+
+                        return ContainerList(
+                          name,
+                          index,
+                          (yesChecked) {
+                            setState(() {
+                              _isCheckedYes[index] = yesChecked;
+                              if (yesChecked) _isCheckedNo[index] = false;
+                            });
+                          },
+                          (noChecked) {
+                            setState(() {
+                              _isCheckedNo[index] = noChecked;
+                              if (noChecked) _isCheckedYes[index] = false;
+                            });
+                          },
+                          _isCheckedYes[index],
+                          _isCheckedNo[index],
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        'Aún no hay miembros disponibles',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    ),
             ),
           ),
           Container(
