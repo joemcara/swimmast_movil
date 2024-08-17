@@ -9,7 +9,12 @@ import 'package:swimmast_movil/shared/inputs.dart';
 import 'package:swimmast_movil/screens/recover_password.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+  String? username;
+
+  SignInScreen({
+    super.key, 
+    this.username
+    });
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -78,6 +83,12 @@ class _SignInScreenState extends State<SignInScreen> {
     Size size = MediaQuery.of(context).size;
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
 
+    var userName = widget.username;
+
+    if(userName == null){
+      userName = "Ingrese el usuario";
+    }
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -135,7 +146,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               TextInput(
                                 controller: _userName,
-                                hintText: "Ingrese su Usuario",
+                                hintText: userName.toString(),
                                 label: "Ingrese su Usuario",
                               ),
                               SizedBox(

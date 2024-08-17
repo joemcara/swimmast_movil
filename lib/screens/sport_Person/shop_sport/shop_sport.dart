@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:swimmast_movil/models/utils.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';

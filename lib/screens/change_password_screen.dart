@@ -52,7 +52,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               onPressed: () async{
                   await _logout();
               Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const SignInScreen()));
+              MaterialPageRoute(builder: (context) => SignInScreen()));
               },
             ),
           ],
