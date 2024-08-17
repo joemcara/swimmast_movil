@@ -1,56 +1,54 @@
-import 'package:swimmast_movil/screens/shop_Screens/purchased_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:swimmast_movil/models/utils.dart';
+import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
+import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
-import 'package:flutter/services.dart';
 
 import 'package:swimmast_movil/models/courseAvailable.dart';
 
 class ShopSportScreen extends StatefulWidget {
-  
   @override
   State<ShopSportScreen> createState() => _ShopSportScreenState();
 }
 
 class _ShopSportScreenState extends State<ShopSportScreen> {
+  List<Map<String, String>> items = [];
 
-    List<Map<String, String>> items = [];
+  Future<void> _AvilableShopCourse() async {
+    try {
+      final response = await Dio().get(
+        urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',
+      );
 
-    Future<void> _AvilableShopCourse() async{
-      try{
-        final response = await Dio().get(
-          urlBack + 'course/swimmer/' + idUser.toString() + '/catalog/',  
-        );
-        
-        for (var item in response.data){
-          CourseAvailable course = CourseAvailable.fromJson(item);
-          Map<String, String> courseMap = {
-            'paquete': course.name,
-            'descripcion': course.description,
-            'price': course.price,
-            'startDate': course.startDate.toString().split(' ')[0],
-            'dueDate': course.dueDate.toString().split(' ')[0],
-          };
-          items.add(courseMap);
-        }
-        setState(() {
-          
-        });
-      } catch (e){
-        print(e);
-        throw e;
+      for (var item in response.data) {
+        CourseAvailable course = CourseAvailable.fromJson(item);
+        Map<String, String> courseMap = {
+          'id': course.id.toString(),
+          'paquete': course.name,
+          'descripcion': course.description,
+          'price': course.price,
+          'startDate': course.startDate.toString().split(' ')[0],
+          'dueDate': course.dueDate.toString().split(' ')[0],
+        };
+        items.add(courseMap);
       }
+      setState(() {});
+    } catch (e) {
+      print(e);
+      throw e;
     }
+  }
 
-    @override
-    void initState() {
-      super.initState();
-      _AvilableShopCourse();
-      
-    }
-  
+  @override
+  void initState() {
+    super.initState();
+    _AvilableShopCourse();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -71,13 +69,13 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
             indicatorWeight: 3.0, // Grosor de la línea del indicador
           ),
         ),
-        body: 
-        TabBarView(
+        body: TabBarView(
           children: [
             ListView.builder(
               padding: const EdgeInsets.all(10),
               itemCount: items.length,
               itemBuilder: (_, index) => PaquetesInscripcion(
+                idCourse: items[index]['id']!,
                 nomPaquete: items[index]['paquete']!,
                 descPaquete: items[index]['descripcion']!,
                 precio: items[index]['price']!,
@@ -89,6 +87,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => BuyScreen(
+                          idCourse: items[index]['id']!,
                           nomPaquete: items[index]['paquete']!,
                           precio: items[index]['price']!,
                         ),
@@ -124,8 +123,8 @@ class DetallePaquete extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio, 
-    required this.startDate, 
+    required this.precio,
+    required this.startDate,
     required this.dueDate,
   }) : super(key: key);
 
@@ -160,21 +159,23 @@ class DetallePaquete extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(              
-            'Fecha inicio: $startDate',
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),),
-            const SizedBox(height: 10),            
-            Text(              
-            'Fecha Fin: $dueDate',
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),),
+            Text(
+              'Fecha inicio: $startDate',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Fecha Fin: $dueDate',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
             const SizedBox(height: 10),
             Center(child: button),
           ],
@@ -185,6 +186,7 @@ class DetallePaquete extends StatelessWidget {
 }
 
 class PaquetesInscripcion extends StatelessWidget {
+  final String idCourse;
   final String nomPaquete;
   final String descPaquete;
   final ElevatedButton button;
@@ -197,9 +199,10 @@ class PaquetesInscripcion extends StatelessWidget {
     required this.nomPaquete,
     required this.descPaquete,
     required this.button,
-    required this.precio, 
-    required this.startDate, 
+    required this.precio,
+    required this.startDate,
     required this.dueDate,
+    required this.idCourse,
   }) : super(key: key);
 
   @override
@@ -216,10 +219,15 @@ class PaquetesInscripcion extends StatelessWidget {
 }
 
 class BuyScreen extends StatelessWidget {
+  final String idCourse;
   final String nomPaquete;
   final String precio;
 
-  const BuyScreen({Key? key, required this.nomPaquete, required this.precio})
+  const BuyScreen(
+      {Key? key,
+      required this.nomPaquete,
+      required this.precio,
+      required this.idCourse})
       : super(key: key);
 
   @override
@@ -230,37 +238,37 @@ class BuyScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-        appBar:AppBar(
-        leading: AlertWidget(),
-        title: Row(
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Comprar $nomPaquete',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          leading: AlertWidget(),
+          title: Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Comprar $nomPaquete',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: defaultGradient,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: defaultGradient,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
             ),
           ),
         ),
-      ),
         body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -271,12 +279,16 @@ class BuyScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: screenWidth * 0.02),
                     WidgetInfoBuy(
-                        personDetails: _personDetails,
-                         nomPaquete: nomPaquete,
-                         precio: precio,
-                         ),
+                      personDetails: _personDetails,
+                      nomPaquete: nomPaquete,
+                      precio: precio,
+                    ),
                     SizedBox(height: screenWidth * 0.02),
-                    WidgetButtons(precio: double.parse(precio)),
+                    WidgetButtons(
+                      precio: double.parse(precio),
+                      nomPaquete: nomPaquete,
+                      idCourse: idCourse,
+                    ),
                   ],
                 ),
               ),
@@ -287,11 +299,14 @@ class BuyScreen extends StatelessWidget {
 }
 
 class WidgetButtons extends StatefulWidget {
+  final String idCourse;
   final double precio;
-
+  final String nomPaquete;
   const WidgetButtons({
     Key? key,
     required this.precio,
+    required this.nomPaquete,
+    required this.idCourse,
   }) : super(key: key);
 
   @override
@@ -340,7 +355,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isTransferVisible) {
           _isAnyButtonVisibleEfec = true;
         }
-      } 
+      }
     });
   }
 
@@ -352,7 +367,7 @@ class _WidgetButtonsState extends State<WidgetButtons> {
         if (!_isCashVisible) {
           _isAnyButtonVisibleTran = true;
         }
-      } 
+      }
     });
   }
 
@@ -406,9 +421,10 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                 bankDetails: _bankDetails,
               ),
               TransferSection(
-                precio: '100.00',
+                idCourse: widget.idCourse,
+                precio: widget.precio,
+                course: widget.nomPaquete,
                 amountController: TextEditingController(),
-                isAmountVisible: _isAmountVisible,
                 onToggleAmountVisibility: () {
                   setState(() {
                     _isAmountVisible = !_isAmountVisible;
@@ -525,7 +541,13 @@ class WidgetInfoBuy extends StatelessWidget {
             children: [
               Icon(Icons.shopping_cart, color: buttoncolorblue),
               SizedBox(width: 8.0),
-              Text('Paquete: $nomPaquete', style: textStyle),
+              Flexible(
+                child: Text(
+                  'Paquete: $nomPaquete',
+                  style: textStyle,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
             ],
           ),
           SizedBox(height: screenWidth * 0.04),
@@ -755,18 +777,184 @@ class PaymentOptionCard extends StatelessWidget {
   }
 }
 
-class TransferSection extends StatelessWidget {
-  final String precio;
+class TransferSection extends StatefulWidget {
+  final String idCourse;
+  final double precio;
+  final String course;
   final TextEditingController amountController;
-  final bool isAmountVisible;
   final VoidCallback onToggleAmountVisibility;
 
   TransferSection({
     required this.precio,
+    required this.course,
     required this.amountController,
-    required this.isAmountVisible,
     required this.onToggleAmountVisibility,
+    required this.idCourse,
   });
+
+  _TransferSectionState createState() => _TransferSectionState();
+}
+
+class _TransferSectionState extends State<TransferSection> {
+  bool isPaymentEnabled = false;
+  bool isEnabledPhoto = false;
+  bool isFullPayment = true;
+  bool isAmountVisible = true;
+
+  bool selectfullpayment = false;
+  bool selectamountpayment = false;
+
+  XFile? selectedImage;
+  Color uploadTextColor = buttoncolorblue;
+  final FocusNode _focusNode = FocusNode();
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _onUploadPhoto() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Seleccionar imagen'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera_alt),
+                title: Text('Tomar foto'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.camera);
+
+                  if (image != null) {
+                    setState(() {
+                      selectedImage = image;
+                      isEnabledPhoto = true;
+                      uploadTextColor = Colors.green;
+                      _updatePaymentStatus();
+                    });
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library),
+                title: Text('Seleccionar desde galería'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final XFile? image =
+                      await _picker.pickImage(source: ImageSource.gallery);
+                  if (image != null) {
+                    setState(() {
+                      selectedImage = image;
+                      isEnabledPhoto = true;
+                      uploadTextColor = Colors.green;
+                      _updatePaymentStatus();
+                    });
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _updatePaymentStatus() {
+    setState(() {
+      if (widget.amountController.text.isNotEmpty || isEnabledPhoto == true) {
+        isPaymentEnabled = true;
+      }
+    });
+  }
+
+  void _updateFullPayment() {
+    setState(() {
+      selectfullpayment = !selectfullpayment;
+      if (selectfullpayment) {
+        isEnabledPhoto = true;
+        isAmountVisible = false;
+      } else {
+        isEnabledPhoto = false;
+        isAmountVisible = true;
+      }
+    });
+  }
+
+  void _updateAmountPayment() {
+    setState(() {
+      selectamountpayment = !selectamountpayment;
+      if (selectamountpayment) {
+        isEnabledPhoto = true;
+        isFullPayment = false;
+      } else {
+        isEnabledPhoto = false;
+        isFullPayment = true;
+      }
+    });
+  }
+
+  void showModal(String errorMessage, BuildContext contextParent) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Informacion!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                if (miembro!.roleName == "DEPORTISTA") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreenMember()));
+                } else if (miembro!.roleName == "DEPORTISTA") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MainScreenSportPerson()));
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<int> _generateEnrollment(
+      double paymentValue, String reciptUrl, int courseId) async {
+    try {
+      final response = await Dio().post(
+        urlBack + 'enrollment/generate_enrollment/',
+        data: {
+          "course": courseId,
+          "applicant": idUser,
+          "payment_value": paymentValue,
+          "receipt_url": reciptUrl,
+        },
+      );
+      if (response.statusCode == 200) {
+        showModal("Pago realizado con éxito", context);
+      } else {
+        showModal("Error al realizar el pago", context);
+      }
+      return 200;
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -779,123 +967,156 @@ class TransferSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: buttoncolorblue,
-                    foregroundColor: buttoncoloryellow,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
+              Visibility(
+                visible: isFullPayment,
+                child: Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttoncolorblue,
+                      foregroundColor: buttoncoloryellow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.03,
+                          horizontal: screenWidth * 0.01),
                     ),
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenWidth * 0.03,
-                        horizontal: screenWidth * 0.01),
-                  ),
-                  onPressed: () {
-                    // Acción al presionar "Pagar valor total"
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "\$ $precio",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                    onPressed: () {
+                      // Acción al presionar "Pagar valor total"
+                      _updateFullPayment();
+                      setState(() {
+                        widget.amountController.text = widget.precio.toString();
+                      });
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "\$ ${widget.precio.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Pagar valor total",
-                        style: TextStyle(fontSize: screenWidth * 0.03),
-                      ),
-                    ],
+                        Text(
+                          "Pagar valor total",
+                          style: TextStyle(fontSize: screenWidth * 0.03),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(width: screenWidth * 0.02),
-              Expanded(
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: buttoncolorblue,
-                    padding: EdgeInsets.symmetric(
-                        vertical: screenWidth * 0.02,
-                        horizontal: screenWidth * 0.02),
-                    backgroundColor: Colors.transparent,
-                    side: BorderSide.none,
-                  ),
-                  onPressed: () {
-                    // Acción al presionar "Subir comprobante"
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.upload_file, color: buttoncolorblue),
-                      SizedBox(width: screenWidth * 0.02),
-                      Text(
-                        "Subir\ncomprobante",
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.03,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                        ),
-                        textAlign: TextAlign.center,
+              Visibility(
+                visible: isAmountVisible,
+                child: Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: buttoncolorblue,
+                      foregroundColor: buttoncoloryellow,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
-                    ],
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.05,
+                          horizontal: screenWidth * 0.05),
+                    ),
+                    //onPressed: widget.onToggleAmountVisibility,
+                    onPressed: () {
+                      _updateAmountPayment();
+                    },
+                    child: Text(
+                      "Abonar",
+                      style: TextStyle(fontSize: screenWidth * 0.04),
+                    ),
                   ),
                 ),
               ),
+              Visibility(
+                visible: isEnabledPhoto,
+                child: Expanded(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: uploadTextColor,
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenWidth * 0.02,
+                          horizontal: screenWidth * 0.02),
+                      backgroundColor: Colors.transparent,
+                      side: BorderSide.none,
+                    ),
+                    onPressed: isEnabledPhoto
+                        ? () {
+                            // Acción al presionar "Subir comprobante"
+                            _onUploadPhoto();
+                          }
+                        : null,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.upload_file, color: uploadTextColor),
+                        SizedBox(width: screenWidth * 0.02),
+                        Text(
+                          "Subir\ncomprobante",
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.03,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
             ],
           ),
           SizedBox(height: screenWidth * 0.02),
           Row(
-            mainAxisAlignment: isAmountVisible
+            mainAxisAlignment: selectamountpayment
                 ? MainAxisAlignment.spaceBetween
-                : MainAxisAlignment.center
-            ,
-
+                : MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: buttoncolorblue,
-                  foregroundColor: buttoncoloryellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
+              Visibility(
+                visible: selectamountpayment,
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.05,
                       horizontal: screenWidth * 0.05),
-                ),
-                onPressed: onToggleAmountVisibility,
-                child: Text(
-                  "Agregar monto",
-                  style: TextStyle(fontSize: screenWidth * 0.04),
+                  child: Text(
+                    "Monto a abonar:",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: buttoncolorblue),
+                  ),
                 ),
               ),
-              SizedBox(width: screenWidth * 0.05),
               Visibility(
-                visible: isAmountVisible,
+                visible: selectamountpayment,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: screenWidth * 0.02,
-                      horizontal: screenWidth * 0.002),
+                      horizontal: screenWidth * 0.01),
                   child: Container(
                     width: screenWidth * 0.3,
                     child: TextField(
-                      controller: amountController,
+                      controller: widget.amountController,
+                      focusNode: _focusNode,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                            RegExp(r'^\d*\.?\d{0,2}')),
-                      ],
                       decoration: InputDecoration(
+                        hintText: '\$00.00',
                         labelText: 'Monto',
                         border: OutlineInputBorder(),
                         prefixText: '\$',
                       ),
                       style: TextStyle(fontSize: screenWidth * 0.03),
+                      onChanged: (_) => _updatePaymentStatus(),
                     ),
                   ),
                 ),
@@ -918,7 +1139,18 @@ class TransferSection extends StatelessWidget {
                         vertical: screenWidth * 0.04,
                         horizontal: screenWidth * 0.02),
                   ),
-                  onPressed: () {},
+                  onPressed: isPaymentEnabled
+                      ? () async {
+                          String urltemp = await Utils.uploadImage(
+                              "${miembro!.user.username}/comprobantes/",
+                              "${widget.course}-1",
+                              selectedImage!);
+                          double amount =
+                              double.parse(widget.amountController.text);
+                          _generateEnrollment(
+                              amount, urltemp, int.parse(widget.idCourse));
+                        }
+                      : null,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,

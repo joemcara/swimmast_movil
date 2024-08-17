@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 
 // shared constants back
 export 'package:dio/dio.dart';
@@ -15,7 +14,13 @@ List<Map<String, dynamic>> coursesList = [];
 List<Map<String, dynamic>> coursesToday = [];
 List<Map<String, dynamic>> allCoursesMembers = [];
 List<dynamic> onlyMembers = [];
-int courseSelected = 0;
+List<dynamic> membersByCourse = [];
+List<Map<String, dynamic>> attendance = [];
+Map<int, bool> attendanceMap = {};
+int courseSelected = -1;
+String courseSelectedDay = '';
+String courseSelectedHour = '';
+String courseSelectedHourEnd = '';
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
 const Color swimmastYellow = Color.fromRGBO(244, 232, 105, 1);
@@ -41,11 +46,14 @@ List<Color> selectedGradient = [
 
 const TextStyle styleSubtitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
+const TextStyle styleSubtitlesSmall =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
 const TextStyle styleTitles =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 int global = 3;
 var attendanceStateModal = false;
 String today = '';
+String dateFormatted = '';
 String dayNow = '';
 
 //Member constans

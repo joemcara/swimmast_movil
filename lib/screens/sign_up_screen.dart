@@ -24,6 +24,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameRepresentative = TextEditingController();
   TextEditingController relationship = TextEditingController();
 
+    void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+    void showModal(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Informacion!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SignInScreen(username: _userName.text,)));
+          
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _createAccount() async {
     if (_checkboxValue) {
       try {
@@ -50,19 +92,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
         );
         if (response.statusCode == 201) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const SignInScreen()));
-        }
+          showModal('Usuario creado correctamente');
+          }
 
         print(response.data);
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('usuario invalido')),
-        );
         print(e);
         if (e is DioException) {
-          print('Status Code: ${e.response?.statusCode}');
-          print('Data: ${e.response?.data}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.response?.data)),
+        );
         }
       }
     }
@@ -179,6 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     text: "Crear",
                     onPressed: () {
                       _createAccount();
+
                     })
               ],
             ),

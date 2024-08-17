@@ -1,4 +1,5 @@
 import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/models/utils.dart';
 import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
 import 'package:swimmast_movil/screens/sign_up_screen.dart';
 import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
@@ -8,7 +9,12 @@ import 'package:swimmast_movil/shared/inputs.dart';
 import 'package:swimmast_movil/screens/recover_password.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+  String? username;
+
+  SignInScreen({
+    super.key, 
+    this.username
+    });
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -40,11 +46,13 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<void> _login() async {
     try {
+      final fcmToken = await Utils.getFCMToken();
       final response = await Dio().post(
         urlBack + 'administration/login_user/',
         data: {
           'username': _userName.text,
           'password': _password.text,
+          'device_token': fcmToken,
         },
       );
       print(response.data);
@@ -74,6 +82,12 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double statusBarHeight = MediaQuery.of(context).viewPadding.top;
+
+    var userName = widget.username;
+
+    if(userName == null){
+      userName = "Ingrese el usuario";
+    }
 
     return Scaffold(
       body: Container(
@@ -132,7 +146,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               TextInput(
                                 controller: _userName,
-                                hintText: "Ingrese su Usuario",
+                                hintText: userName.toString(),
                                 label: "Ingrese su Usuario",
                               ),
                               SizedBox(
