@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/competitions_cards.dart';
 import 'package:swimmast_movil/models/competitions_info.dart';
@@ -22,7 +21,7 @@ class _CompetitionsInfoCardsState extends State<CompetitionsInfoCards> {
 
   Future<void> getCompetitions() async {
     try{
-      var response = await Dio().get(urlBack + 'competition_report/swimmer/3'); 
+      var response = await Dio().get(urlBack + 'competition_report/swimmer/' + idUser.toString()); 
       if (response.statusCode == 201) {
         List<dynamic> data = response.data;
         competitions = data.map((json) => CompetitionsInfo.fromJson(json)).toList();

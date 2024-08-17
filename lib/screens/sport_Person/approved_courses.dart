@@ -23,7 +23,7 @@ class _ApprovedCoursesState extends State<ApprovedCourses> {
 
   Future<void> getCourses() async {
     try{
-      var response = await Dio().get(urlBack + 'course/swimmer/2/purchased/'); 
+      var response = await Dio().get(urlBack + 'course/swimmer/${idUser.toString()}/purchased/'); 
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         courses = data.map((json) => CourseAvailable.fromJson(json)).toList();
