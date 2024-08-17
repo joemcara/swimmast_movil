@@ -1,6 +1,7 @@
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:swimmast_movil/models/member.dart';
+import 'package:swimmast_movil/screens/sport_Person/shop_sport/shop_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/member_admin_screen.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/models/courseInstructor.dart';
@@ -38,11 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> dateToday() async {
     await initializeDateFormatting('es_ES', null);
     final format = DateFormat('EEEE, d \'de\' MMMM \'del\' yyyy', 'es_ES');
-    var date = format.format(DateTime.now());
+    //var date = format.format(DateTime.now());
+    //DateTime formattedDate =
+    //DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    //String formattedDateString = DateFormat('yyyy-MM-dd').format(formattedDate);
+    var date = format.format(DateTime(2024, 8, 14));
+    DateTime dateTest = DateTime(2024, 8, 14);
     DateTime formattedDate =
-        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+        DateTime(dateTest.year, dateTest.month, dateTest.day);
     String formattedDateString = DateFormat('yyyy-MM-dd').format(formattedDate);
     dateFormatted = formattedDateString;
+    dayTest = dateFormatted;
     final dateUppercase = date[0].toUpperCase() + date.substring(1);
     day = dateUppercase.split(",")[0];
     setState(() {

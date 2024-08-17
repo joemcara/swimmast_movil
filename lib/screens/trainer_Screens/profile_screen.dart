@@ -1,7 +1,6 @@
 import 'package:swimmast_movil/screens/edit_profile.dart';
 import 'package:swimmast_movil/shared/btnlogout.dart';
 import 'package:swimmast_movil/shared/button.dart' as customText;
-import 'package:swimmast_movil/shared/button_Rectangle.dart' as customRectangle;
 import 'package:swimmast_movil/shared/change_password_w.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';

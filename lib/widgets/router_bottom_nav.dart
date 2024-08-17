@@ -6,7 +6,6 @@ import 'package:swimmast_movil/screens/sport_Person/profile_screen_sport.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/home_screen.dart';
 import 'package:swimmast_movil/screens/trainer_Screens/profile_screen.dart';
 
-
 import 'package:swimmast_movil/shared/constants.dart';
 
 

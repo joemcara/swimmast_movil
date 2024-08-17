@@ -1,56 +1,63 @@
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/routine_cards.dart';
+import 'package:swimmast_movil/models/history_routines.dart';
 
-class RoutineInfoCards extends StatelessWidget {
-  final List<Map<String, String>> routine_info = [
-    {
-      'id': '1',
-      'name': 'Rutina 1',
-      'day': 'Lunes',
-      'time': '9:30-11:00',
-      'performed': 'yes'
-    },
-    {
-      'id': '1',
-      'name': 'Rutina 2',
-      'day': 'Martes',
-      'time': '9:30-11:00',
-      'performed': 'yes'
-    },
-    {
-      'id': '1',
-      'name': 'Rutina 3',
-      'day': 'Miercoles',
-      'time': '9:30-11:00',
-      'performed': 'no'
-    },
-    {
-      'id': '1',
-      'name': 'Rutina 4',
-      'day': 'Jueves',
-      'time': '9:30-11:00',
-      'performed': 'yes'
-    },
-    {
-      'id': '1',
-      'name': 'Rutina 5',
-      'day': 'Viernes',
-      'time': '9:30-11:00',
-      'performed': 'no'
-    },
-  ];
+class RoutineInfoCards extends StatefulWidget {
+  const RoutineInfoCards({super.key});
+
+  @override
+  State<RoutineInfoCards> createState() => _RoutineInfoCardsState();
+}
+
+class _RoutineInfoCardsState extends State<RoutineInfoCards> {
+
+  List<HistoryRoutines>? routines;
+  
+  @override
+  void initState() {
+    super.initState();
+    getRoutines();
+  }
+
+  Future<void> getRoutines() async {
+    try{
+      var response = await Dio().get(urlBack + 'routine/swimmer/${idUser}');
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        routines = data.map((json) => HistoryRoutines.fromJson(json)).toList();
+        setState(() {}); 
+      }
+    }
+    catch (e) {
+      if (e is DioException) {
+        print('Status Code: ${e.response?.statusCode}');
+        print('Data: ${e.response?.data}');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    if(routines != null && routines!.length >0)
     return Expanded(
         child: ListView.builder(
-            itemCount: routine_info.length,
+            itemCount: routines!.length,
             itemBuilder: (context, index) => RoutineCards(
-                routine_name: routine_info[index]['name']!,
-                day: routine_info[index]['day']!,
-                time: routine_info[index]['time']!,
-                color: routine_info[index]['performed'] == 'yes'
+                routine_name: routines![index].name.toString(),
+                day: routines![index].day.toString(),
+                time: routines![index].time.toString(),
+                color: routines![index].performed
                     ? swimmastGreen
-                    : swimmastRed)));
+                    : swimmastRed
+            )
+        )
+    );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Sin Rutinas")
+          ]
+    );
   }
 }

@@ -19,12 +19,12 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
     Size size = MediaQuery.of(context).size;
 
     List<String> data = [
-      "Número de teléfono: 0960187017",
-      "Fecha de nacimiento: 10-05-2002",
+      "Número de teléfono: ${miembro!.user.phoneNumber}",
+      "Fecha de nacimiento: ${birthDate}",
     ];
 
-    //List<String> packages = userCourse.cast<String>();
-    List<String> packages = ['Paq1', 'Paq2'];
+
+    List<String> packages = userCourse.cast<String>();
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -40,13 +40,13 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
                 height: size.height * 0.2,
                 width: size.height * 0.2,
                 child: CustomAvatar(
-                  username: "Katherine",
+                  username: miembro!.user.firstName[0].toUpperCase(),
                   onTap: () {},
                 ),
               ),
             ),
             Text(
-              "Katherine Tumbaco",
+              miembro!.user.firstName + " " + miembro!.user.lastName,
               style: TextStyle(
                 fontSize: size.width * 0.06,
                 fontWeight: FontWeight.bold,
@@ -69,7 +69,11 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
                 children: [
                   _infoBox("Información general", data),
                   SizedBox(height: size.height * 0.03),
-                  _infoBox("Cursos Inscritos", packages),
+                  if(!packages.isNotEmpty)
+                    _infoBox("Cursos Inscritos", ['Aún no te has inscrito a ningún curso :c']),
+                  if(packages.isNotEmpty)
+                    _infoBox("Cursos Inscritos", packages),
+                    
                 ],
               ),
             ),
@@ -117,6 +121,7 @@ class _ProfileScreenSportState extends State<ProfileScreenSport> {
                 ],
               ),
             ),
+            SizedBox(height: size.height * 0.05),
           ],
         ),
       ),

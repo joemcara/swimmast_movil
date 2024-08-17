@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:swimmast_movil/models/member.dart';
-import 'package:swimmast_movil/screens/trainer_Screens/bottomNav/main_screen_trainee.dart';
 
 // shared constants back
 export 'package:dio/dio.dart';
@@ -55,6 +54,7 @@ int global = 3;
 var attendanceStateModal = false;
 String today = '';
 String dateFormatted = '';
+String dayTest = '';
 String dayNow = '';
 
 //Member constans
@@ -68,7 +68,7 @@ var userCourse = [];
 var userCourses;
 
 List<Color> colorsList = [
-  Colors.purpleAccent,
+  Colors.red,
   swimmastBlue,
   Colors.amber,
   Colors.orange

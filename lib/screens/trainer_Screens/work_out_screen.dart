@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:get/get.dart';
 import 'package:swimmast_movil/shared/constants.dart';
@@ -36,7 +33,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 
       Map<String, dynamic> dataRoutine = {
         "course_id": courseSelected,
-        "date": formattedDate,
+        "date": dayTest,
         "styles": routine
       };
 
@@ -393,7 +390,50 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
                 child: Center(
                     child: CustomButton(
                   text: "Guardar Rutina",
-                  onPressed: () => {},
+                  onPressed: () => {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          surfaceTintColor: Colors.white,
+                          content: Container(
+                            padding: const EdgeInsets.all(10),
+                            height: MediaQuery.of(context).size.height / 7.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                  size: 50,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(top: 5),
+                                    child: const Text(
+                                      'Rutina guardada con éxito',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text(
+                                'Aceptar',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    )
+                  },
                 )),
               ),
             ),

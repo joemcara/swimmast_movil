@@ -6,7 +6,6 @@ class Btnlogout extends StatelessWidget {
     super.key,
   });
 
-  
   Future _logout() async {
     try {
       await Dio().post(urlBack + 'administration/logout_user/',
@@ -20,12 +19,9 @@ class Btnlogout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async{
+      onTap: () async {
         await _logout();
-        Navigator.pop(
-          context,
-          MaterialPageRoute(builder: (context) => SignInScreen()),
-        );
+        Navigator.pop(context);
       },
       child: Row(
         children: [
