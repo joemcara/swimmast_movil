@@ -2,6 +2,8 @@ import 'dart:ffi';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:swimmast_movil/models/utils.dart';
+import 'package:swimmast_movil/screens/member_Screens/bottomNav/main_screen_member.dart';
+import 'package:swimmast_movil/screens/sport_Person/bottonNav/main_screen_sport.dart';
 import 'package:swimmast_movil/screens/sport_Person/shop_sport/purchased_screen.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
 import 'package:swimmast_movil/shared/constants.dart';
@@ -74,7 +76,7 @@ class _ShopSportScreenState extends State<ShopSportScreen> {
             ListView.builder(
               padding: const EdgeInsets.all(10),
               itemCount: items.length,
-              itemBuilder: (_, index) => PaquetesInscripcion( 
+              itemBuilder: (_, index) => PaquetesInscripcion(
                 idCourse: items[index]['id']!,
                 nomPaquete: items[index]['paquete']!,
                 descPaquete: items[index]['descripcion']!,
@@ -223,10 +225,11 @@ class BuyScreen extends StatelessWidget {
   final String nomPaquete;
   final String precio;
 
-  const BuyScreen({Key? key, 
-  required this.nomPaquete, 
-  required this.precio, 
-  required this.idCourse})
+  const BuyScreen(
+      {Key? key,
+      required this.nomPaquete,
+      required this.precio,
+      required this.idCourse})
       : super(key: key);
 
   @override
@@ -284,10 +287,10 @@ class BuyScreen extends StatelessWidget {
                     ),
                     SizedBox(height: screenWidth * 0.02),
                     WidgetButtons(
-                        precio: double.parse(precio), 
-                        nomPaquete: nomPaquete,
-                        idCourse: idCourse,
-                        ),
+                      precio: double.parse(precio),
+                      nomPaquete: nomPaquete,
+                      idCourse: idCourse,
+                    ),
                   ],
                 ),
               ),
@@ -304,7 +307,7 @@ class WidgetButtons extends StatefulWidget {
   const WidgetButtons({
     Key? key,
     required this.precio,
-    required this.nomPaquete, 
+    required this.nomPaquete,
     required this.idCourse,
   }) : super(key: key);
 
@@ -787,7 +790,8 @@ class TransferSection extends StatefulWidget {
     required this.precio,
     required this.course,
     required this.amountController,
-    required this.onToggleAmountVisibility, required this.idCourse,
+    required this.onToggleAmountVisibility,
+    required this.idCourse,
   });
 
   _TransferSectionState createState() => _TransferSectionState();
@@ -867,7 +871,7 @@ class _TransferSectionState extends State<TransferSection> {
     });
   }
 
-void _updateFullPayment() {
+  void _updateFullPayment() {
     setState(() {
       selectfullpayment = !selectfullpayment;
       if (selectfullpayment) {
@@ -880,7 +884,6 @@ void _updateFullPayment() {
     });
   }
 
-
   void _updateAmountPayment() {
     setState(() {
       selectamountpayment = !selectamountpayment;
@@ -890,7 +893,9 @@ void _updateFullPayment() {
       } else {
         isEnabledPhoto = false;
         isFullPayment = true;
-   }});}
+      }
+    });
+  }
 
   void showModal(String errorMessage, BuildContext contextParent) {
     showDialog(
@@ -903,8 +908,18 @@ void _updateFullPayment() {
             new TextButton(
               child: const Text("OK"),
               onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(contextParent);
+                Navigator.pop(context);
+                if (miembro!.roleName == "DEPORTISTA") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreenMember()));
+                } else if (miembro!.roleName == "DEPORTISTA") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MainScreenSportPerson()));
+                }
               },
             ),
           ],
@@ -913,22 +928,23 @@ void _updateFullPayment() {
     );
   }
 
-Future<int> _generateEnrollment(double paymentValue, String reciptUrl, int courseId) async {
+  Future<int> _generateEnrollment(
+      double paymentValue, String reciptUrl, int courseId) async {
     try {
       final response = await Dio().post(
         urlBack + 'enrollment/generate_enrollment/',
         data: {
-            "course":courseId,
-            "applicant":idUser,
-            "payment_value": paymentValue,
-            "receipt_url": reciptUrl,
+          "course": courseId,
+          "applicant": idUser,
+          "payment_value": paymentValue,
+          "receipt_url": reciptUrl,
         },
       );
       if (response.statusCode == 200) {
         showModal("Pago realizado con éxito", context);
-        }else{
-          showModal("Error al realizar el pago", context);
-        }
+      } else {
+        showModal("Error al realizar el pago", context);
+      }
       return 200;
     } catch (e) {
       print(e);
@@ -969,7 +985,7 @@ Future<int> _generateEnrollment(double paymentValue, String reciptUrl, int cours
                     ),
                     onPressed: () {
                       // Acción al presionar "Pagar valor total"
-                        _updateFullPayment();
+                      _updateFullPayment();
                       setState(() {
                         widget.amountController.text = widget.precio.toString();
                       });
@@ -1131,12 +1147,10 @@ Future<int> _generateEnrollment(double paymentValue, String reciptUrl, int cours
                               "${miembro!.user.username}/comprobantes/",
                               "${widget.course}-1",
                               selectedImage!);
-                              double amount = double.parse(widget.amountController.text);
-                            _generateEnrollment(
-                              amount,
-                              urltemp,
-                              int.parse(widget.idCourse
-                              ));
+                          double amount =
+                              double.parse(widget.amountController.text);
+                          _generateEnrollment(
+                              amount, urltemp, int.parse(widget.idCourse));
                         }
                       : null,
                   child: Column(
