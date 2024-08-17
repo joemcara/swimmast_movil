@@ -325,7 +325,7 @@ class _AttendanceSheetState extends State<AttendanceSheet> {
                                 child: Container(
                                   margin: const EdgeInsets.only(top: 5),
                                   child: const Text(
-                                    'Por favor, marque asistencia para todos los miembros.',
+                                    'Por favor, marque asistencia para todos los miembros. ',
                                     style: TextStyle(fontSize: 16),
                                   ),
                                 ),
