@@ -18,6 +18,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
   Map<String, List<Map<String, dynamic>>> allCoursesToday = {};
   String day = "Today";
   String hour = "00:00";
+  String endHour = "00:00";
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
 
       this.day = courseSelectedDay;
       this.hour = courseSelectedHour;
+      this.endHour = courseSelectedHourEnd;
       if (attendanceStateModal) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _showModal(context);
@@ -89,7 +91,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
           Map<String, dynamic> courseItem = {
             'id': course.id,
             'start_date': course.startDate,
-            'start_time': course.startTime.substring(0, 2),
+            'start_time': course.startTime,
             'due_date': course.dueDate,
             'due_time': course.endTime,
             'day': course.description
@@ -191,14 +193,22 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                             itemCount: allCoursesToday['grupal']?.length,
                             itemBuilder: (_, indice) => hourClass(
                               context,
-                              allCoursesToday['grupal']?[0]['start_time'],
+                              allCoursesToday['grupal']?[0]['start_time']
+                                  .substring(0, 5),
+                              allCoursesToday['grupal']?[indice]['due_time']
+                                  .substring(0, 5),
                               allCoursesToday['grupal']?[indice]['id'],
                               () async {
                                 allCoursesToday['grupal']?[indice]['id'];
                                 courseSelectedDay =
                                     allCoursesToday['grupal']?[indice]['day'];
                                 courseSelectedHour = allCoursesToday['grupal']
-                                    ?[indice]['start_time'];
+                                        ?[indice]['start_time']
+                                    .substring(0, 5);
+                                courseSelectedHourEnd =
+                                    allCoursesToday['grupal']?[indice]
+                                            ['due_time']
+                                        .substring(0, 5);
                                 await _MembersByCourse();
                               },
                             ),
@@ -234,6 +244,8 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                               context,
                               allCoursesToday['individual']?[indice]
                                   ['start_time'],
+                              allCoursesToday['individual']?[indice]
+                                  ['due_time'],
                               allCoursesToday['individual']?[indice]['id'],
                               () async {
                                 courseSelected = allCoursesToday['individual']
@@ -243,7 +255,12 @@ class AttendanceScreenState extends State<AttendanceScreen> {
                                         ['day'];
                                 courseSelectedHour =
                                     allCoursesToday['individual']?[indice]
-                                        ['start_time'];
+                                            ['start_time']
+                                        .substring(0, 5);
+                                courseSelectedHourEnd =
+                                    allCoursesToday['individual']?[indice]
+                                            ['due_time']
+                                        .substring(0, 5);
                                 await _MembersByCourse();
                               },
                             ),
@@ -301,8 +318,10 @@ class AttendanceScreenState extends State<AttendanceScreen> {
   }
 }
 
-Widget hourClass(
-    BuildContext context, String hour, int id, void Function() onPopover) {
+Widget hourClass(BuildContext context, String hourStart, String hourEnd, int id,
+    void Function() onPopover) {
+  courseSelectedHour = hourStart ?? "no disponible";
+  courseSelectedHourEnd = hourEnd ?? "no disponible";
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -328,7 +347,7 @@ Widget hourClass(
             child: Row(
               children: [
                 Text(
-                  hour ?? "no disponible",
+                  hourStart ?? "no disponible",
                 ),
                 PopoverButton(
                   showModal: onPopover,

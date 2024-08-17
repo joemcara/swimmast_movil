@@ -21,6 +21,7 @@ Map<int, bool> attendanceMap = {};
 int courseSelected = -1;
 String courseSelectedDay = '';
 String courseSelectedHour = '';
+String courseSelectedHourEnd = '';
 
 const Color swimmastBlue = Color.fromRGBO(11, 34, 181, 1);
 const Color swimmastYellow = Color.fromRGBO(244, 232, 105, 1);
