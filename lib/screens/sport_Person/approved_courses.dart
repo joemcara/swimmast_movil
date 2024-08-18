@@ -3,6 +3,7 @@ import 'package:swimmast_movil/widgets/courses_p.dart';
 import 'package:swimmast_movil/models/courseAvailable.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/customAppBar.dart';
+import 'package:swimmast_movil/widgets/courses_info_cards.dart';
 
 class ApprovedCourses extends StatefulWidget {
   const ApprovedCourses({super.key});
@@ -48,26 +49,12 @@ class _ApprovedCoursesState extends State<ApprovedCourses> {
       body: Column(
         children: [
           SizedBox(height: 20),
-          if(courses != null && courses!.length >0)
-            Expanded(
-              child: ListView.builder(
-              padding: const EdgeInsets.all(10),
-              itemCount: courses!.length,
-              itemBuilder: (context, index) => CoursesP(
-                name: courses![index].name.toString(),
-                description: courses![index].description.toString(),
-                price: courses![index].price.toString(),
-                startDate: courses![index].startDate.year.toString() + "-" + courses![index].startDate.month.toString() + "-" + courses![index].startDate.day.toString(),
-                endDate: courses![index].dueDate.year.toString() + "-" + courses![index].dueDate.month.toString() + "-" + courses![index].dueDate.day.toString(),
-              )
-              )
-            ),
-          Center(
-            child: Text('No hay paquetes aprobados')
-          )
+          CoursesInfoCards(),
         ],
       ),
     );
   }
 
 }
+
+
