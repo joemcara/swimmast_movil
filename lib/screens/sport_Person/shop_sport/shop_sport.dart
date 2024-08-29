@@ -467,7 +467,28 @@ class _WidgetButtonsState extends State<WidgetButtons> {
                       horizontal: screenWidth * 0.02,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Informacion!"),
+                          content: Text("Su pago ha sido reservado. \n"
+                              "Por favor acérquese a nuestras oficinas en un plazo de 24h para realizar el pago."),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text("OK"),
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                   child: Text(
                     "Reservar Cupo por 24hrs",
                     style: TextStyle(fontSize: screenWidth * 0.05),
@@ -907,17 +928,8 @@ class _TransferSectionState extends State<TransferSection> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.pop(context);
-                if (miembro!.roleName == "DEPORTISTA") {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MainScreenMember()));
-                } else if (miembro!.roleName == "DEPORTISTA") {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MainScreenSportPerson()));
-                }
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
             ),
           ],
@@ -938,7 +950,8 @@ class _TransferSectionState extends State<TransferSection> {
           "receipt_url": reciptUrl,
         },
       );
-      if (response.statusCode == 200) {
+      print(response);
+      if (response.statusCode == 201) {
         showModal("Pago realizado con éxito", context);
       } else {
         showModal("Error al realizar el pago", context);

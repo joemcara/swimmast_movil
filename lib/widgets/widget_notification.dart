@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:swimmast_movil/shared/constants.dart';
 import 'package:swimmast_movil/widgets/swimmast_card.dart';
 
@@ -71,12 +72,14 @@ class NotificationWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title),
-                  Text(description, style: const TextStyle(color: Colors.grey)),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title),
+                    Text(description, style: const TextStyle(color: Colors.grey)),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 8.0),

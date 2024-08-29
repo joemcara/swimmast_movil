@@ -44,7 +44,7 @@ class _HomeScreenMemberState extends State<HomeScreenMember> {
         };
         courseList.add(courseMap);
         userCourse.clear();
-        userCourse.add("${course.name}  ${course.description}");
+        userCourse.add("${course.name}");
       }
       setState(() {});
     } catch (e) {

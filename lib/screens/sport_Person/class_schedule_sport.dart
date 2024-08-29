@@ -72,13 +72,16 @@ class _ClassScheduleSportState extends State<ClassScheduleSport> {
   List<Widget> packagesDistribution(DateTime date) {
     List<Widget> courses = [];
     int i = 0;
+    if(coursesList.isEmpty){
+      return courses;
+    }
     for (var item in coursesList) {
       if (isDateInRange(date, item['startDate'], item['dueDate']) &&
           (!_isWeekend(date))) {
         PackageInfo package = PackageInfo(
           color: colorsList[i],
           name: item['name'],
-          day: item['day'],
+          day: item['days'].toString(),
           hour: item['hour'],
         );
 

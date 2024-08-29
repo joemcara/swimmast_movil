@@ -7,7 +7,7 @@ export 'package:flutter/material.dart';
 export 'package:swimmast_movil/shared/button.dart';
 export 'package:swimmast_movil/shared/profile_header.dart';
 
-const String urlBack = 'https://swimmast-api.onrender.com/api/v2/';
+const String urlBack = 'http://10.0.2.2:8000/api/v2/';
 
 Member? miembro;
 List<Map<String, dynamic>> coursesList = [];
